@@ -13,10 +13,32 @@
       >
         Jugar
       </button>
+      <div class="flex gap-4">
+      <button @click="isOpen = true" class="px-4 font-semibold text-2xl uppercase bg-stone-300 rounded-r focus:ring-4 focus:ring-stone-600">Regles</button>
+      <teleport to="body">
+      <div class="modal" v-if="isOpen">
+        <modal-rules 
+        @close = "isOpen = false"
+        />
+      </div>
+      </teleport>
+      </div>
     </div>
-  </div>
+  </div>  
 </template>
-
+<script>
+export default{
+    components: {
+      ModalRules,
+    },
+  };
+</script>
 <script setup>
-const emit = defineEmits(['update:currentPage']);
+import {ref} from "vue";
+import ModalRules from '../components/ModalRules.vue';
+
+const emit = defineEmits(['update:currentPage'])
+
+const isOpen = ref(false)
+
 </script>
