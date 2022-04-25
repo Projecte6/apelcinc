@@ -14,13 +14,6 @@
 
 }
 
-.llargada{
-    height: 60%;
-}
-
-.amplada{
-    width: 80%;
-}
 .line-full-width{
     @apply mt-4 border-solid border-b-4;
     border-bottom-color: #473939;
