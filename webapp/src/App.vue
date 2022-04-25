@@ -1,4 +1,5 @@
 <template>
+
   <Login
     v-if="currentPage == 'login'"
     v-model:currentPage="currentPage"
@@ -13,21 +14,27 @@
   <!-- <button @click="asd">
     Send
   </button> -->
+  <Table v-if="secondPage == 'table'" v-model:secondPage="secondPage" />
 </template>
 
 <script setup>
-  import { ref } from 'vue';
-  import { io } from 'socket.io-client';
+import { ref } from "vue";
+import { io } from "socket.io-client";
+
 
   // Components
   import Login from './components/Login.vue';
   import Chat from './components/Chat.vue';
 
-  const currentPage = ref('login');
-  // const messages = ref(null);
+const currentPage = ref("login");
+// const messages = ref(null);
+const secondPage = ref("table");
 
-  const socket = io('localhost:3210');
+const socket = io("localhost:3210");
 
+// socket.on('messages', function (data) {
+//   messages.value = data;
+// });
   socket.on('chat:message', (data) => {
     console.table(data);
   });

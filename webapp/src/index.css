@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+.nav{
+    background-color: rgb(63, 71, 77);
+}
+
+.but{
+    @apply rounded-md bg-[#585858] text-white font-bold;
+    font-size: 20px;
+    padding: 5px;
+    width: 90px;
+
+}
+
+.llargada{
+    height: 60%;
+}
+
+.amplada{
+    width: 80%;
+}
 .line-full-width{
     @apply mt-4 border-solid border-b-4;
     border-bottom-color: #473939;
