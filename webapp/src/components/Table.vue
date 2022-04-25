@@ -5,12 +5,17 @@
         <img src="/public/img/logo.png" class="w-80" />
       </div>
       <div class="flex items-center mr-20 space-x-2">
-        <button v-on:click="" class="but">Sortir</button>
-        <button v-on:click="" class="but">Regles</button>
+        <button @click="" class="but">Sortir</button>
+        <button @click="isOpen = true" class="but">Regles</button>
+        <teleport to="body">
+          <div class="modal" v-if="isOpen">
+            <modal-rules @close="isOpen = false" />
+          </div>
+        </teleport>
       </div>
     </nav>
-    <div class="mt-20 flex flex-col items-center llargada">
-      <div class="overflow-y-auto bg-[#C4C4C4] rounded-lg amplada">
+    <div class="mt-20 flex flex-col items-center h-[60%]">
+      <div class="overflow-y-auto bg-[#C4C4C4] rounded-lg w-[80%]">
         <div class="py-2 inline-block min-w-full px-6">
           <div class="overflow-hidden">
             <table class="min-w-full">
@@ -83,6 +88,9 @@
 
 <script>
 export default {
+  components: {
+    ModalRules,
+  },
   data() {
     return {
       columnes: ["Id", "Sala", "Jugadors", "Tipus"],
@@ -95,4 +103,9 @@ export default {
   },
 };
 </script>
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import ModalRules from "../components/ModalRules.vue";
+
+const isOpen = ref(false);
+</script>
