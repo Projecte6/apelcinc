@@ -11,20 +11,29 @@
     Send
   </button> -->
   <Table v-if="secondPage == 'table'" v-model:secondPage="secondPage" />
+  <Home
+    v-if="currentPage == 'home'"
+    v-model:currentPage="currentPage"
+  />
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { io } from "socket.io-client";
 
-// Components
-import Login from "./components/Login.vue";
-import Chat from "./components/Chat.vue";
-import Table from "./components/Table.vue";
+  // Components
+  import Login from './components/Login.vue';
+  import Chat from './components/Chat.vue';
+  import Home from './components/Home.vue';
+  import Table from "./components/Table.vue";
+
 
 const currentPage = ref("login");
 // const messages = ref(null);
 const secondPage = ref("table");
+
+  //const currentPage = ref('login');
+  // const messages = ref(null);
 
 const socket = io("localhost:3210");
 
