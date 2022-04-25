@@ -5,11 +5,13 @@
         class="p-3 font-semibold text-2xl uppercase border-none rounded-l focus:ring-4 focus:ring-stone-600"
         type="text"
         placeholder="Nom"
+        v-model="name"
       />
 
+      <!-- @click="emit('update:currentPage', 'rules')" -->
       <button
         class="px-4 font-semibold text-2xl uppercase bg-stone-300 rounded-r focus:ring-4 focus:ring-stone-600"
-        @click="emit('update:currentPage', 'rules')"
+        @click="onClickLogin"
       >
         Jugar
       </button>
@@ -34,11 +36,25 @@ export default{
   };
 </script>
 <script setup>
-import {ref} from "vue";
+import { ref } from 'vue';
+
+// Components
 import ModalRules from '../components/ModalRules.vue';
 
-const emit = defineEmits(['update:currentPage'])
+const props = defineProps({
+  socket: Object,
+  pepe: String,
+});
 
-const isOpen = ref(false)
+const emit = defineEmits(['update:currentPage']);
 
+// Data
+const name = ref('');
+const isOpen = ref(false);
+
+const onClickLogin = () => {
+  props.socket.emit('game:login', name.value);
+  emit('update:currentPage', 'chat');
+  name.value = '';
+}
 </script>
