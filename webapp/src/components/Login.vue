@@ -17,7 +17,8 @@
       </button>
       <div class="flex gap-4">
       <button @click="isOpen = true" class="px-4 font-semibold text-2xl uppercase bg-stone-300 rounded-r focus:ring-4 focus:ring-stone-600">Regles</button>
-      <teleport to="body">
+        <button @click="onClickCreate" class="px-4 font-semibold text-2xl uppercase bg-stone-300 rounded-r focus:ring-4 focus:ring-stone-600">Crear</button>
+        <teleport to="body">
       <div class="modal" v-if="isOpen">
         <modal-rules 
         @close = "isOpen = false"
@@ -56,5 +57,8 @@ const onClickLogin = () => {
   props.socket.emit('game:login', name.value);
   emit('update:currentPage', 'chat');
   name.value = '';
+}
+const onClickCreate = () => {
+  emit('update:currentPage', 'regles');
 }
 </script>
