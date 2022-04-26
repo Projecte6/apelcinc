@@ -2,36 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-.nav{
-    background-color: rgb(63, 71, 77);
+
+
+
+.homebutton{
+  @apply rounded bg-gradient-to-r from-[#0387c8] to-[#00ffef] w-full h-full py-2.5 px-6 font-medium inline-block relative mt-7 cursor-pointer
+  after:absolute after:content-[''] after:w-full after:left-0 after:rounded 
+  after:transition duration-300 ease-in-out hover:text-white transition duration-300 ease-in-out
+  hover:after:top-0 hover:after:h-full active:top-0.5;
 }
 
-.but{
-    @apply rounded-md bg-[#585858] text-white font-bold;
-    font-size: 20px;
-    padding: 5px;
-    width: 90px;
-
+.custom {
+  font-family: 'League Gothic', sans-serif;
+  box-shadow: inset 2px 2px 2px 0px rgba(69, 130, 225, 0.34), 7px 7px 20px 0px rgba(0,0,0,.1), 4px 4px 5px 0px rgba(0,0,0,.1);
 }
 
-.line-full-width{
-    @apply mt-4 border-solid border-b-4;
-    border-bottom-color: #473939;
+.custom:after{
+  box-shadow: -7px -7px 20px 0px #f8ecb21c, -4px -4px 5px 0px #fff39399, 7px 7px 20px 0px #fbf38508, 4px 4px 5px 0px #f4ea9112;
 }
-
-.modal{
-    @apply flex justify-center items-center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.modal > div {
-    background-color: #4E4C4C;
-    color: white;
-    padding: 19px;
-    border-radius: 10px;
-    width:60%;
-  }
