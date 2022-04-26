@@ -210,7 +210,11 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+* Mohamed Bourarach - [GitHub](https://github.com/m04a)
+* Alex Ramón - [GitHub](https://github.com/SEOAlexRamon)
+* Juan Carlos - [GitHub](https://github.com/Juanka007)
+* David Aguirre - [GitHub](https://github.com/davideljefe)
+* Jorge Luis Martinez - [GitHub](https://github.com/George11849)
 
 Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
 
