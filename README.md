@@ -16,10 +16,10 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://i.postimg.cc/KzTKGZzz/Cinquillo-Finished.png" alt="Logo" width="300" height="100">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">CINQUILLO ONLINE</h3>
 
   <p align="center">
     project_description
@@ -66,7 +66,7 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## About The Project ℹ️
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
@@ -76,7 +76,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 
 
-### Built With
+### Built With 🛠️
 
 * [Next.js](https://nextjs.org/)
 * [React.js](https://reactjs.org/)
@@ -92,7 +92,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 
 <!-- GETTING STARTED -->
-## Getting Started
+## Getting Started 🏁
 
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
@@ -113,7 +113,7 @@ This is an example of how to list things you need to use the software and how to
    git clone https://github.com/github_username/repo_name.git
    ```
    
-### Instalation of the server
+### Instalation of the server 
 
 1. Go to folder `/server` and execute:
 
@@ -127,7 +127,7 @@ npm install
 npm run start
 ```
 
-### Instalation of the Webapp
+### Instalation of the Webapp ⬇️
 
 1. Go to folder `/webapp` and execute:
 
@@ -155,7 +155,7 @@ npm run build
 
 <!-- USAGE EXAMPLES -->
 
-## Usage
+## Usage 📜
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
@@ -181,7 +181,7 @@ See the [open issues](https://github.com/Projecte6/apelcinc/issues) for a full l
 
 
 <!-- CONTRIBUTING -->
-## Contributing
+## Contributing 💡
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -196,19 +196,8 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
 <!-- CONTACT -->
-## Contact
+## Contact 📞
 
 * Mohamed Bourarach - [GitHub](https://github.com/m04a)
 * Alex Ramón - [GitHub](https://github.com/SEOAlexRamon)
@@ -238,7 +227,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
 [contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
-[forks-url]: https://github.com/github_username/repo_name/network/members
+[forks-url]: https://github.com/Projecte5/TicketHelp/network/members
 [stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
 [stars-url]: https://github.com/github_username/repo_name/stargazers
 [issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
