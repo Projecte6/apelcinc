@@ -10,10 +10,14 @@
   <!-- <button @click="asd">
     Send
   </button> -->
-  <Table v-if="secondPage == 'table'" v-model:secondPage="secondPage" />
+  <Table v-if="currentPage == 'table'" v-model:secondPage="secondPage" />
   <Home
     v-if="currentPage == 'home'"
     v-model:currentPage="currentPage"
+  />
+  <Create
+      v-if="currentPage == 'create'"
+      v-model:currentPage="currentPage"
   />
 </template>
 
@@ -26,9 +30,10 @@ import { io } from "socket.io-client";
   import Chat from './components/Chat.vue';
   import Home from './components/Home.vue';
   import Table from "./components/Table.vue";
+  import Create from "./components/Create.vue";
 
 
-const currentPage = ref("login");
+const currentPage = ref("create");
 // const messages = ref(null);
 const secondPage = ref("table");
 
