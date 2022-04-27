@@ -1,12 +1,19 @@
+<template>
+    
+</template>
 
 <script>
 import Phaser from 'phaser';
 
+var debug = false;
+
 /* Var config, contains the canvas size, initialize Phaser and charge the method's contained in scene (screen) */
+var globalx = 750;
+var globaly = 350;
 
 var config = {
-    width: 1536,
-    height: 721,
+    width: globalx+750,
+    height: globaly+350,
     backgroundColor: '#06304E',
     type: Phaser.AUTO,
     parent: 'game-container',
@@ -49,18 +56,21 @@ var game = new Phaser.Game(config);
         for (let i=0;i<pals.length;i++){
             xposition = xposition + 100;
             for(let j=1;j<=12;j++){
-                this.add.image(500+xposition,j*25,j+"-"+pals[i]).setScale(0.35,0.325).setOrigin(0.5,-1.2);
+                this.add.image((globalx/1.5)+xposition,(globaly/2)+(j*25),j+"-"+pals[i]).setScale(0.35,0.325);
             }
         }
 
         /** Player's position. */
-        this.add.image(200,370,'player1').setScale(0.6,0.6);  /*Player left*/
+        const PositionPlayer1 = this.add.image(globalx-550,globaly,'player1').setScale(0.6,0.6);  /*Player left*/
         
-        this.add.image(1350,370,'player2').setScale(0.6,0.6); /*Player right*/
+        this.add.image(globalx+600,globaly,'player2').setScale(0.6,0.6); /*Player right*/
         
-        this.add.image(750,640,'player3').setScale(0.6,0.6);  /*Player down*/
+        this.add.image(globalx,globaly+300,'player3').setScale(0.6,0.6);  /*Player down*/
          
-        this.add.image(750,80,'player4').setScale(0.6,0.6);   /*Player up*/
+        this.add.image(globalx,globaly-300,'player4').setScale(0.6,0.6);   /*Player up*/
+        
+        if(debug){
+            console.log("[Debug] The position of " + PositionPlayer1.texture.key + " | x=" + PositionPlayer1.x+ " | y="+ PositionPlayer1.y);}
     }
 
     function update(){

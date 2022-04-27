@@ -48,8 +48,7 @@ import Chat from './components/Chat.vue';
 import Home from './components/Home.vue';
 import Table from "./components/Table.vue";
 import Create from "./components/Create.vue";
-import BackGPos from './components/BackGPos.vue';
-
+import BackGPos from './components/Game.vue';
 
 const currentPage = ref("create");
 // const messages = ref(null);
