@@ -42,16 +42,14 @@ import { ref } from "vue";
 import { io } from "socket.io-client";
 
 
-  // Components
-  import Login from './components/Login.vue';
-  import BackGPos from './components/BackGPos.vue';
-
 // Components
 import Login from './components/Login.vue';
 import Chat from './components/Chat.vue';
 import Home from './components/Home.vue';
 import Table from "./components/Table.vue";
 import Create from "./components/Create.vue";
+import BackGPos from './components/BackGPos.vue';
+
 
 const currentPage = ref("create");
 // const messages = ref(null);
