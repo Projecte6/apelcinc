@@ -8,7 +8,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+
 
 
 
@@ -70,14 +70,12 @@ We program a multiplayer card game, are you a fan of card games? Whether you spe
 
 
 ### Built With 🛠️
-
-* [Socket.io](https://socket.io)
-* [Vue.Js](https://vuejs.org)
-* [Vue.js](https://vuejs.org/)
-* [Expressjs](https://expressjs.com/es/)
-* [Tailwind](https://tailwindcss.com)
-* [Phaser.io](http://phaser.io)
-* [JS](https://www.javascript.com)
+ [![MIT Socket][Socket-shield]][Socket-url]
+ [![MIT Vuejs][Vuejs-shield]][Vuejs-url]
+ [![MIT Expressjs][Expressjs-shield]][Expressjs-url]
+ [![MIT Tailwind][Tailwind-shield]][Tailwind-url]
+ [![MIT Phaser][Phaser-shield]][Phaser-url]
+ [![MIT JS][JS-shield]][JS-url]
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -216,18 +214,28 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
-[contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/Projecte6/apelcinc.svg?style=for-the-badge
+[contributors-url]: https://github.com/m04a/apelcinc/graphs/contributors
+[JS-shield]: https://img.shields.io/badge/js-%23ffff00.svg?style=for-the-badge&logo=javascript&logoColor=black
+[JS-url]: https://www.javascript.com
+[Phaser-shield]: https://img.shields.io/badge/phaser.io-%23715c99.svg?style=for-the-badge&logo=javascript&logoColor=white
+[Phaser-url]: http://phaser.io
+[Tailwind-shield]: https://img.shields.io/badge/Tailwindcss-%23ffffff.svg?style=for-the-badge&logo=Tailwindcss&logoColor=blue
+[Tailwind-url]: https://tailwindcss.com
+[Expressjs-shield]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=javascript&logoColor=white  
+[Expressjs-url]: https://expressjs.com/es/
+[Vuejs-shield]: https://img.shields.io/badge/Vue.js-%23428c49.svg?style=for-the-badge&logo=Vue.js&logoColor=white
+[Vuejs-url]: https://vuejs.org
+[Socket-shield]: https://img.shields.io/badge/Socket.io-%23ffffff.svg?style=for-the-badge&logo=Socket.io&logoColor=black
+[Socket-url]: https://vuejs.org
+[forks-shield]: https://img.shields.io/github/forks/m04a/apelcinc.svg?style=for-the-badge
 [forks-url]: https://github.com/Projecte5/TicketHelp/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
-[stars-url]: https://github.com/github_username/repo_name/stargazers
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
-[issues-url]: https://github.com/github_username/repo_name/issues
-[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
-[license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
+[stars-shield]: https://img.shields.io/github/stars/m04a/apelcinc.svg?style=for-the-badge
+[stars-url]: https://github.com/m04a/apelcinc/stargazers
+[issues-shield]: https://img.shields.io/github/issues/m04a/apelcinc.svg?style=for-the-badge
+[issues-url]: https://github.com/m04a/apelcinc/issues
+[license-shield]: https://img.shields.io/github/license/m04a/apelcinc.svg?style=for-the-badge
+[license-url]: https://github.com/m04a/apelcinc/blob/master/LICENSE.txt
 [product-screenshot]: images/screenshot.png
 
 
