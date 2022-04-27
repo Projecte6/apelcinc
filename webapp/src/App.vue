@@ -1,7 +1,13 @@
 <template>
   <Login
     v-if="currentPage == 'login'"
-    v-model:currentPage="currentPage"
+    v-mode
+    l:currentPage="currentPage"
+  />
+  <BackGPos
+      v-if="currentPage == 'rules'"
+      v-mode
+    l:currentPage="currentPage"
   />
 </template>
 
@@ -11,6 +17,7 @@
 
   // Components
   import Login from './components/Login.vue';
+  import BackGPos from './components/BackGPos.vue';
 
   const currentPage = ref('login');
   // const messages = ref(null);
