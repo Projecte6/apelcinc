@@ -29,13 +29,7 @@
     </div>
   </div>  
 </template>
-<script>
-export default{
-    components: {
-      ModalRules,
-    },
-  };
-</script>
+
 <script setup>
 import { ref } from 'vue';
 
@@ -44,7 +38,6 @@ import ModalRules from '../components/ModalRules.vue';
 
 const props = defineProps({
   socket: Object,
-  pepe: String,
 });
 
 const emit = defineEmits(['update:currentPage']);
@@ -55,8 +48,8 @@ const isOpen = ref(false);
 
 const onClickLogin = () => {
   props.socket.emit('game:login', name.value);
-  emit('update:currentPage', 'chat');
   name.value = '';
+  emit('update:currentPage', 'home');
 }
 const onClickCreate = () => {
   emit('update:currentPage', 'regles');

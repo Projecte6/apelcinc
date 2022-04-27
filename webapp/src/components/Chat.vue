@@ -38,5 +38,6 @@ props.socket.on('chat:message', ({name, message}) => {
 
 const sendMessage = () => {
   // socket.on('')
+  props.socket.emit('chat:message', message)
 };
 </script>
