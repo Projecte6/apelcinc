@@ -15,7 +15,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/github_username/repo_name">
+  <a href="https://github.com/Projecte6/apelcinc">
     <img src="https://i.postimg.cc/KzTKGZzz/Cinquillo-Finished.png" alt="Logo" width="300" height="100">
   </a>
 
@@ -68,24 +68,21 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project ℹ️
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+We program a multiplayer card game, are you a fan of card games? Whether you spend hours playing with your family or not, the Spanish 48-card deck.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-
 ### Built With 🛠️
 
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
+* [Socket.io](https://socket.io)
+* [Vue.Js](https://vuejs.org)
 * [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
+* [Expressjs](https://expressjs.com/es/)
+* [Tailwind](https://tailwindcss.com)
+* [Phaser.io](http://phaser.io)
+* [JS](https://www.javascript.com)
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -110,7 +107,7 @@ This is an example of how to list things you need to use the software and how to
 1. Clone the repo
 
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/Projecte6/apelcinc.git
    ```
    
 ### Instalation of the server 
@@ -183,10 +180,9 @@ See the [open issues](https://github.com/Projecte6/apelcinc/issues) for a full l
 <!-- CONTRIBUTING -->
 ## Contributing 💡
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+If you have a suggestion that would improve this, please fork the repository and create a pull request. You can also simply open an issue with the "improvement" tag. 
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+Don't forget to give the project a star :star:! Thanks!
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
@@ -212,11 +208,11 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+## Acknowledgments 🤝
 
-* []()
-* []()
-* []()
+* [HeroIcons](https://heroicons.com)
+* [Phaser.io](http://phaser.io)
+* [Figma](https://www.figma.com)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
