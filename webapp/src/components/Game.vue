@@ -1,3 +1,6 @@
+<template>
+    
+</template>
 
 <script>
 import Phaser from 'phaser';

@@ -17,7 +17,7 @@
 
   // Components
   import Login from './components/Login.vue';
-  import BackGPos from './components/BackGPos.vue';
+  import BackGPos from './components/Game.vue';
 
   const currentPage = ref('login');
   // const messages = ref(null);
