@@ -1,19 +1,6 @@
 <template>
   <div class="h-screen bg-[#06304E]">
-    <nav class="bg-[#3f474d] flex justify-between items-center px-6 py-4">
-      <div class="flex justify-between">
-        <img src="/public/img/logo.png" class="w-80" />
-      </div>
-      <div class="flex items-center mr-20 space-x-2">
-        <button @click="" class="rounded-md bg-[#585858] text-white font-bold text-xl p-1 w-24">Sortir</button>
-        <button @click="isOpen = true" class="rounded-md bg-[#585858] text-white font-bold text-xl p-1 w-24">Regles</button>
-        <teleport to="body">
-          <div class="flex justify-center items-center absolute top-0 left-0 w-full h-full" v-if="isOpen">
-            <modal-rules @close="isOpen = false" />
-          </div>
-        </teleport>
-      </div>
-    </nav>
+    <Menu></Menu>
     <div class="mt-20 flex flex-col items-center h-[60%]">
       <div class="overflow-y-auto bg-[#C4C4C4] rounded-lg w-[80%]">
         <div class="py-2 inline-block min-w-full px-6">
@@ -89,9 +76,6 @@
 
 <script>
 export default {
-  components: {
-    ModalRules,
-  },
   data() {
     return {
       columnes: ["Id", "Sala", "Jugadors", "Tipus"],
@@ -104,9 +88,7 @@ export default {
   },
 };
 </script>
-<script setup>
-import { ref } from "vue";
-import ModalRules from "../components/ModalRules.vue";
 
-const isOpen = ref(false);
+<script setup>
+import Menu from "../components/Menu.vue";
 </script>
