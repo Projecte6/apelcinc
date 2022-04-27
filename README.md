@@ -27,11 +27,7 @@
     <a href="https://github.com/Projecte6/apelcinc/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
-    ·
-    <a href="https://github.com/Projecte6/apelcinc/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/Projecte6/apelcinc/issues">Request Feature</a>
+    <a href="https://github.com/github_username/repo_name">:eye: View Demo :eye:</a>
   </p>
 </div>
 
