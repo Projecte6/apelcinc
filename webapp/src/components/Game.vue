@@ -8,7 +8,7 @@ import Phaser from 'phaser';
 var debug = false;
 
 /* Var config, contains the canvas size, initialize Phaser and charge the method's contained in scene (screen) */
-var globalx = 750;
+var globalx = 675;
 var globaly = 350;
 
 var config = {
@@ -39,9 +39,11 @@ var game = new Phaser.Game(config);
             }
         }
 
+    
+
         /** Here we set the player's card space  */
-        for(let i=1;i<=4;i++){
-            this.load.image('player'+i,'/img/rock.jpg');
+        for(let i=1;i<=3;i++){
+            this.load.image('backcard'+i,'/img/backcard.png');
         }
     }
 
@@ -60,17 +62,35 @@ var game = new Phaser.Game(config);
             }
         }
 
+        for (let i=0;i<2;i++){
+            xposition = xposition + 45;
+            for(let j=1;j<=12;j++){
+                this.add.image((globalx/1.26)+(j*25),globaly+250,j+"-"+pals[i]).setScale(0.35,0.325);
+            }
+        }
+
         /** Player's position. */
-        const PositionPlayer1 = this.add.image(globalx-550,globaly,'player1').setScale(0.6,0.6);  /*Player left*/
+        const PositionPlayer1 = this.add.text(globalx-600,globaly,'Player left',{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });  /*Player left*/
         
-        this.add.image(globalx+600,globaly,'player2').setScale(0.6,0.6); /*Player right*/
-        
-        this.add.image(globalx,globaly+300,'player3').setScale(0.6,0.6);  /*Player down*/
+        const PositionPlayer2 = this.add.text(globalx+575 ,globaly,'Player right',{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' }); /*Player right*/
+    
+        const PositionPlayer3 = this.add.text(globalx-20,globaly+320,'Player down',{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });  /*Player down*/
          
-        this.add.image(globalx,globaly-300,'player4').setScale(0.6,0.6);   /*Player up*/
+        const PositionPlayer4 = this.add.text(globalx-5,globaly-350,'Player Up',{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });   /*Player up*/
         
+        /** Back cards */
+        
+        const PositionBackcardLeft = this.add.image(globalx-450,globaly,'backcard1',{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' }).setScale(0.2,0.2).setAngle(-90);  /*Player left*/
+        
+        const PositionBackcardRight = this.add.image(globalx+500 ,globaly,'backcard2',{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' }).setScale(0.2,0.2).setAngle(-90); /*Player right*/
+             
+        const PositionBackcardUp = this.add.image(globalx+30,globaly-275,'backcard3',{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' }).setScale(0.2,0.2);   /*Player up*/
+
         if(debug){
-            console.log("[Debug] The position of " + PositionPlayer1.texture.key + " | x=" + PositionPlayer1.x+ " | y="+ PositionPlayer1.y);}
+            console.log("[Debug] The position of " + PositionPlayer1.texture.key + " | x=" + PositionPlayer1.x+ " | y="+ PositionPlayer1.y);
+            console.log("[Debug] The position of " + PositionPlayer2.texture.key + " | x=" + PositionPlayer2.x+ " | y="+ PositionPlayer2.y);
+            console.log("[Debug] The position of " + PositionPlayer3.texture.key + " | x=" + PositionPlayer3.x+ " | y="+ PositionPlayer3.y);
+            console.log("[Debug] The position of " + PositionPlayer4.texture.key + " | x=" + PositionPlayer4.x+ " | y="+ PositionPlayer4.y);}
     }
 
     function update(){
