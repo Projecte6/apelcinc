@@ -83,7 +83,7 @@ const props = defineProps({
 const emit = defineEmits(['update:currentPage']);
 
 const onClickCreate = () => {
-  emit('update:currentPage', 'login');
+  emit('update:currentPage', 'create');
 };
 
 const onClickJoin = () => {

@@ -1,8 +1,7 @@
 <template>
-  <div class="h-screen bg-[#06304E]">
-    <Menu></Menu>
-    <div class="mt-20 flex flex-col items-center h-[60%]">
-      <div class="overflow-y-auto bg-[#C4C4C4] rounded-lg w-[80%]">
+  <div class="h-screen bg-[#06304E] ">
+    <div class="flex flex-col items-center h-7/12">
+      <div class="mt-20 overflow-y-auto bg-[#C4C4C4] rounded-lg w-[80%]">
         <div class="py-2 inline-block min-w-full px-6">
           <div class="overflow-hidden">
           <h1 class="text-center font-extrabold text-4xl mb-2">SALES</h1>

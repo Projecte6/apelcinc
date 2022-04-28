@@ -1,10 +1,7 @@
-<template>
-    
-</template>
 
-<script>
+
+<script setup>
 import Phaser from 'phaser';
-
 var debug = false;
 
 /* Var config, contains the canvas size, initialize Phaser and charge the method's contained in scene (screen) */
