@@ -91,18 +91,14 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
 
 ### Installation
 
 1. Clone the repo
 
-   ```sh
-   git clone https://github.com/Projecte6/apelcinc.git
-   ```
+ ```
+ git clone https://github.com/Projecte6/apelcinc.git
+ ```
    
 ### Instalation of the server 
 
@@ -156,14 +152,9 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 
 
-<!-- ROADMAP -->.
+<!-- ROADMAP -->
 
 ## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
 
 See the [open issues](https://github.com/Projecte6/apelcinc/issues) for a full list of proposed features (and known issues).
 
