@@ -4,6 +4,7 @@
     v-model:currentPage="currentPage"
     :socket="socket"
   />
+
   
   <Login
     v-if="currentPage == 'login'"
@@ -28,6 +29,11 @@
       v-if="currentPage == 'create'"
       v-model:currentPage="currentPage"
   />
+
+  <Winning
+      v-if="currentPage == 'winning'"
+      v-model:currentPage="currentPage"
+  />
 </template>
 
 <script setup>
@@ -40,8 +46,10 @@ import Chat from './components/Chat.vue';
 import Home from './components/Home.vue';
 import Table from "./components/Table.vue";
 import Create from "./components/Create.vue";
+import Winning from "./components/Winning.vue";
 
-const currentPage = ref("create");
+//const currentPage = ref("home");
+const currentPage = ref("winning");
 // const messages = ref(null);
 // const secondPage = ref("table");
 
