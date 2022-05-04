@@ -1,3 +1,7 @@
+<template>
+    <Menu/>
+    <Chat/>
+</template>
 
 
 <script setup>

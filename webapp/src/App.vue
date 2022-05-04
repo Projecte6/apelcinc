@@ -1,5 +1,5 @@
 <template>
-  <Chat v-if="currentPage == 'table' || currentPage == 'create' || currentPage == 'winning'" :socket="socket" />
+  <Chat v-if="currentPage == 'table' || currentPage == 'create' || currentPage == 'game' ||currentPage == 'winning'" :socket="socket" />
   <Home
     v-if="currentPage == 'home'"
     v-model:currentPage="currentPage"
@@ -7,7 +7,7 @@
   />
 
   <Menu
-    v-if="currentPage == 'table'  || currentPage == 'create'"
+    v-if="currentPage == 'table'  || currentPage == 'create' ||currentPage=='game'"
     v-model:currentPage="currentPage"
     :socket="socket"
   />
@@ -19,6 +19,12 @@
 
   />
   
+    <Game
+    v-if="currentPage == 'game'"
+    v-model:currentPage="currentPage"
+    :socket="socket"
+
+  />
 
   <Table
     v-if="currentPage == 'table'"
