@@ -1,5 +1,6 @@
 <template>
   <Chat v-if="currentPage == 'table' || currentPage == 'create' || currentPage == 'game' ||currentPage == 'winning'" :socket="socket" />
+  
   <Home
     v-if="currentPage == 'home'"
     v-model:currentPage="currentPage"
@@ -7,7 +8,7 @@
   />
 
   <Menu
-    v-if="currentPage == 'table'  || currentPage == 'create' ||currentPage=='game'"
+    v-if="currentPage == 'create' || currentPage == 'join' || currentPage == 'game'"
     v-model:currentPage="currentPage"
     :socket="socket"
   />
@@ -19,25 +20,22 @@
 
   />
   
-    <Game
+  <Game
     v-if="currentPage == 'game'"
     v-model:currentPage="currentPage"
     :socket="socket"
-
   />
-
-  <Table
-    v-if="currentPage == 'table'"
-    v-model:currentPage="currentPage"
-    :socket="socket"
-  />
-  <!-- <button @click="asd">
-    Send
-  </button> -->
 
   <Create
       v-if="currentPage == 'create'"
       v-model:currentPage="currentPage"
+      :socket="socket"
+  />
+
+  <Join
+    v-if="currentPage == 'join'"
+    v-model:currentPage="currentPage"
+    :socket="socket"
   />
 
   <!-- <Winning
@@ -55,7 +53,7 @@ import { io } from "socket.io-client";
 import Login from './components/Login.vue';
 import Chat from './components/Chat.vue';
 import Home from './components/Home.vue';
-import Table from "./components/Table.vue";
+import Join from "./components/Join.vue";
 import Create from "./components/Create.vue";
 import Winning from "./components/Winning.vue";
 import Game from './components/Game.vue';
