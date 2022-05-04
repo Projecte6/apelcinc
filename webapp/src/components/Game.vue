@@ -1,5 +1,6 @@
 <template>
     <Menu/>
+    <Chat/>
 </template>
 
 

@@ -10,10 +10,17 @@
             <div class="bg-slate-600 p-8 w-1/2 rounded-md ">
               <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Nom de la partida">
             </div>
-            <div class="flex items-center"><button @click="" class="rounded-md bg-[#585858] text-white font-bold text-xl p-3 ml-4">Crear partida</button></div>
+            <div class="flex items-center"><button @click="onClickCreate" class="rounded-md bg-[#585858] text-white font-bold text-xl p-3 ml-4">Crear partida</button></div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script setup>
+        const emit = defineEmits(['update:currentPage']);
+        const onClickCreate = () => {
+          emit('update:currentPage', 'game');
+        };
+</script>
