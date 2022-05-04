@@ -1,5 +1,5 @@
 <template>
-    
+    <Menu/>
 </template>
 
 <script>
