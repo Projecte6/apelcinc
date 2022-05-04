@@ -1,32 +1,30 @@
 <template>
+  <Chat v-if="currentPage == 'table' || currentPage == 'create' || currentPage == 'winning'" :socket="socket" />
   <Home
     v-if="currentPage == 'home'"
+    v-model:currentPage="currentPage"
+    :socket="socket"
+  />
+
+  <Menu
+    v-if="currentPage == 'table'  || currentPage == 'create'"
     v-model:currentPage="currentPage"
     :socket="socket"
   />
   
   <Login
     v-if="currentPage == 'login'"
-    v-mode
-    l:currentPage="currentPage"
-  />
-  <BackGPos
-      v-if="currentPage == 'rules'"
-      v-mode
-    l:currentPage="currentPage"
     v-model:currentPage="currentPage"
     :socket="socket"
+
   />
+  
 
   <Table
     v-if="currentPage == 'table'"
     v-model:currentPage="currentPage"
     :socket="socket"
   />
-
-
-  <Chat v-if="currentPage == 'chat'" :socket="socket" />
-
   <!-- <button @click="asd">
     Send
   </button> -->
@@ -35,6 +33,11 @@
       v-if="currentPage == 'create'"
       v-model:currentPage="currentPage"
   />
+
+  <!-- <Winning
+      v-if="currentPage == 'winning'"
+      v-model:currentPage="currentPage"
+  /> -->
 </template>
 
 <script setup>
@@ -48,9 +51,12 @@ import Chat from './components/Chat.vue';
 import Home from './components/Home.vue';
 import Table from "./components/Table.vue";
 import Create from "./components/Create.vue";
-import BackGPos from './components/Game.vue';
+import Winning from "./components/Winning.vue";
+import Game from './components/Game.vue';
+import Menu from "./components/Menu.vue";
 
-const currentPage = ref("create");
+//const currentPage = ref("home");
+const currentPage = ref("login");
 // const messages = ref(null);
 // const secondPage = ref("table");
 

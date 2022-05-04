@@ -1,8 +1,7 @@
 <template>
   <div class="min-h-screen bg-[#06304E]">
-    <Menu></Menu>
-    <div class="flex justify-center mt-24 h-screen">
-      <div class="overflow-y-auto bg-[#C4C4C4] rounded-lg w-1/2 h-1/2">
+    <div class="flex justify-center h-screen">
+      <div class="mt-20 overflow-y-auto bg-[#C4C4C4] rounded-lg w-1/2 h-1/2">
         <div class="py-2 inline-block min-w-full px-6">
           <div class="overflow-hidden">
             <h1 class="text-slate-900 text-4xl tracking-tight font-extrabold sm:text-5xl dark:text-dark text-center mt-12">Nova partida</h1>
@@ -18,7 +17,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import Menu from "../components/Menu.vue";
-</script>
