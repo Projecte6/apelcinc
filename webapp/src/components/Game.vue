@@ -1,6 +1,5 @@
 <template>
     <Menu/>
-    <Chat/>
 </template>
 
 
@@ -51,7 +50,7 @@ var game = new Phaser.Game(config);
     //Create or show the images wich are contained in preload method.
     function create(){
         var pals=["o","e","b","c"];
-        var cartes=[];
+        var cards=[];
         var xposition = 0;      //Var to move the image x position on the screen.
 
         /** The same code of the previous for, including xposition, a scale (size of images) and a setOrigin (X,Y) 
@@ -59,14 +58,23 @@ var game = new Phaser.Game(config);
         for (let i=0;i<pals.length;i++){
             xposition = xposition + 100;
             for(let j=1;j<=12;j++){
-                this.add.image((globalx/1.5)+xposition,(globaly/2)+(j*25),j+"-"+pals[i]).setScale(0.35,0.325);
+                 this.add.image((globalx/1.5)+xposition,(globaly/2)+(j*25),j+"-"+pals[i]).setScale(0.35,0.325).setInteractive().setName([j+"-"+pals[i]]);
             }
         }
+        // console.table( cards);
 
+        this.input.on('pointerdown', function (_pointer, objectsClicked) {
+        objectsClicked[0].visible = false;
+    });
+
+        // function clicked() {
+        //     console.log("Hola");
+        // }
+        
         for (let i=0;i<2;i++){
             xposition = xposition + 45;
             for(let j=1;j<=12;j++){
-                this.add.image((globalx/1.26)+(j*25),globaly+250,j+"-"+pals[i]).setScale(0.35,0.325);
+                 cards[j+"-"+pals[i]]=this.add.image((globalx/1.26)+(j*25),globaly+250,j+"-"+pals[i]).setScale(0.35,0.325);
             }
         }
 
