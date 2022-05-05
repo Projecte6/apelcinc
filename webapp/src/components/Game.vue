@@ -39,8 +39,6 @@ var game = new Phaser.Game(config);
             }
         }
 
-    
-
         /** Here we set the player's card space  */
         for(let i=1;i<=3;i++){
             this.load.image('backcard'+i,'/img/backcard.png');
@@ -52,13 +50,15 @@ var game = new Phaser.Game(config);
         var pals=["o","e","b","c"];
         var cards=[];
         var xposition = 0;      //Var to move the image x position on the screen.
+        var HiddenCards;
 
         /** The same code of the previous for, including xposition, a scale (size of images) and a setOrigin (X,Y) 
             to center the images.  */
         for (let i=0;i<pals.length;i++){
             xposition = xposition + 100;
             for(let j=1;j<=12;j++){
-                 this.add.image((globalx/1.5)+xposition,(globaly/2)+(j*25),j+"-"+pals[i]).setScale(0.35,0.325).setInteractive().setName([j+"-"+pals[i]]);
+                 HiddenCards=this.add.image((globalx/1.5)+xposition,(globaly/2)+(j*25),j+"-"+pals[i]).setScale(0.35,0.325).setInteractive().setName([j+"-"+pals[i]]);
+                 HiddenCards.visible = false;
             }
         }
         // console.table( cards);
