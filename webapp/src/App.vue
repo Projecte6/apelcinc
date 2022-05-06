@@ -30,12 +30,7 @@
     :socket="socket"
 
   />
-  
-  <Game
-    v-if="currentPage == 'game'"
-    v-model:currentPage="currentPage"
-    :socket="socket"
-  />
+
 
   <Create
       v-if="currentPage == 'create'"
