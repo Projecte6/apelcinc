@@ -49,24 +49,29 @@ var game = new Phaser.Game(config);
     function create(){
         var pals=["o","e","b","c"];
         var cards=[];
+        var cardsActualPlayer = [];
         var xposition = 0;      //Var to move the image x position on the screen.
-        var HiddenCards;
-
         /** The same code of the previous for, including xposition, a scale (size of images) and a setOrigin (X,Y) 
             to center the images.  */
         for (let i=0;i<pals.length;i++){
             xposition = xposition + 100;
             for(let j=1;j<=12;j++){
-                 HiddenCards=this.add.image((globalx/1.5)+xposition,(globaly/2)+(j*25),j+"-"+pals[i]).setScale(0.35,0.325).setInteractive().setName([j+"-"+pals[i]]);
-                 HiddenCards.visible = false;
+             cards[j+"-"+pals[i]]=this.add.image((globalx/1.5)+xposition,(globaly/2)+(j*25),j+"-"+pals[i]).setScale(0.35,0.325).setInteractive().setName([j+"-"+pals[i]]);
+             cards[j+"-"+pals[i]].visible=false;
             }
         }
-        // console.table( cards);
+        console.table(cards);
 
-        this.input.on('pointerdown', function (_pointer, objectsClicked) {
-        objectsClicked[0].visible = false;
-    });
 
+    //   this.input.on('pointerdown', function (_pointer, objectsClicked) {
+    //     objectsClicked[0].visible = false;
+    // });
+
+
+        
+    //     var Comprobar=this.input.on('pointerdown', function (_pointer, objectsClicked) {
+    //     objectsClicked[0].visible = true;
+    // });
         // function clicked() {
         //     console.log("Hola");
         // }
@@ -74,10 +79,10 @@ var game = new Phaser.Game(config);
         for (let i=0;i<2;i++){
             xposition = xposition + 45;
             for(let j=1;j<=12;j++){
-                 cards[j+"-"+pals[i]]=this.add.image((globalx/1.26)+(j*25),globaly+250,j+"-"+pals[i]).setScale(0.35,0.325);
+                 cardsActualPlayer[j+"-"+pals[i]]=this.add.image((globalx/1.26)+(j*25),globaly+250,j+"-"+pals[i]).setScale(0.35,0.325);
             }
-        }
-
+         }
+         console.log(cardsActualPlayer);
         /** Player's position. */
         const PositionPlayer1 = this.add.text(globalx-600,globaly,'Player left',{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });  /*Player left*/
         
@@ -103,7 +108,7 @@ var game = new Phaser.Game(config);
     }
 
     function update(){
-        console.log('Updating!');
+        console.log('Actualitzant!');
     }
 
 </script>
