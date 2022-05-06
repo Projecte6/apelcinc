@@ -1,7 +1,7 @@
 <template>
-  <div class="h-screen bg-[#06304E] ">
-    <div class="flex flex-col items-center h-7/12">
-      <div class="mt-20 overflow-y-auto bg-[#C4C4C4] rounded-lg w-[80%]">
+    <div class="flex flex-row items-center pb-8">
+    <div class="basis-11/12 flex justify-center">
+      <div class="overflow-y-auto h-[28rem] bg-[#C4C4C4] rounded-lg w-10/12 mt-8">
         <div class="py-2 inline-block min-w-full px-6">
           <div class="overflow-hidden">
           <h1 class="text-center font-extrabold text-4xl mb-2">SALES</h1>
@@ -32,13 +32,18 @@
             </table>
           </div>
         </div>
+        </div>
+      </div>
+      <div class="basis-1/12 flex">
+      <Chat :socket="props.socket"></Chat>
       </div>
     </div>
-  </div>
 </template>
 
 <script setup>
+import Chat from "../components/Chat.vue";
 import { ref } from 'vue';
+
 
 const props = defineProps({
   socket: Object,

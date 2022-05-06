@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 
-
+body{
+  background-color: #06304E;
+}
 
 .homebutton{
   @apply rounded bg-gradient-to-r from-[#0387c8] to-[#00ffef] w-full h-full py-2.5 px-6 font-medium inline-block relative mt-7 cursor-pointer
@@ -19,4 +21,11 @@
 
 .custom:after{
   box-shadow: -7px -7px 20px 0px #f8ecb21c, -4px -4px 5px 0px #fff39399, 7px 7px 20px 0px #fbf38508, 4px 4px 5px 0px #f4ea9112;
+}
+
+.v3-input-emoji-picker{
+  @apply w-full;
+}
+.v3-input-picker-root > input {
+  @apply w-full pl-6 pr-12 py-2 focus:outline-none text-white rounded-md bg-black bg-opacity-25 border-none;
 }
