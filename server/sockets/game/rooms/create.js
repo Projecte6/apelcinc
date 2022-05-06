@@ -1,9 +1,21 @@
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from 'nanoid';
 
-export default (socket, debug) => {
-  let id = `game-${uuidv4()}`;
+export default (socket, debug, rooms, name) => {
+  let id = nanoid(5);
 
-  socket.join(id);
+  let room = {
+    id: id,
+    name: name,
+    status: 'waiting',
+  };
+
+  rooms.push(room);
+
+  socket.join(`game-${id}`);
+  socket.emit('game:rooms:create', room);
+  socket.to('searching').emit('game:rooms:created', room);
+
 
   // if (debug) console.log(`[debug] [on] [game:login] (${name})`);
   // if (!name || name == '') {

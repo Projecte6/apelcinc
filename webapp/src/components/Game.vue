@@ -1,3 +1,9 @@
+
+<template>
+    <Menu/>
+</template>
+
+
 <script setup>
 import Phaser from 'phaser';
 var debug = false;
@@ -32,8 +38,6 @@ var game = new Phaser.Game(config);
                 console.log(this.load.image(j+"-"+pals[i], '/img/'+j+"-"+pals[i]+'.png'));
             }
         }
-
-    
 
         /** Here we set the player's card space  */
         for(let i=1;i<=3;i++){
@@ -88,31 +92,45 @@ var game = new Phaser.Game(config);
         
         
         var pals=["o","e","b","c"];
-        var cartes=[];
+        var cards=[];
+        var cardsActualPlayer = [];
         var xposition = 0;      //Var to move the image x position on the screen.
-
         /** The same code of the previous for, including xposition, a scale (size of images) and a setOrigin (X,Y) 
             to center the images.  */
         for (let i=0;i<pals.length;i++){
             xposition = xposition + 100;
             for(let j=1;j<=12;j++){
-                
-                let actual_image = this.add.image((globalx/1.5)+xposition,(globaly/2)+(j*25),j+"-"+pals[i]).setScale(0.35,0.325);
-                actual_image.visible =false;
-                            }
+             cards[j+"-"+pals[i]]=this.add.image((globalx/1.5)+xposition,(globaly/2)+(j*25),j+"-"+pals[i]).setScale(0.35,0.325).setInteractive().setName([j+"-"+pals[i]]);
+             cards[j+"-"+pals[i]].visible=false;
+            }
         }
+        console.log(cards);
 
+
+    //   this.input.on('pointerdown', function (_pointer, objectsClicked) {
+    //     objectsClicked[0].visible = false;
+    // });
+
+
+        
+    //     var Comprobar=this.input.on('pointerdown', function (_pointer, objectsClicked) {
+    //     objectsClicked[0].visible = true;
+    // });
+        // function clicked() {
+        //     console.log("Hola");
+        // }
+        
         for (let i=0;i<2;i++){
             xposition = xposition + 45;
             for(let j=1;j<=12;j++){
-               let my_images = this.add.image((globalx/1.26)+(j*25),globaly+250,j+"-"+pals[i]).setScale(0.35,0.325);
-               my_images.visible=false;
+  cardsActualPlayer[j+"-"+pals[i]]=this.add.image((globalx/1.26)+(j*25),globaly+250,j+"-"+pals[i]).setScale(0.35,0.325);
             }
-        }
+         }
         
         /** Player's waiting. */
         const WaitPlayers = this.add.text(globalx-100,globaly,'ESPERANT JUGADORS...',{ fontFamily: 'Inter, "sans-serif"' }) .setScale(1.4).setInteractive();  /*Player Wait*/
-        
+                       
+         console.log(cardsActualPlayer);
 
         /** Player's position. */
         const PositionPlayer1 = this.add.text(globalx-600,globaly,'Player left',{ fontFamily: 'Inter, "sans-serif"' });  /*Player left*/
@@ -145,7 +163,7 @@ var game = new Phaser.Game(config);
     
 
     function update(){
-        console.log('Updating!');
+        console.log('Actualitzant!');
     }
 </script>
 

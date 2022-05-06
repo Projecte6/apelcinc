@@ -9,22 +9,39 @@
           </div>
           <div class="flex justify-center mt-16 flex-col items-center">
             <div class="bg-slate-600 p-8 w-1/2 rounded-md ">
-              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Nom de la partida">
+              <input 
+                v-model="name"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="text"
+                placeholder="Nom de la partida"
+              />
             </div>
-            <div class="flex items-center"><button @click="onClickCreate" class="rounded-md bg-[#585858] text-white font-bold text-xl p-3 mt-4 mb-4 "><p class="text-white hover:text-yellow-100 ease-in-out duration-200" >Crear partida</p></button></div>
-          </div>
+            
+            <div class="flex items-center">
+              <button @click="onClickCreate" class="rounded-md bg-[#585858] text-white font-bold text-xl p-3 mt-4 mb-4 "><p class="text-white hover:text-yellow-100 ease-in-out duration-200" >Crear partida</p></button>
+            </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-
 <script setup>
+import { ref } from 'vue';
+
+const props = defineProps({
+  socket: Object,
+});
 
 const emit = defineEmits(['update:currentPage']);
-const onClickCreate = () => {
-  emit('update:currentPage', 'game');
-};
+        const onClickCreate = () => {
+          emit('update:currentPage', 'game');
+        };
 
+const name = ref('');
+
+props.socket.on('game:rooms:create', () => {
+  console.log('Room created');
+  emit('update:currentPage', 'game');
+});
 </script>

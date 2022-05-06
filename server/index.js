@@ -1,7 +1,6 @@
 import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
-// import lodash from 'lodash';
 
 const app = express();
 const server = http.Server(app);
@@ -13,6 +12,7 @@ const debug = false;
 
 // Sockets
 import socketGameLogin from './sockets/game/login.js';
+import socketWebPageJoin from './sockets/web/page/join.js';
 import socketGameRoomsCreate from './sockets/game/rooms/create.js';
 import socketGameRoomsGetAvailable from './sockets/game/rooms/getAvailable.js';
 import socketDisconnect from './sockets/disconnect.js';
@@ -35,7 +35,8 @@ io.on('connection', (socket) => {
 
   // Sockets
   socket.on('game:login', (name) => socketGameLogin(socket, debug, name));
-  socket.on('game:rooms:create', () => socketGameRoomsCreate(io, socket, debug));
+  socket.on('web:page:join', () => socketWebPageJoin(socket, debug));
+  socket.on('game:rooms:create', (name) => socketGameRoomsCreate(socket, debug, rooms, name));
   socket.on('game:rooms:get-available', () => socketGameRoomsGetAvailable(socket, rooms, debug));
   socket.on('chat:message', (message) => socketChatMessage(socket, debug, message));
   socket.on('disconnect', () => socketDisconnect(socket, debug));
@@ -43,7 +44,7 @@ io.on('connection', (socket) => {
 
 // Events
 io.of('/').adapter.on('create-room', (room) => eventRoomCreate(debug, rooms, room));
-io.of('/').adapter.on('delete-room', (room) => eventRoomDelete(debug, rooms, room));
+io.of('/').adapter.on('delete-room', (room) => eventRoomDelete(io, debug, rooms, room));
 io.of('/').adapter.on('join-room', (room, id) => eventRoomJoin(debug, room, id));
 io.of('/').adapter.on('leave-room', (room, id) => eventRoomLeave(debug, room, id));
 
