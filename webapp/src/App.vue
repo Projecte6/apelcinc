@@ -1,5 +1,4 @@
 <template>
-  <Chat v-if="currentPage == 'table' || currentPage == 'create' || currentPage == 'winning'" :socket="socket" />
   <Home
     v-if="currentPage == 'home'"
     v-model:currentPage="currentPage"
@@ -28,11 +27,12 @@
   <!-- <button @click="asd">
     Send
   </button> -->
-
   <Create
       v-if="currentPage == 'create'"
       v-model:currentPage="currentPage"
   />
+
+  <!-- <Chat v-if="currentPage == 'table' || currentPage == 'create' || currentPage == 'winning'" :socket="socket" /> -->
 
   <!-- <Winning
       v-if="currentPage == 'winning'"
