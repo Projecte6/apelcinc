@@ -71,13 +71,14 @@
       </div>
       </div>
       <div class="basis-1/12 flex">
-      <Chat></Chat>
+      <Chat :socket="props.socket"></Chat>
       </div>
     </div>
 </template>
 
 <script>
 import Chat from "../components/Chat.vue";
+
 export default {
   components: {Chat},
   data() {
@@ -94,5 +95,7 @@ export default {
 </script>
 
 <script setup>
-
+const props = defineProps({
+  socket: Object,
+});
 </script>

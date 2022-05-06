@@ -76,7 +76,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import EmojiPicker from "vue3-emoji-picker";
 import "../../node_modules/vue3-emoji-picker/dist/style.css"
 
@@ -94,6 +94,15 @@ const props = defineProps({
   socket: Object,
 });
 
+onMounted(() => {
+console.log(props);
+    props.socket.on('chat:message', ({name, message}) => {
+      messages.value.push({
+      author: name,
+      content: message,});
+    });
+})
+
 
 const messages = ref([{ author: 'sistema', content: 'Benvingut al chat!' }]);
 const message = ref('');
@@ -102,16 +111,4 @@ const sendMessage = () => {
   // socket.on('')
   props.socket.emit('chat:message', message)
 };
-</script>
-<script>
-
-export default {
-  mounted(){
-    props.socket.on('chat:message', ({name, message}) => {
-      messages.value.push({
-      author: name,
-      content: message,});
-    });
-  }
-}
 </script>
