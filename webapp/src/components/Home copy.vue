@@ -1,6 +1,5 @@
 <template>
  
- <div class="sepa">
  <div>
     <img src="https://i.postimg.cc/cJvBWRgT/Cinquillo-Finished.png" alt="cinquillo" class="w-96 img-cinquillo mt-12 ml-48" draggable="false">
  </div>
@@ -22,7 +21,6 @@
         <img src="https://i.postimg.cc/Vvvs6WMZ/Cards-Edited.png" alt="cartas" class="cards" draggable="false">
     </div>   
     
- </div>
  </div>
 </template>
 

@@ -18,11 +18,8 @@
             </div>
             
             <div class="flex items-center">
-              <button @click="onClickCreate" class="rounded-md bg-[#585858] text-white font-bold text-xl p-3 ml-4">
-                Crear partida
-              </button>
+              <button @click="onClickCreate" class="rounded-md bg-[#585858] text-white font-bold text-xl p-3 mt-4 mb-4 "><p class="text-white hover:text-yellow-100 ease-in-out duration-200" >Crear partida</p></button>
             </div>
-          </div>
         </div>
       </div>
     </div>
