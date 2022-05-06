@@ -67,7 +67,6 @@ import Home from './components/Home.vue';
 import Join from "./components/Join.vue";
 import Create from "./components/Create.vue";
 import Winning from "./components/Winning.vue";
-import Waiting from "./components/Waiting.vue";
 import Game from './components/Game.vue';
 import Menu from "./components/Menu.vue";
 
