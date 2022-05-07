@@ -6,7 +6,7 @@
 
 <script setup>
 import Phaser from 'phaser';
-var debug = false;
+var debug = true;
 
 /* Var config, contains the canvas size, initialize Phaser and charge the method's contained in scene (screen) */
 var globalx = 675;
@@ -26,11 +26,11 @@ var config = {
 };
 
 var game = new Phaser.Game(config);
+var pals=["o","e","b","c"];     /** We create an array to storage the letters contained on the image's name. */
+var cards=[];
 
     //Precharge the images or variables to be used later.
     function preload(){  
-        var pals=["o","e","b","c"];     /** We create an array to storage the letters contained on the image's name. */
-        var cartes=[];                  /** We create an array to load and charge the images */
 
         /** A Double for to walk first the "pals array (letters)" and after the numbers for precharge every image. */
         for (let i=0;i<pals.length;i++){
@@ -47,24 +47,26 @@ var game = new Phaser.Game(config);
     
 
 
-    //Create or show the images wich are contained in preload method.
-    function create(){  
-    
-      var fadeOut = this.add.text( 1000, 600, 'Començar', { 
-            fontFamily: 'Inter, "sans-serif"',
-			color: '#000000',
-			backgroundColor: '#F7EBB1',
-			fontStyle: 'normal',
-			borderradius: "5px",
-			strokeThickness: 1,
-			padding: { left: 10, right: 10, top: 10, bottom: 10 }
+    //Create or show the images which gonna be contained
+    function create(){
+
+      /*Here we create the button than gonna start the game*/
+      const fadeOut = this.add.text(1000, 600, 'Començar', {
+        fontFamily: 'Inter, "sans-serif"',
+        color: '#000000',
+        backgroundColor: '#F7EBB1',
+        fontStyle: 'normal',
+        borderradius: "5px",
+        strokeThickness: 1,
+        padding: {left: 10, right: 10, top: 10, bottom: 10}
       }).setInteractive().setFontSize(20);
-        
-        // this.input.on('pointerdown', function (_pointer, objectsClicked){
+
+      // this.input.on('pointerdown', function (_pointer, objectsClicked){
         //         objectsClicked[0].visible = false;
         //         console.log("hola")
         // });
-        
+
+      /*When the button is pressed, se gonna hide the text of waiting players*/
         fadeOut.on('pointerdown', function (_pointer){
         this.tweens.add({
           targets: WaitPlayers,
@@ -74,7 +76,7 @@ var game = new Phaser.Game(config);
         }, this);
         },this);
         
-        //FADE COMENÇAR
+        /*We also hide the button itself*/
          fadeOut.on('pointerdown', function (_pointer){
         this.tweens.add({
           targets: fadeOut,
@@ -89,14 +91,12 @@ var game = new Phaser.Game(config);
         // });
         
       
-        
-        
-        var pals=["o","e","b","c"];
-        var cards=[];
+        /*We define the name of the actual types of cars*/
         var cardsActualPlayer = [];
-        var xposition = 0;      //Var to move the image x position on the screen.
+        var xposition = 0;
+        //Var to move the image x position on the screen.
         /** The same code of the previous for, including xposition, a scale (size of images) and a setOrigin (X,Y) 
-            to center the images.  */
+            to center the images.  **/
         for (let i=0;i<pals.length;i++){
             xposition = xposition + 100;
             for(let j=1;j<=12;j++){
@@ -104,12 +104,15 @@ var game = new Phaser.Game(config);
              cards[j+"-"+pals[i]].visible=false;
             }
         }
-        console.log(cards);
-
-
-    //   this.input.on('pointerdown', function (_pointer, objectsClicked) {
-    //     objectsClicked[0].visible = false;
-    // });
+        if(debug) {
+          console.log("[Debug] Array of the actual objects of the current cards in the middle with their certain position: ")
+          console.log(cards);
+        }
+      /* There we obtain the current key of the actual card in the array objectsClicked.texture.key*/
+       this.input.on('pointerdown', function (_pointer, objectsClicked) {
+         cards[objectsClicked[0].texture.key].visible=true;
+         cardsActualPlayer[objectsClicked[0].texture.key].visible=false;
+       });
 
 
         
@@ -120,17 +123,18 @@ var game = new Phaser.Game(config);
         //     console.log("Hola");
         // }
         
-        for (let i=0;i<2;i++){
+        for (let i=0;i<1;i++){
             xposition = xposition + 45;
             for(let j=1;j<=12;j++){
-  cardsActualPlayer[j+"-"+pals[i]]=this.add.image((globalx/1.26)+(j*25),globaly+250,j+"-"+pals[i]).setScale(0.35,0.325);
+              cardsActualPlayer[j+"-"+pals[i]]=this.add.image((globalx/1.26)+(j*25),globaly+250,j+"-"+pals[i]).setScale(0.35,0.325).setInteractive();
             }
          }
-        
-        /** Player's waiting. */
+      if (debug) {
+        console.log("[Debug] Array of the current cards of the player playing: ");
+        console.log(cardsActualPlayer);
+      }
+      /** Player's waiting. */
         const WaitPlayers = this.add.text(globalx-100,globaly,'ESPERANT JUGADORS...',{ fontFamily: 'Inter, "sans-serif"' }) .setScale(1.4).setInteractive();  /*Player Wait*/
-                       
-         console.log(cardsActualPlayer);
 
         /** Player's position. */
         const PositionPlayer1 = this.add.text(globalx-600,globaly,'Player left',{ fontFamily: 'Inter, "sans-serif"' });  /*Player left*/
@@ -141,15 +145,18 @@ var game = new Phaser.Game(config);
          
         const PositionPlayer4 = this.add.text(globalx-5,globaly-350,'Player Up',{ fontFamily: 'Inter, "sans-serif"' });   /*Player up*/
         
-        /** Back cards */
+        /** Back cards One backcard means one enemy player**/
         
-        const PositionBackcardLeft = this.add.image(globalx-450,globaly,'backcard1',{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' }).setScale(0.2,0.2).setAngle(-90);  /*Player left*/
+        const PositionBackcardLeft = this.add.image(globalx-450,globaly,'backcard1').setScale(0.2,0.2).setAngle(-90);  /*Player left*/
+        if (debug){ console.log("[Debug] If the seat its occupied this should be true");}
         PositionBackcardLeft.visible=false;
         
-        const PositionBackcardRight = this.add.image(globalx+500 ,globaly,'backcard2',{ fontFamily: 'Inter, "sans-serif' }).setScale(0.2,0.2).setAngle(-90); /*Player right*/
+        const PositionBackcardRight = this.add.image(globalx+500 ,globaly,'backcard2').setScale(0.2,0.2).setAngle(-90); /*Player right*/
+
         PositionBackcardRight.visible=false;
 
-        const PositionBackcardUp = this.add.image(globalx+30,globaly-275,'backcard3',{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' }).setScale(0.2,0.2);   /*Player up*/
+        const PositionBackcardUp = this.add.image(globalx+30,globaly-275,'backcard3').setScale(0.2,0.2);   /*Player up*/
+
         PositionBackcardUp.visible=false;
 
         if(debug){
@@ -161,9 +168,9 @@ var game = new Phaser.Game(config);
     }
     
     
-
+    /*Events in realtime*/
     function update(){
-        console.log('Actualitzant!');
+       // console.log('Actualitzant!');
     }
 </script>
 
