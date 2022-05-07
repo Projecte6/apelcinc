@@ -6,7 +6,7 @@
 
 <script setup>
 import Phaser from 'phaser';
-var debug = false;
+var debug = true;
 
 /* Var config, contains the canvas size, initialize Phaser and charge the method's contained in scene (screen) */
 var globalx = 675;
@@ -129,9 +129,10 @@ var cards=[];
               cardsActualPlayer[j+"-"+pals[i]]=this.add.image((globalx/1.26)+(j*25),globaly+250,j+"-"+pals[i]).setScale(0.35,0.325).setInteractive();
             }
          }
-
-      console.log(cardsActualPlayer);
-
+      if (debug) {
+        console.log("[Debug] Array of the current cards of the player playing: ");
+        console.log(cardsActualPlayer);
+      }
       /** Player's waiting. */
         const WaitPlayers = this.add.text(globalx-100,globaly,'ESPERANT JUGADORS...',{ fontFamily: 'Inter, "sans-serif"' }) .setScale(1.4).setInteractive();  /*Player Wait*/
 
@@ -144,15 +145,18 @@ var cards=[];
          
         const PositionPlayer4 = this.add.text(globalx-5,globaly-350,'Player Up',{ fontFamily: 'Inter, "sans-serif"' });   /*Player up*/
         
-        /** Back cards */
+        /** Back cards One backcard means one enemy player**/
         
         const PositionBackcardLeft = this.add.image(globalx-450,globaly,'backcard1').setScale(0.2,0.2).setAngle(-90);  /*Player left*/
+        if (debug){ console.log("[Debug] If the seat its occupied this should be true");}
         PositionBackcardLeft.visible=false;
         
         const PositionBackcardRight = this.add.image(globalx+500 ,globaly,'backcard2').setScale(0.2,0.2).setAngle(-90); /*Player right*/
+
         PositionBackcardRight.visible=false;
 
         const PositionBackcardUp = this.add.image(globalx+30,globaly-275,'backcard3').setScale(0.2,0.2);   /*Player up*/
+
         PositionBackcardUp.visible=false;
 
         if(debug){
