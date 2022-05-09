@@ -51,7 +51,7 @@ var cards=[];
     function create(){
 
       /*Here we create the button than gonna start the game*/
-      const fadeOut = this.add.text(1000, 600, 'Començar', {
+      const fadeOut = this.add.text(880, 345, 'Començar', {
         fontFamily: 'Inter, "sans-serif"',
         color: '#000000',
         backgroundColor: '#F7EBB1',
