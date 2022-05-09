@@ -1,9 +1,9 @@
 <template>
-  <div class="w-screen h-screen flex items-center justify-center gap-32 select-none" style="background: url(/images/bkg.png)">
+  <div class="w-screen h-screen flex items-center justify-center gap-40 select-none bg-cover bg-center" style="background-image: url(/images/bkg1.png)">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-[#230834]">
       <!-- Create -->
       <button
-        class="flex p-4 flex-col items-center justify-center bg-cover bg-center bg-no-repeat border-4 border-[#230834] rounded-xl leading-none hover:opacity-75"
+        class="flex p-4 flex-col items-center justify-center bg-cover bg-center bg-no-repeat border-4 border-[#230834] rounded-xl leading-none hover:grayscale-[0.6]"
         style="background-image: url(/images/btn-bkg.png)"
         @click="onClickCreate"
       >
@@ -18,7 +18,7 @@
 
       <!-- Join -->
       <button
-        class="flex p-4 flex-col items-center justify-center bg-cover bg-center bg-no-repeat border-4 border-[#230834] rounded-xl leading-none hover:opacity-75"
+        class="flex p-4 flex-col items-center justify-center bg-cover bg-center bg-no-repeat border-4 border-[#230834] rounded-xl leading-none hover:grayscale-[0.6]"
         style="background-image: url(/images/btn-bkg.png)"
         @click="onClickJoin"
       >
@@ -33,7 +33,7 @@
 
       <!-- Rules -->
       <button
-        class="flex p-4 flex-col items-center justify-center bg-cover bg-center bg-no-repeat border-4 border-[#230834] rounded-xl leading-none hover:opacity-75"
+        class="flex p-4 flex-col items-center justify-center bg-cover bg-center bg-no-repeat border-4 border-[#230834] rounded-xl leading-none hover:grayscale-[0.6]"
         style="background-image: url(/images/btn-bkg.png)"
         @click="isOpen = true"  
       >
@@ -53,7 +53,7 @@
 
       <!-- Exit -->
       <button
-        class="flex p-4 flex-col items-center justify-center bg-cover bg-center bg-no-repeat border-4 border-[#230834] rounded-xl leading-none hover:opacity-75"
+        class="flex p-4 flex-col items-center justify-center bg-cover bg-center bg-no-repeat border-4 border-[#230834] rounded-xl leading-none hover:grayscale-[0.6]"
         style="background-image: url(/images/btn-bkg.png)"
         @click="onClickExit"  
       >
@@ -67,7 +67,7 @@
       </button>
     </div>
 
-    <img class="hidden lg:block h-2/3" src="/images/logo.png" draggable="false">
+    <img class="hidden lg:block h-2/4" src="/images/logo.png" draggable="false">
   </div>
 </template>
 

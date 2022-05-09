@@ -67,7 +67,7 @@ const currentPage = ref("login");
 // const messages = ref(null);
   // const messages = ref(null);
 
-const socket = io("localhost:3210");
+const socket = io('localhost:3210', {upgrade: false});
 
 // socket.on('messages', function (data) {
 //   messages.value = data;

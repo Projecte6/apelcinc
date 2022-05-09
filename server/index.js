@@ -15,6 +15,7 @@ import socketGameLogin from './sockets/game/login.js';
 import socketWebPageJoin from './sockets/web/page/join.js';
 import socketGameRoomsCreate from './sockets/game/rooms/create.js';
 import socketGameRoomsGetAvailable from './sockets/game/rooms/getAvailable.js';
+import socketGameRoomsJoin from './sockets/game/rooms/join.js';
 import socketDisconnect from './sockets/disconnect.js';
 import socketChatMessage from './sockets/chat/message.js';
 
@@ -25,6 +26,7 @@ import eventRoomJoin from './events/room/join.js';
 import eventRoomLeave from './events/room/leave.js';
 
 let rooms = [];
+let usernames = [];
 
 app.get('/', (request, response) => {
   response.send('Hello World!');
@@ -33,19 +35,30 @@ app.get('/', (request, response) => {
 io.on('connection', (socket) => {
   console.log(`[ws] [connection] ${socket.id} connected`);
 
+  ////
   // Sockets
-  socket.on('game:login', (name) => socketGameLogin(socket, debug, name));
+  ////
+
+  // Web
   socket.on('web:page:join', () => socketWebPageJoin(socket, debug));
+  
+  // Game
+  socket.on('game:login', (name) => socketGameLogin(socket, debug, usernames, name));
   socket.on('game:rooms:create', (name) => socketGameRoomsCreate(socket, debug, rooms, name));
-  socket.on('game:rooms:get-available', () => socketGameRoomsGetAvailable(socket, rooms, debug));
+  socket.on('game:rooms:get-available', () => socketGameRoomsGetAvailable(io, socket, rooms, debug));
+  socket.on('game:rooms:join', (id) => socketGameRoomsJoin(io, socket, debug, id));
+  
+  // Chat
   socket.on('chat:message', (message) => socketChatMessage(socket, debug, message));
-  socket.on('disconnect', () => socketDisconnect(socket, debug));
+  
+  // Native
+  socket.on('disconnect', () => socketDisconnect(socket, debug, usernames));
 });
 
 // Events
 io.of('/').adapter.on('create-room', (room) => eventRoomCreate(debug, rooms, room));
 io.of('/').adapter.on('delete-room', (room) => eventRoomDelete(io, debug, rooms, room));
-io.of('/').adapter.on('join-room', (room, id) => eventRoomJoin(debug, room, id));
+io.of('/').adapter.on('join-room', (room, id) => eventRoomJoin(io, debug, room, id));
 io.of('/').adapter.on('leave-room', (room, id) => eventRoomLeave(debug, room, id));
 
 server.listen(process.env.PORT, () => {
