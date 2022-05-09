@@ -1,34 +1,35 @@
 <template>
-  <div class="w-screen h-screen flex items-center justify-center gap-32 select-none" style="background: url(/images/bkg.png)">
-    <div class="w-96 grid grid-cols-1 md:grid-cols-1 gap-4 text-[#230834] content-center">
-     <div class=" flex-1 flex flex-col items-center content-around space-y-8 bg-cover bg-center py-4 bg-no-repeat border-8 border-[#230834] rounded-xl" style="background-image: url(/images/btn-bkg.png)">
-        <div class="w-4/5 bg-gray-800 rounded-md text-3xl font-bold text-white">
+  <div class="h-screen flex flex-col md:flex-row items-center justify-center select-none" style="background: url(/images/bkg.png)">
+    <div class="flex-col flex basis-11/12 px-12 space-y-4 items-center">
+      <div class="flex-col w-9/12 flex justify-center items-center space-y-8 pt-8 pb-8 border-8 border-[#230834] rounded-xl bg-cover bg-center bg-no-repeat" style="background-image: url(/images/btn-bkg.png)">
+        <div class="bg-gray-800 w-4/5 rounded-md text-3xl font-bold text-white">
           <div class="flex items-center">
             <div class="w-20"><img class="w-4/5 ml-5" src="/img/medalla2.png"></div>
             <div class="w-full text-center">Juanka</div>
           </div>
         </div>
-        <div class="w-4/5 bg-gray-800 rounded-md text-3xl font-bold text-white">
+        <div class="bg-gray-800 w-4/5 rounded-md text-3xl font-bold text-white">
           <div class="flex items-center">
             <div class="w-20"><img class="w-4/5 ml-4" src="/img/medalla1.png"></div>
             <div class="w-full text-center">Moha</div>
           </div>
         </div>
-        <div class="w-4/5 bg-gray-800 rounded-md text-3xl font-bold text-white">
+        <div class="bg-gray-800 w-4/5 rounded-md text-3xl font-bold text-white">
           <div class="flex items-center">
             <div class="w-20"><img class="w-4/5 ml-5" src="/img/medalla3.png"></div>
             <div class="w-full text-center">Jorge</div>
           </div>
         </div>
-        <div class="w-4/5 mb-8 bg-gray-800 rounded-md text-3xl font-bold text-white">
+        <div class="bg-gray-800 w-4/5 rounded-md text-3xl font-bold text-white">
           <div class="flex items-center">
             <div class="w-20"><img class="w-4/5 ml-4" src="/img/caca.png"></div>
             <div class="w-full text-center">David</div>
           </div>
         </div>
-     </div>
-     <div class="flex justify-between">
-        <button
+      </div>
+      <div class="flex w-9/12 justify-center">
+        <div class="flex space-x-6">
+          <button
         class="flex px-4 w-72 h-[3.75rem] items-center justify-center bg-cover bg-center bg-no-repeat border-8 border-[#230834] rounded-3xl leading-none hover:opacity-75"
         style="background-image: url(/images/btn-bkg.png)"
         @click="onClickStart"  
@@ -48,14 +49,15 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
         </svg>
       </button>
-     </div>
+        </div>
+      </div>
     </div>
-    <img class="hidden lg:block h-2/3" src="/images/logo.png" draggable="false">
+    <div class="basis-1/12 flex"> <Chat :socket="socket"></Chat></div>
   </div>
 </template>
 
 <script setup>
-
+import Chat from '../components/Chat.vue';
 const props = defineProps({
   socket: Object,
 });
