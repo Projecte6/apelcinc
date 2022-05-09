@@ -1,40 +1,32 @@
 <template>
-  <div class="w-screen h-screen flex flex-col items-center justify-center bg-stone-800">    
-    <div class="flex gap-4">
+  <div class="w-screen h-screen flex flex-col items-center justify-center gap-10 select-none bg-cover bg-center" style="background-image: url(/images/bkg1.png)">
+    <span
+      v-if="errorMessage"
+      class="fixed top-10 px-4 py-2 font-medium text-xl uppercase bg-red-400 rounded shadow"
+      v-text="errorMessage"
+    />
+
+    <img class="hidden lg:block h-1/5" src="/images/logo.png" draggable="false">
+
+    <div class="flex flex-col gap-4">
       <input
-        class="p-3 font-semibold text-2xl uppercase border-none rounded-l focus:ring-4 focus:ring-stone-600"
-        type="text"
-        placeholder="Nom"
         v-model="name"
+        class="p-3 font-semibold text-2xl text-center uppercase border-none rounded focus:ring-0"
+        type="text"
+        placeholder="Usuari"
+        @keydown.space.prevent
+        @keyup.enter="onClickLogin"
       />
 
-      <!-- @click="emit('update:currentPage', 'rules')" -->
-      <button
-        class="px-4 font-semibold text-2xl uppercase bg-stone-300 rounded-r focus:ring-4 focus:ring-stone-600"
-        @click="onClickLogin"
-      >
-        Jugar
+      <button class="px-4 py-1 font-medium text-2xl uppercase bg-stone-300 rounded hover:opacity-90" @click="onClickLogin">
+        Accedir
       </button>
-      <div class="flex gap-4">
-      <button @click="isOpen = true" class="px-4 font-semibold text-2xl uppercase bg-stone-300 rounded-r focus:ring-4 focus:ring-stone-600">Regles</button>
-        <button @click="onClickCreate" class="px-4 font-semibold text-2xl uppercase bg-stone-300 rounded-r focus:ring-4 focus:ring-stone-600">Crear</button>
-        <teleport to="body">
-      <div class="modal" v-if="isOpen">
-        <modal-rules 
-        @close = "isOpen = false"
-        />
-      </div>
-      </teleport>
-      </div>
     </div>
-  </div>  
+  </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-
-// Components
-import ModalRules from '../components/ModalRules.vue';
 
 const props = defineProps({
   socket: Object,
@@ -44,14 +36,27 @@ const emit = defineEmits(['update:currentPage']);
 
 // Data
 const name = ref('');
-const isOpen = ref(false);
+const errorMessage = ref(null);
 
 const onClickLogin = () => {
+  name.value = name.value.replaceAll(' ', '');
+
+  if (name.value === '') {
+    errorMessage.value = 'Has d\'introduir un nom d\'usuari';
+    setTimeout(() => errorMessage.value = null, 4000);
+    return;
+  }
+
   props.socket.emit('game:login', name.value);
   name.value = '';
+}
+
+props.socket.on('game:login:success', () => {
   emit('update:currentPage', 'home');
-}
-const onClickCreate = () => {
-  emit('update:currentPage', 'regles');
-}
+});
+
+props.socket.on('game:login:error', (message) => {
+  errorMessage.value = message;
+  setTimeout(() => errorMessage.value = null, 4000);
+});
 </script>

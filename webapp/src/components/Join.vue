@@ -20,11 +20,12 @@
                 </tr>
                 <tr
                   v-for="room in roomsList"
-                  class="border-b"
+                  class="border-b hover:bg-gray-700 hover:text-white"
+                  @click="onClickJoinRoom(room.id)"
                 >
                   <td class="text-sm font-bold px-6 py-4 whitespace-nowrap" v-text="`#${room.id}`" />
                   <td class="text-sm font-bold px-6 py-4 whitespace-nowrap" v-text="room.name" />
-                  <td class="text-sm font-bold px-6 py-4 whitespace-nowrap" v-text="'0/4'" />
+                  <td class="text-sm font-bold px-6 py-4 whitespace-nowrap" v-text="`${room.players}/4`" />
                   <td class="text-sm font-bold px-6 py-4 whitespace-nowrap" v-text="'Publica'" />
                 </tr>
               </tbody>
@@ -50,6 +51,10 @@ const props = defineProps({
 const columns = ['Id', 'Sala', 'Jugadors', 'Tipus'];
 const roomsList = ref([]);
 
+const onClickJoinRoom = (id) => {
+  props.socket.emit('game:rooms:join', id);
+};
+
 props.socket.emit('web:page:join');
 props.socket.emit('game:rooms:get-available');
 
@@ -59,6 +64,14 @@ props.socket.on('game:rooms:get-available', rooms => {
 
 props.socket.on('game:rooms:created', game => {
   roomsList.value.push(game);
+});
+
+props.socket.on('game:rooms:update-players-length', (id, players) => {
+  let index = roomsList.value.findIndex(r => r.id === id);
+
+  if (index === -1) return;
+
+  roomsList.value[index].players = players;
 });
 
 props.socket.on('game:rooms:deleted', id => {
