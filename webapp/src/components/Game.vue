@@ -113,7 +113,12 @@ var cards=[];
          cards[objectsClicked[0].texture.key].visible=true;
          cardsActualPlayer[objectsClicked[0].texture.key].visible=false;
        });
-
+      this.input.on('pointerover', function (_pointer, objectsClicked) {
+        cardsActualPlayer[objectsClicked[0].texture.key].setScale(0.40,0.40).setY(550);
+      });
+      this.input.on('pointerout', function (_pointer, objectsClicked) {
+        cardsActualPlayer[objectsClicked[0].texture.key].setScale(0.35,0.35).setY(600);
+      });
 
         
     //     var Comprobar=this.input.on('pointerdown', function (_pointer, objectsClicked) {
@@ -126,7 +131,7 @@ var cards=[];
         for (let i=0;i<1;i++){
             xposition = xposition + 45;
             for(let j=1;j<=12;j++){
-              cardsActualPlayer[j+"-"+pals[i]]=this.add.image((globalx/1.26)+(j*25),globaly+250,j+"-"+pals[i]).setScale(0.35,0.325).setInteractive();
+              cardsActualPlayer[j+"-"+pals[i]]=this.add.image((globalx/1.26)+(j*30),globaly+250,j+"-"+pals[i]).setScale(0.35,0.325).setInteractive();
             }
          }
       if (debug) {
