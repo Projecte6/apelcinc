@@ -55,7 +55,6 @@
           </button>
         </div>
 			</div>
-      <div v-if="isOpen" class="dark h-60 w-[23rem] absolute top-[25rem] opacity-95">grebrfvvw</div>
     </div>
   <!-- <div> 
     Chat
@@ -80,7 +79,6 @@ import { onMounted, ref } from 'vue';
 import EmojiPicker from "vue3-emoji-picker";
 import "../../node_modules/vue3-emoji-picker/dist/style.css"
 
-const isOpen = ref(false);
 const input = ref(" ");
 function onSelectEmoji(emoji) {
       console.log(emoji);
