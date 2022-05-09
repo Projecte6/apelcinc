@@ -4,20 +4,21 @@
     v-model:currentPage="currentPage"
     :socket="socket"
   />
-  <Game
-    v-if="currentPage == 'game'"
+  
+  <Menu
+    v-if="currentPage == 'create' || currentPage == 'join' || currentPage == 'game'"
     v-model:currentPage="currentPage"
     :socket="socket"
   />
-  
+
   <Waiting
     v-if="currentPage == 'waiting'"
     v-model:currentPage="currentPage"
     :socket="socket"
   />
-
-  <Menu
-    v-if="currentPage == 'create' || currentPage == 'join' || currentPage == 'game'"
+  
+  <Game
+    v-if="currentPage == 'game'"
     v-model:currentPage="currentPage"
     :socket="socket"
   />
@@ -42,10 +43,10 @@
   />
   <!-- <Chat v-if="currentPage == 'table' || currentPage == 'create' || currentPage == 'winning'" :socket="socket" /> -->
 
-  <!-- <Winning
+  <Winning
       v-if="currentPage == 'winning'"
       v-model:currentPage="currentPage"
-  /> -->
+  />
 </template>
 
 <script setup>
@@ -55,7 +56,6 @@ import { io } from "socket.io-client";
 
 // Components
 import Login from './components/Login.vue';
-import Chat from './components/Chat.vue';
 import Home from './components/Home.vue';
 import Join from "./components/Join.vue";
 import Create from "./components/Create.vue";
@@ -63,12 +63,8 @@ import Winning from "./components/Winning.vue";
 import Game from './components/Game.vue';
 import Menu from "./components/Menu.vue";
 
-//const currentPage = ref("home");
 const currentPage = ref("login");
 // const messages = ref(null);
-// const secondPage = ref("table");
-
-  //const currentPage = ref('login');
   // const messages = ref(null);
 
 const socket = io("localhost:3210");

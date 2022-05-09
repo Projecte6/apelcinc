@@ -1,11 +1,10 @@
 <template>
-    <div class="flex flex-row items-center pb-8">
-    <div class="basis-11/12 flex justify-center">
+    <div class="flex md:flex-row items-center pb-8 flex-col">
+    <div class="basis-11/12 flex justify-center w-full">
       <div class="overflow-y-auto h-[28rem] bg-[#C4C4C4] rounded-lg w-10/12 mt-8">
-        <div class="py-2 inline-block min-w-full px-6">
-          <div class="overflow-hidden">
+        <div class="py-2 inline-block px-6 w-full">
           <h1 class="text-center font-extrabold text-4xl mb-2">SALES</h1>
-            <table class="min-w-full">
+            <table class="w-full">
               <thead class="border-b">
                 <tr>
                   <th
@@ -30,7 +29,6 @@
                 </tr>
               </tbody>
             </table>
-          </div>
         </div>
         </div>
       </div>

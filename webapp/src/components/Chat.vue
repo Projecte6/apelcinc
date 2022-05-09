@@ -110,5 +110,6 @@ const message = ref('');
 const sendMessage = () => {
   // socket.on('')
   props.socket.emit('chat:message', message)
+  console.log(message.message);
 };
 </script>
