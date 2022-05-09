@@ -3,7 +3,7 @@
       <div class="flex justify-between">
         <img src="/public/img/logo.png" class="w-80" />
       </div>
-      <div class="flex items-center mr-20 space-x-2">
+      <div class="flex items-center ml-4 mr-16 space-x-2 md:mr-6">
         <button @click="onClickExit" class="rounded-md bg-[#585858] text-white font-bold text-xl p-1 w-24">Sortir</button>
         <button @click="isOpen = true" class="rounded-md bg-[#585858] text-white font-bold text-xl p-1 w-24">Regles</button>
         <teleport to="body">

@@ -1,7 +1,6 @@
 <template>
-  <div class="min-h-screen bg-[#06304E]">
-    <Menu></Menu>
-    <div class="flex justify-center mt-14">
+  <div class="flex  md:flex-row flex-col items-center pb-8">
+    <div class="basis-11/12 flex justify-center">
       <div class="overflow-y-auto bg-[#C4C4C4] rounded-lg w-2/3 h-1/2">
         <div class="py-2 inline-block min-w-full px-6">
           <div class="overflow-hidden">
@@ -16,18 +15,21 @@
                 placeholder="Nom de la partida"
               />
             </div>
-            
             <div class="flex items-center">
               <button @click="onClickCreate" class="rounded-md bg-[#585858] text-white font-bold text-xl p-3 mt-4 mb-4 "><p class="text-white hover:text-yellow-100 ease-in-out duration-200" >Crear partida</p></button>
             </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <div class="basis-1/12 flex">
+      <Chat :socket="props.socket"></Chat>
+    </div>
   </div>
 </template>
 
 <script setup>
+import Chat from "../components/Chat.vue";
 import { ref } from 'vue';
 
 const props = defineProps({
