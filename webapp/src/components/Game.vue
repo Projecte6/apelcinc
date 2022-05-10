@@ -1,6 +1,6 @@
 <template>
 <div class="absolute bottom-10 right-2">
-<div v-if="isOpen" class="relative top-3 opacity-50">
+<div v-if="isOpen" class="relative top-3">
 <Chat :socket="props.socket"></Chat>
 </div>
 <div class="absolute right-0 flex">
