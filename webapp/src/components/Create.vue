@@ -38,7 +38,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:currentPage']);
         const onClickCreate = () => {
-          emit('update:currentPage', 'game');
+          props.socket.emit('game:rooms:create', name.value);
         };
 
 const name = ref('');
