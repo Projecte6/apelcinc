@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen flex flex-col md:flex-row items-center justify-center select-none" style="background: url(/images/bkg.png)">
+  <div class="h-screen flex flex-col md:flex-row items-center justify-center select-none bg-cover" style="background: url(/images/bkg.png)">
     <div class="flex-col flex basis-11/12 px-12 space-y-4 items-center">
       <div class="flex-col w-9/12 flex justify-center items-center space-y-8 pt-8 pb-8 border-8 border-[#230834] rounded-xl bg-cover bg-center bg-no-repeat" style="background-image: url(/images/btn-bkg.png)">
         <div class="bg-gray-800 w-4/5 rounded-md text-3xl font-bold text-white">
@@ -32,7 +32,7 @@
           <button
         class="flex px-4 w-72 h-[3.75rem] items-center justify-center bg-cover bg-center bg-no-repeat border-8 border-[#230834] rounded-3xl leading-none hover:opacity-75"
         style="background-image: url(/images/btn-bkg.png)"
-        @click="onClickStart"  
+        @click="onClickJoin"  
       >
         <span class="text-3xl font-black uppercase">
           Jugar
@@ -52,7 +52,7 @@
         </div>
       </div>
     </div>
-    <div class="basis-1/12 flex"> <Chat :socket="socket"></Chat></div>
+    <div class="basis-1/12 flex"> <Chat :socket="props.socket"></Chat></div>
   </div>
 </template>
 
@@ -64,8 +64,8 @@ const props = defineProps({
 
 const emit = defineEmits(['update:currentPage']);
 
-const onClickStart = () => {
-  emit('update:currentPage', 'table');
+const onClickJoin = () => {
+  emit('update:currentPage', 'join');
 };
 
 const onClickExit = () => {
