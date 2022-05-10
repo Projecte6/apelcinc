@@ -15,6 +15,12 @@
     v-if="currentPage == 'waiting'"
     v-model:currentPage="currentPage"
     :socket="socket"
+    />
+    
+  <Credits
+    v-if="currentPage == 'credits'"
+    v-model:currentPage="currentPage"
+    :socket="socket"
   />
   
   <Game
@@ -61,6 +67,7 @@ import Join from "./components/Join.vue";
 import Create from "./components/Create.vue";
 import Winning from "./components/Winning.vue";
 import Game from './components/Game.vue';
+import Credits from './components/Credits.vue';
 import Menu from "./components/Menu.vue";
 
 const currentPage = ref("login");
