@@ -6,7 +6,18 @@
 
 <script setup>
 import Phaser from 'phaser';
+import { io } from "socket.io-client";
+
 var debug = true;
+
+const props = defineProps({
+  socket: Object,
+});
+
+props.socket.on('game:room:player-join', player => {
+
+  console.log(player);
+});
 
 /* Var config, contains the canvas size, initialize Phaser and charge the method's contained in scene (screen) */
 var globalx = 675;
@@ -35,7 +46,7 @@ var cards=[];
         /** A Double for to walk first the "pals array (letters)" and after the numbers for precharge every image. */
         for (let i=0;i<pals.length;i++){
             for (let j=1;j<=12;j++){
-                console.log(this.load.image(j+"-"+pals[i], '/img/'+j+"-"+pals[i]+'.png'));
+                this.load.image(j+"-"+pals[i], '/img/'+j+"-"+pals[i]+'.png');
             }
         }
 
@@ -67,6 +78,7 @@ var cards=[];
         // });
 
       /*When the button is pressed, se gonna hide the text of waiting players*/
+
         fadeOut.on('pointerdown', function (_pointer){
         this.tweens.add({
           targets: WaitPlayers,
@@ -100,7 +112,7 @@ var cards=[];
         for (let i=0;i<pals.length;i++){
             xposition = xposition + 100;
             for(let j=1;j<=12;j++){
-             cards[j+"-"+pals[i]]=this.add.image((globalx/1.5)+xposition,(globaly/2)+(j*25),j+"-"+pals[i]).setScale(0.35,0.325).setInteractive().setName([j+"-"+pals[i]]);
+             cards[j+"-"+pals[i]]=this.add.image((globalx/1.5)+xposition,(globaly/2)+(j*25),j+"-"+pals[i]).setScale(0.35,0.325).setInteractive().setName([j+"-"+pals[i]]).setData("depth",j);
              cards[j+"-"+pals[i]].visible=false;
             }
         }
@@ -108,16 +120,22 @@ var cards=[];
           console.log("[Debug] Array of the actual objects of the current cards in the middle with their certain position: ")
           console.log(cards);
         }
+
+
       /* There we obtain the current key of the actual card in the array objectsClicked.texture.key*/
        this.input.on('pointerdown', function (_pointer, objectsClicked) {
          cards[objectsClicked[0].texture.key].visible=true;
          cardsActualPlayer[objectsClicked[0].texture.key].visible=false;
        });
       this.input.on('pointerover', function (_pointer, objectsClicked) {
-        cardsActualPlayer[objectsClicked[0].texture.key].setScale(0.40,0.40).setY(550);
+        cardsActualPlayer[objectsClicked[0].texture.key].setScale(0.50,0.50).setY(550);
+       // objectsClicked[0].depth = 100;
+        console.log(objectsClicked[0]);
       });
       this.input.on('pointerout', function (_pointer, objectsClicked) {
-        cardsActualPlayer[objectsClicked[0].texture.key].setScale(0.35,0.35).setY(600);
+        //objectsClicked[0].depth = objectsClicked[0].getData("depth");
+        cardsActualPlayer[objectsClicked[0].texture.key].setScale(0.35,0.325).setY(600);
+        console.log(objectsClicked[0]);
       });
 
         
@@ -129,7 +147,7 @@ var cards=[];
         // }
         
         for (let i=0;i<1;i++){
-            xposition = xposition + 45;
+            xposition = xposition + 60;
             for(let j=1;j<=12;j++){
               cardsActualPlayer[j+"-"+pals[i]]=this.add.image((globalx/1.26)+(j*30),globaly+250,j+"-"+pals[i]).setScale(0.35,0.325).setInteractive();
             }

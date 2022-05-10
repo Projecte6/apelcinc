@@ -48,12 +48,18 @@ const props = defineProps({
   socket: Object,
 });
 
+const emit = defineEmits(['update:currentPage']);
+
 const columns = ['Id', 'Sala', 'Jugadors', 'Tipus'];
 const roomsList = ref([]);
 
 const onClickJoinRoom = (id) => {
   props.socket.emit('game:rooms:join', id);
 };
+props.socket.on('game:rooms:join:success', () => {
+  console.log('You joined into the room');
+  emit('update:currentPage', 'game');
+});
 
 props.socket.emit('web:page:join');
 props.socket.emit('game:rooms:get-available');
