@@ -87,10 +87,10 @@ const onClickCreate = () => {
 };
 
 const onClickJoin = () => {
-  emit('update:currentPage', 'join');
+  emit('update:currentPage', 'table');
 };
 
 const onClickExit = () => {
-  // code
+    emit('update:currentPage', 'credits');
 };
 </script>
