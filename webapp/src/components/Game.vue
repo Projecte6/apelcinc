@@ -75,19 +75,18 @@ onMounted(() => {
 
     /*When the button is pressed, se gonna hide the text of waiting players*/
 
+    /*We also hide the button itself*/
     fadeOut.on('pointerdown', function (_pointer) {
+      props.socket.emit('game:rooms:start-game');
+      /** TODO: Check if we can really create the room **/
       this.tweens.add({
-        targets: WaitPlayers,
+        targets: fadeOut,
         alpha: 0,
         duration: 3000,
         ease: 'Power2',
       }, this);
-    }, this);
-
-    /*We also hide the button itself*/
-    fadeOut.on('pointerdown', function (_pointer) {
       this.tweens.add({
-        targets: fadeOut,
+        targets: WaitPlayers,
         alpha: 0,
         duration: 3000,
         ease: 'Power2',
@@ -108,7 +107,7 @@ onMounted(() => {
     for (let i = 0; i < pals.length; i++) {
       xposition = xposition + 100;
       for (let j = 1; j <= 12; j++) {
-        cards[j + "-" + pals[i]] = this.add.image((globalx / 1.5) + xposition, (globaly / 2) + (j * 25), j + "-" + pals[i]).setScale(0.35, 0.325).setInteractive().setName([j + "-" + pals[i]]).setData("depth", j);
+        cards[j + "-" + pals[i]] = this.add.image((globalx / 1.5) + xposition, (globaly + 150) - (j * 28), j + "-" + pals[i]).setScale(0.35, 0.325).setInteractive().setName([j + "-" + pals[i]]).setData("depth", j);
         cards[j + "-" + pals[i]].visible = false;
       }
     }
@@ -120,6 +119,10 @@ onMounted(() => {
 
     /* There we obtain the current key of the actual card in the array objectsClicked.texture.key*/
     this.input.on('pointerdown', function (_pointer, objectsClicked) {
+      const cardMoved = objectsClicked[0].texture.key;
+      props.socket.emit('game:rooms:move-card',cardMoved);
+
+      /*** TODO: Need the event to check **/
       cards[objectsClicked[0].texture.key].visible = true;
       cardsActualPlayer[objectsClicked[0].texture.key].visible = false;
     });
@@ -166,6 +169,7 @@ onMounted(() => {
 
     /** Back cards One backcard means one enemy player**/
 
+
     const PositionBackcardLeft = this.add.image(globalx - 450, globaly, 'backcard1').setScale(0.2, 0.2).setAngle(-90);  /*Player left*/
     if (debug) {
       console.log("[Debug] If the seat its occupied this should be true");
@@ -180,6 +184,17 @@ onMounted(() => {
 
     PositionBackcardUp.visible = false;
 
+    /** Stats of the game **/
+
+    const nameRoom = "Sala #1";
+
+    const TextNameOfRoom = this.add.text(10, 10,"Nom sala: " + nameRoom , {fontFamily: 'Inter, "sans-serif"'});  /* Name of the room */
+
+    const CurrentPlayer = "Player 5";
+
+    const TurnPlayerName = this.add.text(10, 40,"El turn es del: " + CurrentPlayer, {fontFamily: 'Inter, "sans-serif"'});
+
+
     if (debug) {
       console.log("[Debug] The position of " + WaitPlayers.texture.key + " | x=" + PositionPlayer1.x + " | y=" + PositionPlayer1.y);
       console.log("[Debug] The position of " + PositionPlayer1.texture.key + " | x=" + PositionPlayer1.x + " | y=" + PositionPlayer1.y);
@@ -192,6 +207,7 @@ onMounted(() => {
 
   /*Events in realtime*/
   function update() {
+
     // console.log('Actualitzant!');
   }
 });
