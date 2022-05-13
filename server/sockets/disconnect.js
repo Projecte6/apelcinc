@@ -11,7 +11,7 @@ export default (socket, debug, usernames) => {
   let message = `${socket.name} se ha desconectado`;
 
   socket.to('global').emit('chat:message', {
-    name: 'Sistema',
+    name: 'sistema',
     message,
   });
 }
