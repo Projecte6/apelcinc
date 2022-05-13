@@ -9,9 +9,14 @@ const debug = true;
 const props = defineProps({
   socket: Object,
 });
-
+var currentPlayers = [];
 props.socket.on('game:room:player-join', player => {
   console.log(player);
+  currentPlayers.push(player);
+  currentPlayers.length;
+});
+props.socket.on('game:room:turn', turn => {
+  console.log(turn);
 });
 
 /* Var config, contains the canvas size, initialize Phaser and charge the method's contained in scene (screen) */
@@ -78,6 +83,7 @@ onMounted(() => {
     /*We also hide the button itself*/
     fadeOut.on('pointerdown', function (_pointer) {
       props.socket.emit('game:rooms:start-game');
+
       /** TODO: Check if we can really create the room **/
 
       this.tweens.add({
@@ -134,17 +140,28 @@ onMounted(() => {
 
     /** Player's waiting. */
     const WaitPlayers = this.add.text(globalx - 100, globaly, 'ESPERANT JUGADORS...',
-        {fontFamily: 'Inter, "sans-serif"'}).setScale(1.4).setInteractive();  /*Player Wait*/
+        {fontFamily: 'Inter, "sans-serif"'}).setScale(1.4); /*Player Wait*/
 
-    props.socket.on('game:rooms:start-game:success', () => {
+    var cardsRecieved = [];
+    var cardsActualPlayer = [];
+    let xposition = 0;
+      props.socket.on('game:rooms:get-cards', cardsActualPlayer => {
+        console.log(cardsRecieved);
+          for (let j = 0; j < cardsActualPlayer.length; j++) {
+            cardsRecieved[cardsActualPlayer[j]] = this.add.image((globalx / 1.26) + (j * 30), globaly + 250, cardsActualPlayer[j]).setScale(0.35, 0.325).setInteractive();;
+        }
+        if (debug) {
+          console.log("[Debug] Array of the current cards of the player playing: ");
+          console.log(cardsRecieved);
+        }
+      });
 
-      /** TODO: GET THE ARRAY FROM THE WEBSOCKET OF THE ACTUAL CARDS OF THE PLAYER ***/
+    /** TODO: GET THE ARRAY FROM THE WEBSOCKET OF THE ACTUAL CARDS OF THE PLAYER ***/
       /*We define the name of the actual types of cars*/
 
 
 
-      var cardsActualPlayer = [];
-      let xposition = 0;
+
       //Var to move the image x position on the screen.
       /** The same code of the previous for, including xposition, a scale (size of images) and a setOrigin (X,Y)
        to center the images.  **/
@@ -160,27 +177,26 @@ onMounted(() => {
         console.log(cards);
       }
 
-
-      /* There we obtain the current key of the actual card in the array objectsClicked.texture.key*/
+     // There we obtain the current key of the actual card in the array objectsClicked.texture.key
       this.input.on('pointerdown', function (_pointer, objectsClicked) {
         const cardMoved = objectsClicked[0].texture.key;
         props.socket.emit('game:rooms:move-card', cardMoved);
 
         /*** TODO: Need the event to check **/
         cards[objectsClicked[0].texture.key].visible = true;
-        cardsActualPlayer[objectsClicked[0].texture.key].visible = false;
+        cardsRecieved[objectsClicked[0].texture.key].visible = false;
       });
       this.input.on('pointerover', function (_pointer, objectsClicked) {
-        cardsActualPlayer[objectsClicked[0].texture.key].setScale(0.50, 0.50).setY(550);
+        cardsRecieved[objectsClicked[0].texture.key].setScale(0.50, 0.50).setY(550);
         // objectsClicked[0].depth = 100;
         console.log(objectsClicked[0]);
       });
       this.input.on('pointerout', function (_pointer, objectsClicked) {
         //objectsClicked[0].depth = objectsClicked[0].getData("depth");
-        cardsActualPlayer[objectsClicked[0].texture.key].setScale(0.35, 0.325).setY(600);
+        cardsRecieved[objectsClicked[0].texture.key].setScale(0.35, 0.325).setY(600);
         console.log(objectsClicked[0]);
       });
-
+      console.log(cardsRecieved);
 
       //     var Comprobar=this.input.on('pointerdown', function (_pointer, objectsClicked) {
       //     objectsClicked[0].visible = true;
@@ -189,22 +205,12 @@ onMounted(() => {
       //     console.log("Hola");
       // }
 
-      for (let i = 0; i < 1; i++) {
-        xposition = xposition + 60;
-        for (let j = 1; j <= 12; j++) {
-          cardsActualPlayer[j + "-" + pals[i]] = this.add.image((globalx / 1.26) + (j * 30), globaly + 250, j + "-" + pals[i]).setScale(0.35, 0.325).setInteractive();
-        }
-      }
-      if (debug) {
-        console.log("[Debug] Array of the current cards of the player playing: ");
-        console.log(cardsActualPlayer);
-      }
 
-    });
+
     }
 
     if (debug) {
-      console.log("[Debug] The position of " + WaitPlayers.texture.key + " | x=" + PositionPlayer1.x + " | y=" + PositionPlayer1.y);
+      //console.log("[Debug] The position of " + WaitPlayers.texture.key + " | x=" + PositionPlayer1.x + " | y=" + PositionPlayer1.y);
       console.log("[Debug] The position of " + PositionPlayer1.texture.key + " | x=" + PositionPlayer1.x + " | y=" + PositionPlayer1.y);
       console.log("[Debug] The position of " + PositionPlayer2.texture.key + " | x=" + PositionPlayer2.x + " | y=" + PositionPlayer2.y);
       console.log("[Debug] The position of " + PositionPlayer3.texture.key + " | x=" + PositionPlayer3.x + " | y=" + PositionPlayer3.y);

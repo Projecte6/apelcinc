@@ -87,7 +87,7 @@ const onClickCreate = () => {
 };
 
 const onClickJoin = () => {
-  emit('update:currentPage', 'table');
+  emit('update:currentPage', 'join');
 };
 
 const onClickExit = () => {
