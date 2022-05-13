@@ -5,8 +5,9 @@
           <div class="flex items-center">
             <span class="flex text-black pl-6 font-bold">{{msg.author}}</span>
           </div>
-					  <span v-if="msg.author=='Jo'" class="flex break-all h-auto bg-[#585858] text-white rounded-xl px-4 py-2 items-end">{{msg.content}}</span>
-            <span v-if="msg.content != '' && msg.author!='Jo'" class="flex break-all h-auto bg-[#373E4E] text-white rounded-xl px-4 py-2 items-end">{{msg.content}}</span>
+            <span v-if="msg.author=='Jo' && msg.content != '' && msg.author!='sistema'" class="flex break-all h-auto bg-[#585858] text-white rounded-xl px-4 py-2 items-end">{{msg.content}}</span>
+            <span v-if="msg.content != '' && msg.author!='Jo' && msg.author!='sistema'" class="flex break-all h-auto bg-[#373E4E] text-white rounded-xl px-4 py-2 items-end">{{msg.content}}</span>
+            <span v-if="msg.author=='sistema'" class="flex break-all h-auto bg-red-800 text-white rounded-xl px-4 py-2 items-end">{{msg.content}}</span>
         </div>
       </div>
       <div class="flex justify-between items-center p-1 border-t-2 space-x-2">
