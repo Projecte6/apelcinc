@@ -26,7 +26,7 @@ export default (socket, debug, usernames, name = '') => {
   socket.emit('game:login:success');
 
   socket.to('global').emit('chat:message', {
-    name: 'sistema',
+    name: 'Sistema',
     message,
   });
 
