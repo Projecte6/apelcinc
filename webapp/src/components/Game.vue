@@ -1,10 +1,27 @@
-
+<template>
+  <div id="game-container"></div>
+  <div class="absolute bottom-10 right-2">
+    <div v-if="isOpen" class="relative top-3">
+      <Chat :socket="props.socket"></Chat>
+    </div>
+    <div class="absolute right-0 flex">
+      <button @click="isOpen = !isOpen" class="flex items-center justify-center h-12 w-12 hover:bg-gray-500 hover:rounded-full hover:transition duration-500 ease-in-out">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="h-8 w-8 fill-white" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
+	        <path d="M44.348,12.793H2.652C1.189,12.793,0,13.982,0,15.445v43.762l9.414-9.414h34.934c1.463,0,2.652-1.19,2.652-2.653V15.445   C47,13.982,45.811,12.793,44.348,12.793z M10,35.777c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S12.206,35.777,10,35.777z    M23,35.777c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S25.206,35.777,23,35.777z M36,35.777c-2.206,0-4-1.794-4-4s1.794-4,4-4   s4,1.794,4,4S38.206,35.777,36,35.777z"/>
+	        <path d="M57.348,0.793H12.652C11.189,0.793,10,1.982,10,3.445v7.348h34.348c2.565,0,4.652,2.087,4.652,4.652v25.332h11V3.445   C60,1.982,58.811,0.793,57.348,0.793z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</template>
 <script setup>
-
 import Phaser from 'phaser';
-import { onMounted, ref } from 'vue';
+import Chat from '../components/Chat.vue';
+import { onMounted, ref} from 'vue';
 
-const debug = true;
+const isOpen = ref(false);
+
+const debug = false;
 
 const props = defineProps({
   socket: Object,
@@ -226,12 +243,6 @@ onMounted(() => {
   }
 });
 </script>
-
-<template>
-  <Menu/>
-  <div id="game-container"></div>
-</template>
-
 <style>
    @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 </style>

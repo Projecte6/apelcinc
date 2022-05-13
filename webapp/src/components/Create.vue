@@ -1,4 +1,10 @@
 <template>
+  <span
+      v-if="errorMessage"
+      class="fixed top-10 px-4 py-2 font-medium text-xl uppercase bg-red-400 rounded shadow"
+      v-text="errorMessage"
+    />  
+  
   <div class="flex  md:flex-row flex-col items-center pb-8">
     <div class="basis-11/12 flex justify-center">
       <div class="overflow-y-auto bg-[#C4C4C4] rounded-lg w-2/3 h-1/2">
@@ -36,15 +42,42 @@ const props = defineProps({
   socket: Object,
 });
 
+
 const emit = defineEmits(['update:currentPage']);
-        const onClickCreate = () => {
-          props.socket.emit('game:rooms:create', name.value);
-        };
 
 const name = ref('');
+const errorMessage = ref(null);
 
+const onClickCreate = () => {
+  props.socket.emit('game:rooms:create', name.value);
+
+  if (name.value === '') {
+    errorMessage.value = 'Has d\'introduir un nom de sala';
+    setTimeout(() => errorMessage.value = null, 4000);
+    return;
+  }
+
+  if(name.value.length < 2) {
+    errorMessage.value = 'El nom ha de tenir una llargada mínima de 2 caràcters';
+    setTimeout(() => errorMessage.value = null, 4000);
+    return;
+  }
+  
+  props.socket.emit('game:create', name.value);
+  name.value = '';
+ };
+
+
+
+// const onClickCreate = () => {
+//   name.value = name.value.replaceAll(' ', '');
 props.socket.on('game:rooms:create', () => {
   console.log('Room created');
   emit('update:currentPage', 'game');
+});
+
+props.socket.on('game:create:error', (message) => {
+  errorMessage.value = message;
+  setTimeout(() => errorMessage.value = null, 4000);
 });
 </script>
