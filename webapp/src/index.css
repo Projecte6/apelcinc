@@ -24,8 +24,9 @@ body{
 }
 
 .v3-input-emoji-picker{
-  @apply w-full;
+  @apply w-2/12;
 }
-.v3-input-picker-root > input {
-  @apply w-full pl-6 pr-12 py-2 focus:outline-none text-white rounded-md bg-black bg-opacity-25 border-none;
+
+.v3-input-emoji-picker .v3-input-picker-root .v3-emoji-picker-input, .v3-input-emoji-picker .v3-input-picker-root .v3-emoji-picker-textarea {
+@apply border-none  bg-[#C4C4C4] w-[0%];
 }

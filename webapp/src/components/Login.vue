@@ -47,6 +47,12 @@ const onClickLogin = () => {
     return;
   }
 
+  if(name.value.length < 4) {
+    errorMessage.value = 'El nom ha de tenir una llargada mínima de 4 caràcters';
+    setTimeout(() => errorMessage.value = null, 4000);
+    return;
+  }
+
   props.socket.emit('game:login', name.value);
   name.value = '';
 }
