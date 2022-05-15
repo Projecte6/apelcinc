@@ -1,15 +1,15 @@
-
 <script setup>
 
 import Phaser from 'phaser';
-import { onMounted, ref } from 'vue';
+import {onMounted} from 'vue';
 
-const debug = true;
+const debug = import.meta.env.VITE_DEBUG;
 
 const props = defineProps({
   socket: Object,
 });
-var currentPlayers = [];
+
+const currentPlayers = [];
 props.socket.on('game:room:player-join', player => {
   console.log(player);
   currentPlayers.push(player);
@@ -24,7 +24,7 @@ const globalx = 675;
 const globaly = 350;
 
 onMounted(() => {
-  var config = {
+  const config = {
     width: globalx + 750,
     height: globaly + 350,
     backgroundColor: '#06304E',
@@ -37,10 +37,10 @@ onMounted(() => {
     }
   };
 
-  var game = new Phaser.Game(config);
-  var pals = ["o", "e", "b", "c"];
+  const game = new Phaser.Game(config);
+  const pals = ["o", "e", "b", "c"];
   /** We create an array to storage the letters contained on the image's name. */
-  var cards = [];
+  const cards = [];
 
   //Precharge the images or variables to be used later.
   function preload() {
@@ -73,10 +73,6 @@ onMounted(() => {
       padding: {left: 10, right: 10, top: 10, bottom: 10}
     }).setInteractive().setFontSize(20);
 
-    // this.input.on('pointerdown', function (_pointer, objectsClicked){
-    //         objectsClicked[0].visible = false;
-    //         console.log("hola")
-    // });
 
     /*When the button is pressed, se gonna hide the text of waiting players*/
 
@@ -101,13 +97,13 @@ onMounted(() => {
     }, this);
 
     /** Player's position. */
-    const PositionPlayer1 = this.add.text(globalx - 600, globaly, 'Player left', {fontFamily: 'Inter, "sans-serif"'});  /*Player left*/
+    this.add.text(globalx - 600, globaly, 'Player left', {fontFamily: 'Inter, "sans-serif"'});  /*Player left*/
 
-    const PositionPlayer2 = this.add.text(globalx + 575, globaly, 'Player right', {fontFamily: 'Inter, "sans-serif"'}); /*Player right*/
+    this.add.text(globalx + 575, globaly, 'Player right', {fontFamily: 'Inter, "sans-serif"'}); /*Player right*/
 
-    const PositionPlayer3 = this.add.text(globalx - 20, globaly + 320, 'Player down', {fontFamily: 'Inter, "sans-serif"'});  /*Player down*/
+    this.add.text(globalx - 20, globaly + 320, 'Player down', {fontFamily: 'Inter, "sans-serif"'});  /*Player down*/
 
-    const PositionPlayer4 = this.add.text(globalx - 5, globaly - 350, 'Player Up', {fontFamily: 'Inter, "sans-serif"'});   /*Player up*/
+    this.add.text(globalx - 5, globaly - 350, 'Player Up', {fontFamily: 'Inter, "sans-serif"'});   /*Player up*/
 
     /** Back cards One backcard means one enemy player**/
 
@@ -142,27 +138,19 @@ onMounted(() => {
     const WaitPlayers = this.add.text(globalx - 100, globaly, 'ESPERANT JUGADORS...',
         {fontFamily: 'Inter, "sans-serif"'}).setScale(1.4); /*Player Wait*/
 
-    var cardsRecieved = [];
-    var cardsActualPlayer = [];
+    const cardsRecieved = [];
+    const cardsActualPlayer = [];
     let xposition = 0;
       props.socket.on('game:rooms:get-cards', cardsActualPlayer => {
         console.log(cardsRecieved);
           for (let j = 0; j < cardsActualPlayer.length; j++) {
-            cardsRecieved[cardsActualPlayer[j]] = this.add.image((globalx / 1.26) + (j * 30), globaly + 250, cardsActualPlayer[j]).setScale(0.35, 0.325).setInteractive();;
+            cardsRecieved[cardsActualPlayer[j]] = this.add.image((globalx / 1.26) + (j * 30), globaly + 250, cardsActualPlayer[j]).setScale(0.35, 0.325).setInteractive();
         }
         if (debug) {
           console.log("[Debug] Array of the current cards of the player playing: ");
           console.log(cardsRecieved);
         }
       });
-
-    /** TODO: GET THE ARRAY FROM THE WEBSOCKET OF THE ACTUAL CARDS OF THE PLAYER ***/
-      /*We define the name of the actual types of cars*/
-
-
-
-
-      //Var to move the image x position on the screen.
       /** The same code of the previous for, including xposition, a scale (size of images) and a setOrigin (X,Y)
        to center the images.  **/
       for (let i = 0; i < pals.length; i++) {
@@ -197,24 +185,6 @@ onMounted(() => {
         console.log(objectsClicked[0]);
       });
       console.log(cardsRecieved);
-
-      //     var Comprobar=this.input.on('pointerdown', function (_pointer, objectsClicked) {
-      //     objectsClicked[0].visible = true;
-      // });
-      // function clicked() {
-      //     console.log("Hola");
-      // }
-
-
-
-    }
-
-    if (debug) {
-      //console.log("[Debug] The position of " + WaitPlayers.texture.key + " | x=" + PositionPlayer1.x + " | y=" + PositionPlayer1.y);
-      console.log("[Debug] The position of " + PositionPlayer1.texture.key + " | x=" + PositionPlayer1.x + " | y=" + PositionPlayer1.y);
-      console.log("[Debug] The position of " + PositionPlayer2.texture.key + " | x=" + PositionPlayer2.x + " | y=" + PositionPlayer2.y);
-      console.log("[Debug] The position of " + PositionPlayer3.texture.key + " | x=" + PositionPlayer3.x + " | y=" + PositionPlayer3.y);
-      console.log("[Debug] The position of " + PositionPlayer4.texture.key + " | x=" + PositionPlayer4.x + " | y=" + PositionPlayer4.y);
     }
 
 
