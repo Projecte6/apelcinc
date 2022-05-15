@@ -1,20 +1,6 @@
-<template>
-  <div id="game-container"></div>
-  <div class="absolute bottom-10 right-2">
-    <div v-if="isOpen" class="relative top-3">
-      <Chat :socket="props.socket"></Chat>
-    </div>
-    <div class="absolute right-0 flex">
-      <button @click="isOpen = !isOpen" class="flex items-center justify-center h-12 w-12 hover:bg-gray-500 hover:rounded-full hover:transition duration-500 ease-in-out">
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="h-8 w-8 fill-white" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
-	        <path d="M44.348,12.793H2.652C1.189,12.793,0,13.982,0,15.445v43.762l9.414-9.414h34.934c1.463,0,2.652-1.19,2.652-2.653V15.445   C47,13.982,45.811,12.793,44.348,12.793z M10,35.777c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S12.206,35.777,10,35.777z    M23,35.777c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S25.206,35.777,23,35.777z M36,35.777c-2.206,0-4-1.794-4-4s1.794-4,4-4   s4,1.794,4,4S38.206,35.777,36,35.777z"/>
-	        <path d="M57.348,0.793H12.652C11.189,0.793,10,1.982,10,3.445v7.348h34.348c2.565,0,4.652,2.087,4.652,4.652v25.332h11V3.445   C60,1.982,58.811,0.793,57.348,0.793z"/>
-        </svg>
-      </button>
-    </div>
-  </div>
-</template>
+
 <script setup>
+
 import Phaser from 'phaser';
 import Chat from '../components/Chat.vue';
 import { onMounted, ref} from 'vue';
@@ -26,7 +12,8 @@ const debug = false;
 const props = defineProps({
   socket: Object,
 });
-var currentPlayers = [];
+
+const currentPlayers = [];
 props.socket.on('game:room:player-join', player => {
   console.log(player);
   currentPlayers.push(player);
@@ -41,7 +28,7 @@ const globalx = 675;
 const globaly = 350;
 
 onMounted(() => {
-  var config = {
+  const config = {
     width: globalx + 750,
     height: globaly + 350,
     backgroundColor: '#06304E',
@@ -54,10 +41,10 @@ onMounted(() => {
     }
   };
 
-  var game = new Phaser.Game(config);
-  var pals = ["o", "e", "b", "c"];
+  const game = new Phaser.Game(config);
+  const pals = ["o", "e", "b", "c"];
   /** We create an array to storage the letters contained on the image's name. */
-  var cards = [];
+  const cards = [];
 
   //Precharge the images or variables to be used later.
   function preload() {
@@ -90,10 +77,6 @@ onMounted(() => {
       padding: {left: 10, right: 10, top: 10, bottom: 10}
     }).setInteractive().setFontSize(20);
 
-    // this.input.on('pointerdown', function (_pointer, objectsClicked){
-    //         objectsClicked[0].visible = false;
-    //         console.log("hola")
-    // });
 
     /*When the button is pressed, se gonna hide the text of waiting players*/
 
@@ -118,13 +101,13 @@ onMounted(() => {
     }, this);
 
     /** Player's position. */
-    const PositionPlayer1 = this.add.text(globalx - 600, globaly, 'Player left', {fontFamily: 'Inter, "sans-serif"'});  /*Player left*/
+    this.add.text(globalx - 600, globaly, 'Player left', {fontFamily: 'Inter, "sans-serif"'});  /*Player left*/
 
-    const PositionPlayer2 = this.add.text(globalx + 575, globaly, 'Player right', {fontFamily: 'Inter, "sans-serif"'}); /*Player right*/
+    this.add.text(globalx + 575, globaly, 'Player right', {fontFamily: 'Inter, "sans-serif"'}); /*Player right*/
 
-    const PositionPlayer3 = this.add.text(globalx - 20, globaly + 320, 'Player down', {fontFamily: 'Inter, "sans-serif"'});  /*Player down*/
+    this.add.text(globalx - 20, globaly + 320, 'Player down', {fontFamily: 'Inter, "sans-serif"'});  /*Player down*/
 
-    const PositionPlayer4 = this.add.text(globalx - 5, globaly - 350, 'Player Up', {fontFamily: 'Inter, "sans-serif"'});   /*Player up*/
+    this.add.text(globalx - 5, globaly - 350, 'Player Up', {fontFamily: 'Inter, "sans-serif"'});   /*Player up*/
 
     /** Back cards One backcard means one enemy player**/
 
@@ -159,27 +142,19 @@ onMounted(() => {
     const WaitPlayers = this.add.text(globalx - 100, globaly, 'ESPERANT JUGADORS...',
         {fontFamily: 'Inter, "sans-serif"'}).setScale(1.4); /*Player Wait*/
 
-    var cardsRecieved = [];
-    var cardsActualPlayer = [];
+    const cardsRecieved = [];
+    const cardsActualPlayer = [];
     let xposition = 0;
       props.socket.on('game:rooms:get-cards', cardsActualPlayer => {
         console.log(cardsRecieved);
           for (let j = 0; j < cardsActualPlayer.length; j++) {
-            cardsRecieved[cardsActualPlayer[j]] = this.add.image((globalx / 1.26) + (j * 30), globaly + 250, cardsActualPlayer[j]).setScale(0.35, 0.325).setInteractive();;
+            cardsRecieved[cardsActualPlayer[j]] = this.add.image((globalx / 1.26) + (j * 30), globaly + 250, cardsActualPlayer[j]).setScale(0.35, 0.325).setInteractive();
         }
         if (debug) {
           console.log("[Debug] Array of the current cards of the player playing: ");
           console.log(cardsRecieved);
         }
       });
-
-    /** TODO: GET THE ARRAY FROM THE WEBSOCKET OF THE ACTUAL CARDS OF THE PLAYER ***/
-      /*We define the name of the actual types of cars*/
-
-
-
-
-      //Var to move the image x position on the screen.
       /** The same code of the previous for, including xposition, a scale (size of images) and a setOrigin (X,Y)
        to center the images.  **/
       for (let i = 0; i < pals.length; i++) {
@@ -214,24 +189,6 @@ onMounted(() => {
         console.log(objectsClicked[0]);
       });
       console.log(cardsRecieved);
-
-      //     var Comprobar=this.input.on('pointerdown', function (_pointer, objectsClicked) {
-      //     objectsClicked[0].visible = true;
-      // });
-      // function clicked() {
-      //     console.log("Hola");
-      // }
-
-
-
-    }
-
-    if (debug) {
-      //console.log("[Debug] The position of " + WaitPlayers.texture.key + " | x=" + PositionPlayer1.x + " | y=" + PositionPlayer1.y);
-      console.log("[Debug] The position of " + PositionPlayer1.texture.key + " | x=" + PositionPlayer1.x + " | y=" + PositionPlayer1.y);
-      console.log("[Debug] The position of " + PositionPlayer2.texture.key + " | x=" + PositionPlayer2.x + " | y=" + PositionPlayer2.y);
-      console.log("[Debug] The position of " + PositionPlayer3.texture.key + " | x=" + PositionPlayer3.x + " | y=" + PositionPlayer3.y);
-      console.log("[Debug] The position of " + PositionPlayer4.texture.key + " | x=" + PositionPlayer4.x + " | y=" + PositionPlayer4.y);
     }
 
 
@@ -243,6 +200,24 @@ onMounted(() => {
   }
 });
 </script>
+
+<template>
+  <div id="game-container"></div>
+  <div class="absolute bottom-10 right-2">
+    <div v-if="isOpen" class="relative top-3">
+      <Chat :socket="props.socket"></Chat>
+    </div>
+    <div class="absolute right-0 flex">
+      <button @click="isOpen = !isOpen" class="flex items-center justify-center h-12 w-12 hover:bg-gray-500 hover:rounded-full hover:transition duration-500 ease-in-out">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="h-8 w-8 fill-white" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
+	        <path d="M44.348,12.793H2.652C1.189,12.793,0,13.982,0,15.445v43.762l9.414-9.414h34.934c1.463,0,2.652-1.19,2.652-2.653V15.445   C47,13.982,45.811,12.793,44.348,12.793z M10,35.777c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S12.206,35.777,10,35.777z    M23,35.777c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S25.206,35.777,23,35.777z M36,35.777c-2.206,0-4-1.794-4-4s1.794-4,4-4   s4,1.794,4,4S38.206,35.777,36,35.777z"/>
+          <path d="M57.348,0.793H12.652C11.189,0.793,10,1.982,10,3.445v7.348h34.348c2.565,0,4.652,2.087,4.652,4.652v25.332h11V3.445   C60,1.982,58.811,0.793,57.348,0.793z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</template>
+
 <style>
    @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 </style>
