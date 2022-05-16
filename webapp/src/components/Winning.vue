@@ -1,6 +1,9 @@
 <template>
-  <div class="h-screen flex flex-col md:flex-row items-center justify-center select-none bg-cover" style="background: url(/images/bkg.png)">
+  <div class="h-screen flex flex-col md:flex-row items-center select-none bg-cover" style="background: url(/images/bkg.png)">
     <div class="flex-col flex basis-11/12 px-12 space-y-4 items-center">
+    <div class="flex items-center justify-center"> 
+        <img class="w-3/5" src="/img/Cinquillo_Finished.png" alt="logo">
+      </div>
       <div class="flex-col w-9/12 flex justify-center items-center space-y-8 pt-8 pb-8 border-8 border-[#230834] rounded-xl bg-cover bg-center bg-no-repeat" style="background-image: url(/images/btn-bkg.png)">
         <div class="bg-gray-800 w-4/5 rounded-md text-3xl font-bold text-white">
           <div class="flex items-center">
@@ -30,11 +33,11 @@
       <div class="flex w-9/12 justify-center">
         <div class="flex space-x-6">
           <button
-        class="flex px-4 w-72 h-[3.75rem] items-center justify-center bg-cover bg-center bg-no-repeat border-8 border-[#230834] rounded-3xl leading-none hover:opacity-75"
+        class="flex px-4 w-72 h-[4.75rem] items-center justify-center bg-cover bg-center bg-no-repeat border-8 border-[#230834] rounded-3xl leading-none hover:opacity-75"
         style="background-image: url(/images/btn-bkg.png)"
         @click="onClickJoin"  
       >
-        <span class="text-3xl font-black uppercase">
+        <span class="text-4xl font-black uppercase">
           Jugar
         </span>
          <svg xmlns="http://www.w3.org/2000/svg" class="ml-4 w-12 h-12" viewBox="0 0 20 20" fill="currentColor">
@@ -42,7 +45,7 @@
         </svg>
       </button>
       <button
-        class="flex p-3 w-20 h-[3.75rem] items-center justify-center bg-[#FF0000] border-[6px] border-[#230834] rounded-full leading-none hover:opacity-75"
+        class="flex p-3 w-20 h-[4.75rem] items-center justify-center bg-[#FF0000] border-[6px] border-[#230834] rounded-full leading-none hover:opacity-75"
         @click="onClickExit"  
       >
          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
