@@ -1,5 +1,5 @@
 <template>
-  <div class="w-screen h-screen flex items-center justify-center gap-40 select-none bg-cover bg-center" style="background-image: url(/images/bkg1.png)">
+  <div class="w-screen h-screen flex items-center justify-center gap-40 select-none bg-cover bg-center" style="background-image: url(/images/bkg1.png)" @keydown.esc="isOpen = false">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-[#230834]">
       <!-- Create -->
       <button

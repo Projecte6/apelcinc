@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-[#3f474d] flex justify-between items-center px-6 py-4">
+  <nav class="bg-[#3f474d] flex justify-between items-center px-6 py-4" @keydown.esc="isOpen = false">
     <div class="flex justify-between">
       <img src="/public/img/logo.png" class="w-80" />
     </div>
