@@ -118,7 +118,7 @@ onMounted(() => {
       padding: {left: 15, right: 15, top: 7, bottom: 7}
       }); 
       
- const PositionPlayer2 = this.add.text(1300, 350,"JUANKA" , {
+ const PositionPlayer2 = this.add.text(1270, 350,"Player Right", {
       fontFamily: 'Koulen, "cursive"',
       fontSize: '24px',
       color: '#000000',
