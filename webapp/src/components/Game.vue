@@ -18,7 +18,9 @@ props.socket.on('game:room:player-join', player => {
   console.log(player);
   currentPlayers.push(player);
   currentPlayers.length;
+  console.log(currentPlayers);
 });
+/*TODO: Check the turn of the current player */
 props.socket.on('game:room:turn', turn => {
   console.log(turn);
 });
@@ -48,7 +50,10 @@ onMounted(() => {
 
   //Precharge the images or variables to be used later.
   function preload() {
-
+    if(debug){
+      /**TODO: Get the name of the current room **/
+      console.log["Debug:" + "Game started"]
+    }
     /** A Double for to walk first the "pals array (letters)" and after the numbers for precharge every image. */
     for (let i = 0; i < pals.length; i++) {
       for (let j = 1; j <= 12; j++) {
