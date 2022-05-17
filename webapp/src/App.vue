@@ -52,6 +52,7 @@
   <Winning
       v-if="currentPage == 'winning'"
       v-model:currentPage="currentPage"
+      :socket="socket"
   />
 </template>
 
