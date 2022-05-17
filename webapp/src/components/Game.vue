@@ -142,11 +142,11 @@ onMounted(() => {
 
   const PositionPlayer4 = this.add.text(700, 15,"Player up" , {
         fontFamily: 'Koulen, "cursive"',
-      fontSize: '24px',
-      color: '#000000',
+        fontSize: '24px',
+        color: '#000000',
         backgroundColor: '#d3d372',
         fontStyle: 'normal',
-      strokeThickness: 10,
+        strokeThickness: 10,
         strokeRoundedRect : (32, 32, 300, 200, 10),
         padding: {left: 15, right: 15, top: 7, bottom: 7}
         }); 
