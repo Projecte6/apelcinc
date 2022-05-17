@@ -10,8 +10,8 @@
         </div>
         <div class="flex flex-col justify-center items-center h-80">
           <div class="flex flex-col gap-4">
-            <input v-on:keyup.enter="onClickLogin" class="p-3 font-semibold text-2xl text-center uppercase border-none rounded focus:ring-0" placeholder="#V1f43" />
-            <button class="px-4 py-1 font-medium text-2xl uppercase bg-stone-300 rounded hover:opacity-90" @click="onClickLogin">
+            <input v-on:keyup.enter="onClickLogin(privateroom)" v-model="privateroom" class="p-3 font-semibold text-2xl text-center border-none rounded focus:ring-0" placeholder="#V1f43" />
+            <button class="px-4 py-1 font-medium text-2xl uppercase bg-stone-300 rounded hover:opacity-90" @click="onClickLogin(privateroom)">
               Accedir
             </button>
           </div>
@@ -67,13 +67,14 @@ import Chat from "../components/Chat.vue";
 import { ref } from 'vue';
 
 const isOpen = ref(false);
+const privateroom = ref('');
 const props = defineProps({
   socket: Object,
 });
 
-const onClickLogin = () => {
-
-}
+const onClickLogin = (privateroom) => {
+  props.socket.emit('game:rooms:join', privateroom);
+};
 
 const emit = defineEmits(['update:currentPage']);
 

@@ -13,8 +13,9 @@
             <h1 class="text-slate-900 text-4xl tracking-tight font-extrabold sm:text-5xl dark:text-dark text-center mt-12">Nova partida</h1>
           </div>
           <div class="flex justify-center mt-16 flex-col items-center">
-            <div class="bg-slate-600 p-8 w-1/2 rounded-md ">
-              <input 
+            <div class="bg-slate-600 p-8 w-1/2 rounded-md">
+              <input
+                v-on:keyup.enter="onClickCreate" 
                 v-model="name"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
@@ -23,6 +24,10 @@
             </div>
             <div class="flex items-center">
               <button @click="onClickCreate" class="rounded-md bg-[#585858] text-white font-bold text-xl p-3 mt-4 mb-4 "><p class="text-white hover:text-yellow-100 ease-in-out duration-200" >Crear partida</p></button>
+              <div class="ml-8">
+                <input type="checkbox" class="bg-red-700 focus:shadow-none focus:outline-none"/>
+                <label class="ml-2 font-bold text-md">Sala Privada</label>
+              </div>
             </div>
           </div>
         </div>
@@ -41,7 +46,6 @@ import { ref } from 'vue';
 const props = defineProps({
   socket: Object,
 });
-
 
 const emit = defineEmits(['update:currentPage']);
 
