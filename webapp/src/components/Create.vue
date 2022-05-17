@@ -71,7 +71,7 @@ const onClickCreate = () => {
 
 // const onClickCreate = () => {
 //   name.value = name.value.replaceAll(' ', '');
-props.socket.on('game:rooms:create', () => {
+props.socket.on('game:rooms:create:success', () => {
   console.log('Room created');
   emit('update:currentPage', 'game');
 });
