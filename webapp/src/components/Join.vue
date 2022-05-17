@@ -1,5 +1,5 @@
 <template>
-  <div class="flex md:flex-row items-center pb-8 flex-col">
+  <div class="flex md:flex-row items-center pb-8 flex-col" @keydown.esc="isOpen = false">
     <div class="basis-11/12 flex justify-center w-full relative">
       <div v-if="isOpen" class="absolute w-96 h-96 md:left-2/4 bg-[#3f474d] rounded-xl">
         <div class="flex justify-end pr-2 pt-2">
