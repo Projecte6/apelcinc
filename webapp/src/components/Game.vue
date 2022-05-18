@@ -280,6 +280,12 @@ onMounted(() => {
 
 <template>
   <div class="all-game">
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative absolute top-15 right-0 w-64" role="alert">
+      <strong class="font-bold">Ha hagut un error<br></strong>
+      <span class="block sm:inline">Something seriously bad happened.</span>
+      <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+  </span>
+    </div>
   <div id="game-container"></div>
   <div class="absolute bottom-10 right-2">
     <div v-if="isOpen" class="relative top-3">
