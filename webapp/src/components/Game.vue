@@ -279,6 +279,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <div class="all-game">
   <div id="game-container"></div>
   <div class="absolute bottom-10 right-2">
     <div v-if="isOpen" class="relative top-3">
@@ -293,16 +294,17 @@ onMounted(() => {
       </button>
     </div>
   </div>
+  </div>
 </template>
 
 <style>
    @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
    @import url('https://fonts.googleapis.com/css2?family=Koulen&display=swap');
    @import url('https://fonts.googleapis.com/css2?family=Skranji:wght@700&display=swap');
-   /** Set the zoom according to the level of the window **/
-   #game-container {
+   /*If something fails and u don't know what to do delete this
+   .all-game {
      zoom: 0.80;
      -moz-transform: scale(0.75);
      -moz-transform-origin: 0 0;
-   }
+   }*/
 </style>
