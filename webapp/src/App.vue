@@ -71,7 +71,7 @@ import Game from './components/Game.vue';
 import Credits from './components/Credits.vue';
 import Menu from "./components/Menu.vue";
 
-const currentPage = ref("game");
+const currentPage = ref("login");
 // const messages = ref(null);
   // const messages = ref(null);
 
