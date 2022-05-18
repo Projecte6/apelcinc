@@ -71,14 +71,15 @@ onMounted(() => {
   //Create or show the images which gonna be contained
   function create() {
 
+
     /*Here we create the button than gonna start the game*/
-    const fadeOut = this.add.text(880, 345, 'Començar', {
-      fontFamily: 'Inter, "sans-serif"',
-      color: '#000000',
+    const fadeOut = this.add.text(880, 345, ' 🏁 Començar  🏁', {
+      fontFamily: 'Skranji, "cursive"',
+      color: 'red',
       backgroundColor: '#F7EBB1',
       fontStyle: 'normal',
       borderradius: "5px",
-      strokeThickness: 1,
+      strokeThickness: 10,
       padding: {left: 10, right: 10, top: 10, bottom: 10}
     }).setInteractive().setFontSize(20);
 
@@ -106,14 +107,49 @@ onMounted(() => {
     }, this);
 
     /** Player's position. */
-    this.add.text(globalx - 600, globaly, 'Player left', {fontFamily: 'Inter, "sans-serif"'});  /*Player left*/
+   const PositionPlayer1 = this.add.text(80, 350,"Player left" , {
+      fontFamily: 'Koulen, "cursive"',
+      color: '#000000',
+      fontSize: '24px',
+      backgroundColor: '#72c3d3',
+      fontStyle: 'normal',
+      strokeThickness: 10,
+      strokeRoundedRect : (32, 32, 300, 200, 10),
+      padding: {left: 15, right: 15, top: 7, bottom: 7}
+      }); 
+      
+ const PositionPlayer2 = this.add.text(1270, 350,"Player Right", {
+      fontFamily: 'Koulen, "cursive"',
+      fontSize: '24px',
+      color: '#000000',
+      backgroundColor: '#72d397',
+      fontStyle: 'normal',
+      strokeThickness: 10,
+      strokeRoundedRect : (32, 32, 300, 200, 10),
+      padding: {left: 17, right: 17, top: 7, bottom: 7}
+      }); 
 
-    this.add.text(globalx + 575, globaly, 'Player right', {fontFamily: 'Inter, "sans-serif"'}); /*Player right*/
+ const PositionPlayer3 = this.add.text(700, 650,"Player down" , {
+      fontFamily: 'Koulen, "cursive"',
+      fontSize: '24px',
+      color: '#000000',
+      backgroundColor: '#d372ca',
+      fontStyle: 'normal',
+      strokeThickness: 10,
+      strokeRoundedRect : (32, 32, 300, 200, 10),
+      padding: {left: 15, right: 15, top: 7, bottom: 7}
+      }); 
 
-    this.add.text(globalx - 20, globaly + 320, 'Player down', {fontFamily: 'Inter, "sans-serif"'});  /*Player down*/
-
-    this.add.text(globalx - 5, globaly - 350, 'Player Up', {fontFamily: 'Inter, "sans-serif"'});   /*Player up*/
-
+  const PositionPlayer4 = this.add.text(700, 15,"Player up" , {
+        fontFamily: 'Koulen, "cursive"',
+        fontSize: '24px',
+        color: '#000000',
+        backgroundColor: '#d3d372',
+        fontStyle: 'normal',
+        strokeThickness: 10,
+        strokeRoundedRect : (32, 32, 300, 200, 10),
+        padding: {left: 15, right: 15, top: 7, bottom: 7}
+        }); 
     /** Back cards One backcard means one enemy player**/
 
 
@@ -137,12 +173,26 @@ onMounted(() => {
 
     const nameRoom = "Sala #1";
 
-    const TextNameOfRoom = this.add.text(10, 10, "Nom sala: " + nameRoom, {fontFamily: 'Inter, "sans-serif"'});  /* Name of the room */
-
+   const TextNameOfRoom = this.add.text(25, 10,"Nom sala: " + nameRoom , {
+      fontFamily: 'Inter, "sans-serif"',
+      color: '#000000',
+      backgroundColor: '#F7EBB1',
+      fontStyle: 'normal',
+      strokeThickness: 1,
+      strokeRoundedRect : (32, 32, 300, 200, 10),
+      padding: {left: 15, right: 15, top: 7, bottom: 7}
+      });  /* Name of the room */
     const CurrentPlayer = "Player 5";
 
-    const TurnPlayerName = this.add.text(10, 40, "El turn es del: " + CurrentPlayer, {fontFamily: 'Inter, "sans-serif"'});
-
+    const TurnPlayerName = this.add.text(25, 50,"El turn es de: " + CurrentPlayer, {
+      fontFamily: 'Inter, "sans-serif"',
+      color: 'white',
+      backgroundColor: 'gray',
+      fontStyle: 'normal',
+      strokeThickness: 1,
+      strokeRoundedRect : (32, 32, 300, 200, 10),
+      padding: {left: 15, right: 15, top: 7, bottom: 7}
+      });
     /** Player's waiting. */
     const WaitPlayers = this.add.text(globalx - 100, globaly, 'ESPERANT JUGADORS...',
         {fontFamily: 'Inter, "sans-serif"'}).setScale(1.4); /*Player Wait*/
@@ -225,4 +275,6 @@ onMounted(() => {
 
 <style>
    @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+   @import url('https://fonts.googleapis.com/css2?family=Koulen&display=swap');
+   @import url('https://fonts.googleapis.com/css2?family=Skranji:wght@700&display=swap');
 </style>
