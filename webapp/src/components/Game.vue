@@ -7,7 +7,7 @@ import { onMounted, ref} from 'vue';
 
 const isOpen = ref(false);
 
-const debug = false;
+const debug = true;
 
 const props = defineProps({
   socket: Object,
@@ -90,22 +90,10 @@ onMounted(() => {
     fadeOut.on('pointerdown', function (_pointer) {
       props.socket.emit('game:rooms:start-game');
 
-      /** TODO: Check if we can really create the room **/
+        /** TODO: Check if we can really create the room **/
 
-      this.tweens.add({
-        targets: fadeOut,
-        alpha: 0,
-        duration: 3000,
-        ease: 'Power2',
-      }, this);
-      this.tweens.add({
-        targets: WaitPlayers,
-        alpha: 0,
-        duration: 3000,
-        ease: 'Power2',
-      }, this);
-    }, this);
 
+      }, this);
     /** Player's position. */
    const PositionPlayer1 = this.add.text(80, 350,"Player left" , {
       fontFamily: 'Koulen, "cursive"',
@@ -201,14 +189,36 @@ onMounted(() => {
     const cardsActualPlayer = [];
     let xposition = 0;
       props.socket.on('game:rooms:get-cards', cardsActualPlayer => {
-        console.log(cardsRecieved);
-          for (let j = 0; j < cardsActualPlayer.length; j++) {
-            cardsRecieved[cardsActualPlayer[j]] = this.add.image((globalx / 1.26) + (j * 30), globaly + 250, cardsActualPlayer[j]).setScale(0.35, 0.325).setInteractive();
-        }
+        this.tweens.add({
+          targets: fadeOut,
+          alpha: 0,
+          duration: 3000,
+          ease: 'Power2',
+        }, this);
+        this.tweens.add({
+          targets: WaitPlayers,
+          alpha: 0,
+          duration: 3000,
+          ease: 'Power2',
+        }, this);
+
         if (debug) {
           console.log("[Debug] Array of the current cards of the player playing: ");
           console.log(cardsRecieved);
+          console.log("[Debug] Number of cards received: ");
+          console.log(cardsActualPlayer.length);
         }
+        let positionActualCardsX = 1.25;
+        if(cardsActualPlayer.length === 24){
+          positionActualCardsX = 1.75;
+        }else if (cardsActualPlayer.length === 16){
+          positionActualCardsX = 1.40;
+        }
+
+          for (let j = 0; j < cardsActualPlayer.length; j++) {
+            cardsRecieved[cardsActualPlayer[j]] = this.add.image((globalx / positionActualCardsX) + (j * 30), globaly + 250, cardsActualPlayer[j]).setScale(0.35, 0.325).setInteractive();
+        }
+
       });
       /** The same code of the previous for, including xposition, a scale (size of images) and a setOrigin (X,Y)
        to center the images.  **/
@@ -240,7 +250,7 @@ onMounted(() => {
       });
       this.input.on('pointerout', function (_pointer, objectsClicked) {
         //objectsClicked[0].depth = objectsClicked[0].getData("depth");
-        cardsRecieved[objectsClicked[0].texture.key].setScale(0.35, 0.325).setY(600);
+          cardsRecieved[objectsClicked[0].texture.key].setScale(0.35, 0.325).setY(600);
         console.log(objectsClicked[0]);
       });
       console.log(cardsRecieved);
