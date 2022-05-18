@@ -10,7 +10,8 @@
         </div>
         <div class="flex flex-col justify-center items-center h-80">
           <div class="flex flex-col gap-4">
-            <input v-on:keyup.enter="onClickLogin(privateroom)" v-model="privateroom" class="p-3 font-semibold text-2xl text-center border-none rounded focus:ring-0" placeholder="#V1f43" />
+            <h2 class="text-white text-center mb-3 text-">Escriu el Id de la sala sense #</h2>
+            <input v-on:keyup.enter="onClickLogin(privateroom)" v-model="privateroom" class="p-3 font-semibold text-2xl text-center border-none rounded focus:ring-0" placeholder="V1f43" />
             <button class="px-4 py-1 font-medium text-2xl uppercase bg-stone-300 rounded hover:opacity-90" @click="onClickLogin(privateroom)">
               Accedir
             </button>
