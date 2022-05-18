@@ -15,10 +15,7 @@ const props = defineProps({
 
 const currentPlayers = [];
 props.socket.on('game:room:player-join', player => {
-  console.log(player);
-  currentPlayers.push(player);
-  currentPlayers.length;
-  console.log(currentPlayers);
+  console.log(player);;
 });
 /*TODO: Check the turn of the current player */
 props.socket.on('game:room:turn', turn => {
@@ -27,7 +24,7 @@ props.socket.on('game:room:turn', turn => {
 
 /* Var config, contains the canvas size, initialize Phaser and charge the method's contained in scene (screen) */
 const globalx = 675;
-const globaly = 350;
+const globaly = 400;
 
 onMounted(() => {
   const config = {
@@ -104,9 +101,9 @@ onMounted(() => {
       strokeThickness: 10,
       strokeRoundedRect : (32, 32, 300, 200, 10),
       padding: {left: 15, right: 15, top: 7, bottom: 7}
-      }); 
-      
- const PositionPlayer2 = this.add.text(1270, 350,"Player Right", {
+      });
+
+ const PositionPlayer2 = this.add.text(1200, 350,"Player Right", {
       fontFamily: 'Koulen, "cursive"',
       fontSize: '24px',
       color: '#000000',
@@ -115,9 +112,9 @@ onMounted(() => {
       strokeThickness: 10,
       strokeRoundedRect : (32, 32, 300, 200, 10),
       padding: {left: 17, right: 17, top: 7, bottom: 7}
-      }); 
+      });
 
- const PositionPlayer3 = this.add.text(700, 650,"Player down" , {
+ const PositionPlayer3 = this.add.text(675, 700,"Player down" , {
       fontFamily: 'Koulen, "cursive"',
       fontSize: '24px',
       color: '#000000',
@@ -126,9 +123,9 @@ onMounted(() => {
       strokeThickness: 10,
       strokeRoundedRect : (32, 32, 300, 200, 10),
       padding: {left: 15, right: 15, top: 7, bottom: 7}
-      }); 
+      });
 
-  const PositionPlayer4 = this.add.text(700, 15,"Player up" , {
+  const PositionPlayer4 = this.add.text(675, 15,"Player up" , {
         fontFamily: 'Koulen, "cursive"',
         fontSize: '24px',
         color: '#000000',
@@ -137,8 +134,8 @@ onMounted(() => {
         strokeThickness: 10,
         strokeRoundedRect : (32, 32, 300, 200, 10),
         padding: {left: 15, right: 15, top: 7, bottom: 7}
-        }); 
-    /** Back cards One backcard means one enemy player**/
+        });
+   // Back cards One backcard means one enemy player**/
 
 
     if (debug) {
@@ -170,6 +167,7 @@ onMounted(() => {
       strokeRoundedRect : (32, 32, 300, 200, 10),
       padding: {left: 15, right: 15, top: 7, bottom: 7}
       });  /* Name of the room */
+
     const CurrentPlayer = "Player 5";
 
     const TurnPlayerName = this.add.text(25, 50,"El turn es de: " + CurrentPlayer, {
@@ -182,7 +180,7 @@ onMounted(() => {
       padding: {left: 15, right: 15, top: 7, bottom: 7}
       });
     /** Player's waiting. */
-    const WaitPlayers = this.add.text(globalx - 100, globaly, 'ESPERANT JUGADORS...',
+    const WaitPlayers = this.add.text(globalx - 100, globaly - 45, 'ESPERANT JUGADORS...',
         {fontFamily: 'Inter, "sans-serif"'}).setScale(1.4); /*Player Wait*/
 
     const cardsRecieved = [];
@@ -208,10 +206,14 @@ onMounted(() => {
           console.log("[Debug] Number of cards received: ");
           console.log(cardsActualPlayer.length);
         }
+
+        /*Depending if there are more or less cards*/
         let positionActualCardsX = 1.25;
+
         if(cardsActualPlayer.length === 24){
           positionActualCardsX = 1.75;
-        }else if (cardsActualPlayer.length === 16){
+        }
+        else if (cardsActualPlayer.length === 16){
           positionActualCardsX = 1.40;
         }
 
@@ -239,26 +241,36 @@ onMounted(() => {
         const cardMoved = objectsClicked[0].texture.key;
         props.socket.emit('game:rooms:move-card', cardMoved);
 
-        /*** TODO: Need the event to check **/
-        cards[objectsClicked[0].texture.key].visible = true;
-        cardsRecieved[objectsClicked[0].texture.key].visible = false;
+        props.socket.on('game:rooms:move-card:error', message => {
+         console.log(message);
+        });
       });
       this.input.on('pointerover', function (_pointer, objectsClicked) {
-        cardsRecieved[objectsClicked[0].texture.key].setScale(0.50, 0.50).setY(550);
+        cardsRecieved[objectsClicked[0].texture.key].setScale(0.50, 0.55).setY(605);
         // objectsClicked[0].depth = 100;
-        console.log(objectsClicked[0]);
+       // console.log(objectsClicked[0]);
       });
       this.input.on('pointerout', function (_pointer, objectsClicked) {
         //objectsClicked[0].depth = objectsClicked[0].getData("depth");
-          cardsRecieved[objectsClicked[0].texture.key].setScale(0.35, 0.325).setY(600);
-        console.log(objectsClicked[0]);
+          cardsRecieved[objectsClicked[0].texture.key].setScale(0.35, 0.325).setY(650);
+      //  console.log(objectsClicked[0]);
       });
-      console.log(cardsRecieved);
+    props.socket.on('game:rooms:player-move-card:success', card => {
+      cards[card].visible = true;
+      console.log("We are moviing");
+    });
+
+    props.socket.on('game:rooms:move-card:success', card => {
+      console.log(card);
+      cards[card].visible = true;
+      cardsRecieved[card].visible = false;
+    });
+
+     // console.log(cardsRecieved);
     }
 
 
-
-  /*Events in realtime*/
+    /*Events in realtime*/
   function update() {
 
     // console.log('Actualitzant!');
@@ -287,4 +299,10 @@ onMounted(() => {
    @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
    @import url('https://fonts.googleapis.com/css2?family=Koulen&display=swap');
    @import url('https://fonts.googleapis.com/css2?family=Skranji:wght@700&display=swap');
+   /** Set the zoom according to the level of the window **/
+   #game-container {
+     zoom: 0.80;
+     -moz-transform: scale(0.75);
+     -moz-transform-origin: 0 0;
+   }
 </style>
