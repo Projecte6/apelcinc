@@ -64,7 +64,7 @@ io.on('connection', (socket) => {
 
   // Game
   socket.on('game:login', (name) => socketGameLogin(io, socket, debug, usernames, name));
-  socket.on('game:rooms:create', (name) => socketGameRoomsCreate(socket, debug, cards, games, name));
+  socket.on('game:rooms:create', (name,type) => socketGameRoomsCreate(socket, debug, cards, games, name,type));
   socket.on('game:rooms:get-available', () => socketGameRoomsGetAvailable(socket, debug, games));
   socket.on('game:rooms:join', (id) => socketGameRoomsJoin(io, socket, debug, games, id));
   socket.on('game:rooms:start-game', () => socketGameRoomsStartGame(io, socket, debug, games));
