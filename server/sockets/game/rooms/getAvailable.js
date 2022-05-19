@@ -1,3 +1,11 @@
+// Types
+import { Socket } from 'socket.io';
+
+/**
+ * @param {Socket} socket
+ * @param {boolean} debug
+ * @param {object} games
+ */
 export default (socket, debug, games) => {
   if (debug) console.log('[debug] [on] [game:rooms:get-available] ()');
 
