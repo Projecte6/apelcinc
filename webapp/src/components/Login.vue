@@ -14,6 +14,7 @@
         class="p-3 font-semibold text-2xl text-center uppercase border-none rounded focus:ring-0"
         type="text"
         placeholder="Usuari"
+        autofocus
         @keydown.space.prevent
         @keyup.enter="onClickLogin"
       />

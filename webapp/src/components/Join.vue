@@ -50,7 +50,7 @@
                 <td class="text-sm font-bold px-6 py-4 whitespace-nowrap" v-text="`#${room.id}`" />
                 <td class="text-sm font-bold px-6 py-4 whitespace-nowrap" v-text="room.name" />
                 <td class="text-sm font-bold px-6 py-4 whitespace-nowrap" v-text="`${room.players}/4`" />
-                <td class="text-sm font-bold px-6 py-4 whitespace-nowrap" v-text="'Publica'" />
+                <td class="text-sm font-bold px-6 py-4 whitespace-nowrap" v-text="room.type" />
               </tr>
             </tbody>
           </table>
