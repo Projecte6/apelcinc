@@ -6,13 +6,13 @@ export default (socket, debug, games) => {
   for (let property in games) {
     let game = games[property];
 
-    if (game.status !== 'waiting') continue;
+    if (game.status !== 'waiting' || game.type !== 'public') continue;
 
     waitingRooms.push({
       id: game.id,
       name: game.name,
       players: Object.keys(game.players).length,
-      type: 'Publica',
+      type: game.type,
     });
   }
 
