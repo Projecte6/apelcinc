@@ -25,7 +25,7 @@
             <div class="flex items-center">
               <button @click="onClickCreate" class="rounded-md bg-[#585858] text-white font-bold text-xl p-3 mt-4 mb-4 "><p class="text-white hover:text-yellow-100 ease-in-out duration-200" >Crear partida</p></button>
               <div class="ml-8">
-                <input type="checkbox" class="bg-red-700 focus:shadow-none focus:outline-none"/>
+                <input type="checkbox" v-model="privateRoom" class="bg-red-700 focus:shadow-none focus:outline-none"/>
                 <label class="ml-2 font-bold text-md">Sala Privada</label>
               </div>
             </div>
@@ -50,10 +50,17 @@ const props = defineProps({
 const emit = defineEmits(['update:currentPage']);
 
 const name = ref('');
+let privateRoom = ref('');
 const errorMessage = ref(null);
 
 const onClickCreate = () => {
-  props.socket.emit('game:rooms:create', name.value);
+  if(privateRoom.value === ''){
+    privateRoom.value = "public";
+  }else{
+    privateRoom.value = "private";
+  }
+  console.log(privateRoom.value);
+  props.socket.emit('game:rooms:create', name.value , privateRoom.value);
 
   if (name.value === '') {
     errorMessage.value = 'Has d\'introduir un nom de sala';
@@ -66,8 +73,6 @@ const onClickCreate = () => {
     setTimeout(() => errorMessage.value = null, 4000);
     return;
   }
-  
-  props.socket.emit('game:create', name.value);
   name.value = '';
  };
 

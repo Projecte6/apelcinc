@@ -11,10 +11,10 @@ import { Socket } from 'socket.io';
  * @param {Array<string>} cards
  * @param {object} games
  * @param {string} name
+ * @param {string} type
  */
-export default async (socket, debug, cards, games, name) => {
+export default async (socket, debug, cards, games, name,type) => {
   let id = nanoid(5);
-
   let clonedCards = lodash.cloneDeep(cards);
   let suffledCards = lodash.shuffle(clonedCards);
 
@@ -100,7 +100,7 @@ export default async (socket, debug, cards, games, name) => {
 
   games[id].players[socket.id] = { cards: [] };
 
-  let room = { id, name };
+  let room = { id, name, type };
 
   await socket.join(`game-${id}`);
   await socket.leave('global');
