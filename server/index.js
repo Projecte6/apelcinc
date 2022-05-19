@@ -16,6 +16,8 @@ import socketWebPageJoin from './sockets/web/page/join.js';
 import socketGameRoomsCreate from './sockets/game/rooms/create.js';
 import socketGameRoomsGetAvailable from './sockets/game/rooms/getAvailable.js';
 import socketGameRoomsJoin from './sockets/game/rooms/join.js';
+import socketGameRoomsStartGame from './sockets/game/rooms/startGame.js'
+import socketGameRoomsMoveCard from './sockets/game/rooms/moveCard.js';
 import socketDisconnect from './sockets/disconnect.js';
 import socketChatMessage from './sockets/chat/message.js';
 
@@ -27,6 +29,38 @@ import eventRoomLeave from './events/room/leave.js';
 
 let rooms = [];
 let usernames = [];
+
+// let cards = [
+//   { number: 1,  type: 'espadas' }, { number: 1,  type: 'copas' }, { number: 1,  type: 'oros' }, { number: 1,  type: 'bastos' },
+//   { number: 2,  type: 'espadas' }, { number: 2,  type: 'copas' }, { number: 2,  type: 'oros' }, { number: 2,  type: 'bastos' },
+//   { number: 3,  type: 'espadas' }, { number: 3,  type: 'copas' }, { number: 3,  type: 'oros' }, { number: 3,  type: 'bastos' },
+//   { number: 4,  type: 'espadas' }, { number: 4,  type: 'copas' }, { number: 4,  type: 'oros' }, { number: 4,  type: 'bastos' },
+//   { number: 5,  type: 'espadas' }, { number: 5,  type: 'copas' }, { number: 5,  type: 'oros' }, { number: 5,  type: 'bastos' },
+//   { number: 6,  type: 'espadas' }, { number: 6,  type: 'copas' }, { number: 6,  type: 'oros' }, { number: 6,  type: 'bastos' },
+//   { number: 7,  type: 'espadas' }, { number: 7,  type: 'copas' }, { number: 7,  type: 'oros' }, { number: 7,  type: 'bastos' },
+//   { number: 8,  type: 'espadas' }, { number: 8,  type: 'copas' }, { number: 8,  type: 'oros' }, { number: 8,  type: 'bastos' },
+//   { number: 9,  type: 'espadas' }, { number: 9,  type: 'copas' }, { number: 9,  type: 'oros' }, { number: 9,  type: 'bastos' },
+//   { number: 10, type: 'espadas' }, { number: 10, type: 'copas' }, { number: 10, type: 'oros' }, { number: 10, type: 'bastos' },
+//   { number: 11, type: 'espadas' }, { number: 11, type: 'copas' }, { number: 11, type: 'oros' }, { number: 11, type: 'bastos' },
+//   { number: 12, type: 'espadas' }, { number: 12, type: 'copas' }, { number: 12, type: 'oros' }, { number: 12, type: 'bastos' },
+// ];
+
+let cards = [
+  '1-e',  '1-c',  '1-o',  '1-b',
+  '2-e',  '2-c',  '2-o',  '2-b',
+  '3-e',  '3-c',  '3-o',  '3-b',
+  '4-e',  '4-c',  '4-o',  '4-b',
+  '5-e',  '5-c',  '5-o',  '5-b',
+  '6-e',  '6-c',  '6-o',  '6-b',
+  '7-e',  '7-c',  '7-o',  '7-b',
+  '8-e',  '8-c',  '8-o',  '8-b',
+  '9-e',  '9-c',  '9-o',  '9-b',
+  '10-e', '10-c', '10-o', '10-b',
+  '11-e', '11-c', '11-o', '11-b',
+  '12-e', '12-c', '12-o', '12-b',
+];
+
+let games = {};
 
 app.get('/', (request, response) => {
   response.send('Hello World!');
@@ -41,134 +75,32 @@ io.on('connection', (socket) => {
 
   // Web
   socket.on('web:page:join', () => socketWebPageJoin(socket, debug));
-  
+
   // Game
-  socket.on('game:login', (name) => socketGameLogin(socket, debug, usernames, name));
-  socket.on('game:rooms:create', (name) => socketGameRoomsCreate(socket, debug, rooms, name));
-  socket.on('game:rooms:get-available', () => socketGameRoomsGetAvailable(io, socket, rooms, debug));
-  socket.on('game:rooms:join', (id) => socketGameRoomsJoin(io, socket, debug, id));
-  
+  socket.on('game:login', (name) => socketGameLogin(io, socket, debug, usernames, name));
+  socket.on('game:rooms:create', (name) => socketGameRoomsCreate(socket, debug, cards, games, name));
+  socket.on('game:rooms:get-available', () => socketGameRoomsGetAvailable(socket, debug, games));
+  socket.on('game:rooms:join', (id) => socketGameRoomsJoin(io, socket, debug, games, id));
+  socket.on('game:rooms:start-game', () => socketGameRoomsStartGame(io, socket, debug, games));
+  socket.on('game:rooms:move-card', (card) => socketGameRoomsMoveCard(io, socket, debug, games, card));
+
   // Chat
   socket.on('chat:message', (message) => socketChatMessage(socket, debug, message));
-  
+
   // Native
   socket.on('disconnect', () => socketDisconnect(socket, debug, usernames));
 });
 
+////
 // Events
+////
+
+// Native
 io.of('/').adapter.on('create-room', (room) => eventRoomCreate(debug, rooms, room));
 io.of('/').adapter.on('delete-room', (room) => eventRoomDelete(io, debug, rooms, room));
-io.of('/').adapter.on('join-room', (room, id) => eventRoomJoin(io, debug, room, id));
-io.of('/').adapter.on('leave-room', (room, id) => eventRoomLeave(debug, room, id));
+io.of('/').adapter.on('join-room', (room, id) => eventRoomJoin(io, debug, games, room, id));
+io.of('/').adapter.on('leave-room', (room, id) => eventRoomLeave(io, debug, games, room, id));
 
 server.listen(process.env.PORT, () => {
   console.log(`listening on *:${process.env.PORT}`);
 });
-
-
-
-// var cards = [
-//   [1,"espadas"],[1,"copas"],[1,"oros"],[1,"bastos"],
-//   [2,"espadas"],[2,"copas"],[2,"oros"],[2,"bastos"],
-//   [3,"espadas"],[3,"copas"],[3,"oros"],[3,"bastos"],
-//   [4,"espadas"],[4,"copas"],[4,"oros"],[4,"bastos"],
-//   [5,"espadas"],[5,"copas"],[5,"oros"],[5,"bastos"],
-//   [6,"espadas"],[6,"copas"],[6,"oros"],[6,"bastos"],
-//   [7,"espadas"],[7,"copas"],[7,"oros"],[7,"bastos"],
-//   [8,"espadas"],[8,"copas"],[8,"oros"],[8,"bastos"],
-//   [9,"espadas"],[9,"copas"],[9,"oros"],[9,"bastos"],
-//   [10,"espadas"],[10,"copas"],[10,"oros"],[10,"bastos"],
-//   [11,"espadas"],[11,"copas"],[11,"oros"],[11,"bastos"],
-//   [12,"espadas"],[12,"copas"],[12,"oros"],[12,"bastos"],
-// ],
-
-// shuffled_array = lodash.shuffle(cards);
-
-// Printing the output
-// console.log(shuffled_array);
-
-// let game = {
-//   /*Id of player currently playing*/
-//   turn: 1,
-//   /*Object of the 12 positions actual state*/
-//   table: {
-//     'oros': {
-//       1: false,
-//       2: false,
-//       3: false,
-//       4: false,
-//       5: false,
-//       6: false,
-//       7: false,
-//       8: false,
-//       9: false,
-//       10: false,
-//       11: false,
-//       12: false,
-//     },
-//     'espadas': {
-//       1: false,
-//       2: false,
-//       3: false,
-//       4: false,
-//       5: false,
-//       6: false,
-//       7: false,
-//       8: false,
-//       9: false,
-//       10: false,
-//       11: false,
-//       12: false,
-//     },
-//     'copas': {
-//       1: false,
-//       2: false,
-//       3: false,
-//       4: false,
-//       5: false,
-//       6: false,
-//       7: false,
-//       8: false,
-//       9: false,
-//       10: false,
-//       11: false,
-//       12: false,
-//     },
-//     'bastos': {
-//       1: false,
-//       2: false,
-//       3: false,
-//       4: false,
-//       5: false,
-//       6: false,
-//       7: false,
-//       8: false,
-//       9: false,
-//       10: false,
-//       11: false,
-//       12: false,
-//     },
-//   },
-//   /*Array of the players currently connected in the game*/
-//   players: [
-//     {
-//       /*Id to identify the player*/
-//       id: 1,
-//       /*Name of the player logged*/
-//       name: 'demo',
-//       /*Array of the cards of the player*/
-//       cards: [
-//         {
-//           /*To identify the card we gonna use the id for security concerns*/
-//           id: 0,
-//           /*Number of the card*/
-//           number: 3,
-//           /*Type of card*/
-//           type: 'espadas'
-//         },
-//         { number: 3, type: 'copas' },
-//         { number: 4, type: 'oro' },
-//       ]
-//     }
-//   ]
-// }
