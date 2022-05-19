@@ -9,7 +9,7 @@ import lodash from 'lodash';
  * @param {object} games
  */
 export default (io, socket, debug, games) => {
-  console.log('[debug] [on] [game:rooms:start-game] ()');
+  if (debug) console.log('[debug] [on] [game:rooms:start-game] ()');
 
   let rooms = Array.from(socket.rooms.values());
   let joinedGames = rooms.filter(r => r.startsWith('game-'));
@@ -48,9 +48,12 @@ export default (io, socket, debug, games) => {
     return previous;
   }, []);
 
+  let playersKeys = Object.keys(game.players);
+
   for (let [index, value] of cards.entries()) {
     let playerCards = lodash.cloneDeep(value);
-    let playerId = Object.keys(game.players)[index]
+
+    let playerId = playersKeys[index]
     let player = game.players[playerId];
 
     player.cards = playerCards;
@@ -65,7 +68,7 @@ export default (io, socket, debug, games) => {
     io.to(playerId).emit('game:rooms:get-cards', player.cards);
   };
 
-  let playerId = Object.keys(game.players)[game.turn];
+  let playerId = playersKeys[game.turn];
   let playerName = io.sockets.sockets.get(playerId).name;
 
   io.to(`game-${game.id}`).emit('game:rooms:turn', playerName);

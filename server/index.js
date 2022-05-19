@@ -16,7 +16,8 @@ import socketWebPageJoin from './sockets/web/page/join.js';
 import socketGameRoomsCreate from './sockets/game/rooms/create.js';
 import socketGameRoomsGetAvailable from './sockets/game/rooms/getAvailable.js';
 import socketGameRoomsJoin from './sockets/game/rooms/join.js';
-import socketGameRoomsStartGame from './sockets/game/rooms/startGame.js'
+import socketGameRoomsStartGame from './sockets/game/rooms/startGame.js';
+import socketGameRoomsSkipTurn from './sockets/game/rooms/skipTurn.js';
 import socketGameRoomsMoveCard from './sockets/game/rooms/moveCard.js';
 import socketDisconnect from './sockets/disconnect.js';
 import socketChatMessage from './sockets/chat/message.js';
@@ -29,21 +30,6 @@ import eventRoomLeave from './events/room/leave.js';
 
 let rooms = [];
 let usernames = [];
-
-// let cards = [
-//   { number: 1,  type: 'espadas' }, { number: 1,  type: 'copas' }, { number: 1,  type: 'oros' }, { number: 1,  type: 'bastos' },
-//   { number: 2,  type: 'espadas' }, { number: 2,  type: 'copas' }, { number: 2,  type: 'oros' }, { number: 2,  type: 'bastos' },
-//   { number: 3,  type: 'espadas' }, { number: 3,  type: 'copas' }, { number: 3,  type: 'oros' }, { number: 3,  type: 'bastos' },
-//   { number: 4,  type: 'espadas' }, { number: 4,  type: 'copas' }, { number: 4,  type: 'oros' }, { number: 4,  type: 'bastos' },
-//   { number: 5,  type: 'espadas' }, { number: 5,  type: 'copas' }, { number: 5,  type: 'oros' }, { number: 5,  type: 'bastos' },
-//   { number: 6,  type: 'espadas' }, { number: 6,  type: 'copas' }, { number: 6,  type: 'oros' }, { number: 6,  type: 'bastos' },
-//   { number: 7,  type: 'espadas' }, { number: 7,  type: 'copas' }, { number: 7,  type: 'oros' }, { number: 7,  type: 'bastos' },
-//   { number: 8,  type: 'espadas' }, { number: 8,  type: 'copas' }, { number: 8,  type: 'oros' }, { number: 8,  type: 'bastos' },
-//   { number: 9,  type: 'espadas' }, { number: 9,  type: 'copas' }, { number: 9,  type: 'oros' }, { number: 9,  type: 'bastos' },
-//   { number: 10, type: 'espadas' }, { number: 10, type: 'copas' }, { number: 10, type: 'oros' }, { number: 10, type: 'bastos' },
-//   { number: 11, type: 'espadas' }, { number: 11, type: 'copas' }, { number: 11, type: 'oros' }, { number: 11, type: 'bastos' },
-//   { number: 12, type: 'espadas' }, { number: 12, type: 'copas' }, { number: 12, type: 'oros' }, { number: 12, type: 'bastos' },
-// ];
 
 let cards = [
   '1-e',  '1-c',  '1-o',  '1-b',
@@ -82,6 +68,7 @@ io.on('connection', (socket) => {
   socket.on('game:rooms:get-available', () => socketGameRoomsGetAvailable(socket, debug, games));
   socket.on('game:rooms:join', (id) => socketGameRoomsJoin(io, socket, debug, games, id));
   socket.on('game:rooms:start-game', () => socketGameRoomsStartGame(io, socket, debug, games));
+  socket.on('game:rooms:skip-turn', () => socketGameRoomsSkipTurn(io, socket, debug, games));
   socket.on('game:rooms:move-card', (card) => socketGameRoomsMoveCard(io, socket, debug, games, card));
 
   // Chat

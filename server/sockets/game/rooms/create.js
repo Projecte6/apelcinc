@@ -1,3 +1,4 @@
+// Packages
 import { nanoid } from 'nanoid';
 import lodash from 'lodash';
 
@@ -103,6 +104,8 @@ export default async (socket, debug, cards, games, name) => {
 
   await socket.join(`game-${id}`);
   await socket.leave('global');
+
+  socket.game = id;
 
   socket.emit('game:rooms:create:success', room);
   socket.to('searching').emit('game:rooms:created', room);
