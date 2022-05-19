@@ -90,6 +90,26 @@ onMounted(() => {
       },
       this
     );
+    /** Skip turn **/
+    const skipButton = this.add
+        .text(1000, 500, " Skip", {
+          fontFamily: 'Inter, "sans-serif"',
+          color: "black",
+          backgroundColor: "#F7EBB1",
+          fontStyle: "normal",
+          padding: { left: 20, right: 20, top: 10, bottom: 10 },
+        })
+        .setInteractive()
+        .setFontSize(20);
+    skipButton.visible = false;
+    skipButton.on(
+        "pointerdown",
+        function (_pointer) {
+          console.log("I pressed skip!!")
+          props.socket.emit("game:rooms:skip-turn");
+        },
+        this
+    );
     /** Player's position. */
     const PositionPlayer1 = this.add.text(80, 350, "Player left", {
       fontFamily: 'Koulen, "cursive"',
@@ -149,8 +169,10 @@ onMounted(() => {
       .image(globalx + 30, globaly - 275, "backcard3")
       .setScale(0.2, 0.2); /*Player up*/
     PositionBackcardUp.visible = false;
+
     /** Stats of the game **/
     const nameRoom = "Sala #1";
+
     const TextNameOfRoom = this.add.text(25, 10, "Nom sala: " + nameRoom, {
       fontFamily: 'Inter, "sans-serif"',
       color: "#000000",
@@ -180,6 +202,7 @@ onMounted(() => {
     const cardsActualPlayer = [];
     let xposition = 0;
     props.socket.on("game:rooms:get-cards", (cardsActualPlayer) => {
+      skipButton.visible = true;
       this.tweens.add(
         {
           targets: fadeOut,
@@ -198,6 +221,7 @@ onMounted(() => {
         },
         this
       );
+
       if (debug) {
         console.log("[Debug] Array of the current cards of the player playing: ");
         console.log(cardsRecieved);
