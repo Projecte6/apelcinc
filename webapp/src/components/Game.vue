@@ -28,7 +28,6 @@ const props = defineProps({
 const globalx = 675;
 const globaly = 400;
 
-
 /**
  *
  * Defined the colors of the game that can be used in the screen background
@@ -105,7 +104,6 @@ onMounted(() => {
    * The actual interactions between the server and the client should be made inside here
    * **/
   function create() {
-
     /**  Button to start the game **/
 
     const startButton = this.add
@@ -132,21 +130,28 @@ onMounted(() => {
     );
     /** Player's waiting. */
     const WaitPlayers = this.add
-        .text(globalx - 100, globaly - 45, "ESPERANT JUGADORS...", {
+        .text(globalx - 100, globaly, "ESPERANT JUGADORS...", {
           fontFamily: 'Inter, "sans-serif"',
+          fontStyle: "normal",
+          fontSize: "24px",
+          color: "black",
+          strokeThickness: 7,
+          fontWeight: "bold",
+          stroke: "#f6eab0",
         })
         .setScale(1.4);
-
     /** Invisible button to skip the game **/
 
     const skipButton = this.add
-        .text(1000, 500, " Skip", {
-          fontFamily: 'Inter, "sans-serif"',
-          color: "black",
-          backgroundColor: "#F7EBB1",
-          fontStyle: "normal",
-          padding: { left: 20, right: 20, top: 10, bottom: 10 },
-        }).setInteractive().setFontSize(20);
+      .text(1000, 500, " Skip", {
+        fontFamily: 'Inter, "sans-serif"',
+        color: "black",
+        backgroundColor: "#F7EBB1",
+        fontStyle: "normal",
+        padding: { left: 20, right: 20, top: 10, bottom: 10 },
+      })
+      .setInteractive()
+      .setFontSize(20);
 
     skipButton.visible = false;
 
@@ -156,11 +161,11 @@ onMounted(() => {
      * **/
 
     skipButton.on(
-        "pointerdown",
-        function (_pointer) {
-          props.socket.emit("game:rooms:skip-turn");
-        },
-        this
+      "pointerdown",
+      function (_pointer) {
+        props.socket.emit("game:rooms:skip-turn");
+      },
+      this
     );
 
     /************** PLAYER POSITIONS TODO IMPORTANT **************/
