@@ -29,14 +29,15 @@
             <div class="flex items-center">
               <button
                 @click="onClickCreate"
-                class="rounded-md bg-[#585858] text-white font-bold text-xl p-3 mt-4 mb-4"
+                class="rounded-md bg-[#585858] text-white font-bold text-xl p-3 mt-4 mb-4 hover:transition-colors duration-200 hover:animate-bounce hover:bg-amber-300"
               >
-                <p class="text-white hover:text-yellow-100 ease-in-out duration-200">
-                  Crear partida
-                </p>
+                Crear partida
               </button>
               <div class="ml-8">
-                <input type="checkbox" v-model="privateRoom" class="bg-red-700 focus:shadow-none focus:outline-none"/>
+                <input
+                  type="checkbox"
+                  class="bg-red-700 focus:shadow-none focus:outline-none"
+                />
                 <label class="ml-2 font-bold text-md">Sala Privada</label>
               </div>
             </div>
@@ -60,18 +61,11 @@ const props = defineProps({
 
 const emit = defineEmits(["update:currentPage"]);
 
-const name = ref('');
-let privateRoom = ref('');
+const name = ref("");
 const errorMessage = ref(null);
 
 const onClickCreate = () => {
-  if(privateRoom.value === ''){
-    privateRoom.value = "public";
-  }else{
-    privateRoom.value = "private";
-  }
-  console.log(privateRoom.value);
-  props.socket.emit('game:rooms:create', name.value , privateRoom.value);
+  props.socket.emit("game:rooms:create", name.value);
 
   if (name.value === "") {
     errorMessage.value = "Has d'introduir un nom de sala";
@@ -84,14 +78,15 @@ const onClickCreate = () => {
     setTimeout(() => (errorMessage.value = null), 4000);
     return;
   }
+
+  props.socket.emit("game:create", name.value);
   name.value = "";
 };
 
 // const onClickCreate = () => {
 //   name.value = name.value.replaceAll(' ', '');
-props.socket.on("game:rooms:create:success", (room) => {
-  console.log(room);
-  emit("update:roomName", room);
+props.socket.on("game:rooms:create:success", () => {
+  console.log("Room created");
   emit("update:currentPage", "game");
 });
 
