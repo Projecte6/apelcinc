@@ -49,9 +49,9 @@
             <div class="flex w-36 justify-end ml-6">
               <button
                 @click="isOpen = true"
-                class="rounded-md bg-[#585858] text-white font-bold text-md p-1 w-24 hover:bg-opacity-80"
+                class="rounded-md bg-[#585858] text-white font-bold text-md p-1 w-44 hover:bg-opacity-80 hover:transition-colors duration-200 hover:animate-pulse hover:bg-amber-300"
               >
-                Sales Privades
+                Partida privada
               </button>
             </div>
           </div>

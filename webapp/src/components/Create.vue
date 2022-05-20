@@ -29,11 +29,9 @@
             <div class="flex items-center">
               <button
                 @click="onClickCreate"
-                class="rounded-md bg-[#585858] text-white font-bold text-xl p-3 mt-4 mb-4"
+                class="rounded-md bg-[#585858] text-white font-bold text-xl p-3 mt-4 mb-4 hover:transition-colors duration-200 hover:animate-bounce hover:bg-amber-300"
               >
-                <p class="text-white hover:text-yellow-100 ease-in-out duration-200">
-                  Crear partida
-                </p>
+                Crear partida
               </button>
               <div class="ml-8">
                 <input type="checkbox" v-model="privateRoom" class="bg-red-700 focus:shadow-none focus:outline-none"/>
@@ -90,7 +88,6 @@ const onClickCreate = () => {
 // const onClickCreate = () => {
 //   name.value = name.value.replaceAll(' ', '');
 props.socket.on("game:rooms:create:success", (room) => {
-  console.log(room);
   emit("update:roomName", room);
   emit("update:currentPage", "game");
 });

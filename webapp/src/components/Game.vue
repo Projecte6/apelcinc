@@ -130,13 +130,18 @@ onMounted(() => {
       this
     );
     /** Player's waiting. */
-    const WaitPlayers = this.add
-      .text(globalx - 100, globaly - 45, "ESPERANT JUGADORS...", {
-        fontFamily: 'Inter, "sans-serif"',
-      })
-      .setScale(1.4);
+    const WaitPlayers = this.add.text(globalx - 100, globaly, "ESPERANT JUGADORS...", {
+          fontFamily: 'Inter, "sans-serif"',
+          fontStyle: "normal",
+          fontSize: "24px",
+          color: "black",
+          strokeThickness: 7,
+          fontWeight: "bold",
+          stroke: "#f6eab0",
+        })
+        .setScale(1.4);
 
-    /** Invisible button to skip the game **/
+  /** Invisible button to skip the game **/
 
     const skipButton = this.add
       .text(1000, 500, " Skip", {

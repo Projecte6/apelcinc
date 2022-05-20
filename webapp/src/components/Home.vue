@@ -3,7 +3,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-[#230834]">
       <!-- Create -->
       <button
-        class="flex p-4 flex-col items-center justify-center bg-cover bg-center bg-no-repeat border-4 border-[#230834] rounded-xl leading-none hover:grayscale-[0.6]"
+        class="flex p-4 flex-col items-center justify-center bg-cover bg-center bg-no-repeat border-4 border-[#230834] rounded-xl leading-none hover:grayscale-[0.6]  ease-in-out hover:animate-bounce transition-colors duration-200"
         style="background-image: url(/images/btn-bkg.png)"
         @click="onClickCreate"
       >
@@ -18,7 +18,7 @@
 
       <!-- Join -->
       <button
-        class="flex p-4 flex-col items-center justify-center bg-cover bg-center bg-no-repeat border-4 border-[#230834] rounded-xl leading-none hover:grayscale-[0.6]"
+        class="flex p-4 flex-col items-center justify-center bg-cover bg-center bg-no-repeat border-4 border-[#230834] rounded-xl leading-none hover:grayscale-[0.6] transition-colors duration-200 hover:animate-bounce"
         style="background-image: url(/images/btn-bkg.png)"
         @click="onClickJoin"
       >
@@ -33,7 +33,7 @@
 
       <!-- Rules -->
       <button
-        class="flex p-4 flex-col items-center justify-center bg-cover bg-center bg-no-repeat border-4 border-[#230834] rounded-xl leading-none hover:grayscale-[0.6]"
+        class="flex p-4 flex-col items-center justify-center bg-cover bg-center bg-no-repeat border-4 border-[#230834] rounded-xl leading-none hover:grayscale-[0.6] ease-in-out hover:animate-bounce transition-colors duration-200"
         style="background-image: url(/images/btn-bkg.png)"
         @click="isOpen = true"  
       >
@@ -53,7 +53,7 @@
 
       <!-- Exit -->
       <button
-        class="flex p-4 flex-col items-center justify-center bg-cover bg-center bg-no-repeat border-4 border-[#230834] rounded-xl leading-none hover:grayscale-[0.6]"
+        class="flex p-4 flex-col items-center justify-center bg-cover bg-center bg-no-repeat border-4 border-[#230834] rounded-xl leading-none hover:grayscale-[0.6]  hover:animate-bounce transition-colors duration-200"
         style="background-image: url(/images/btn-bkg.png)"
         @click="onClickExit"  
       >
