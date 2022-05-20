@@ -11,11 +11,10 @@ import { onMounted, ref } from "vue";
 /** Constant to define when the chat is opened **/
 const isOpen = ref(false);
 
+const isError = ref(false);
+
 /** Using the env file we can identify the debug variable **/
 const debug = import.meta.env.VITE_DEBUG;
-
-/** Defined the variable to display the error msg**/
-const showError = false;
 
 /** To be able to use the socket as an object, we define it as an props**/
 const props = defineProps({
@@ -130,18 +129,19 @@ onMounted(() => {
       this
     );
     /** Player's waiting. */
-    const WaitPlayers = this.add.text(globalx - 100, globaly, "ESPERANT JUGADORS...", {
-          fontFamily: 'Inter, "sans-serif"',
-          fontStyle: "normal",
-          fontSize: "24px",
-          color: "black",
-          strokeThickness: 7,
-          fontWeight: "bold",
-          stroke: "#f6eab0",
-        })
-        .setScale(1.4);
+    const WaitPlayers = this.add
+      .text(globalx - 100, globaly, "ESPERANT JUGADORS...", {
+        fontFamily: 'Inter, "sans-serif"',
+        fontStyle: "normal",
+        fontSize: "24px",
+        color: "black",
+        strokeThickness: 7,
+        fontWeight: "bold",
+        stroke: "#f6eab0",
+      })
+      .setScale(1.4);
 
-  /** Invisible button to skip the game **/
+    /** Invisible button to skip the game **/
 
     const skipButton = this.add
       .text(1000, 500, " Skip", {
@@ -367,10 +367,10 @@ onMounted(() => {
       const cardMoved = objectsClicked[0].texture.key;
 
       props.socket.emit("game:rooms:move-card", cardMoved);
+
       props.socket.on("game:rooms:error", (message) => {
         errormsg.value = message;
         console.log(errormsg.value);
-        setTimeout(() => (this.showError = true), 2000);
       });
     });
 
@@ -428,11 +428,31 @@ onMounted(() => {
 <template>
   <div id="game-container">
     <div
-      v-show="showError"
-      class="bg-red-100 border border-red-400 text-center text-red-700 px-4 py-3 rounded absolute top-15 right-40 w-80"
+      v-if="errormsg"
+      class="bg-red-100 border border-red-400 text-center text-red-700 rounded absolute top-28 right-40 w-80"
       role="alert"
     >
-      <span class="font-bold" v-if="errormsg" v-text="errormsg" />
+      <div class="h-6 w-full text-right pt-1 pr-1">
+        <button @click="errormsg = !errormsg">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 text-red hover:bg-[#E79F9F] rounded-full"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="w-full pb-5">
+        <span class="font-bold text-md" v-text="errormsg" />
+      </div>
     </div>
     <div class="absolute top-28 right-2">
       <button
