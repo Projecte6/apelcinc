@@ -16,6 +16,14 @@ const isError = ref(false);
 /** Using the env file we can identify the debug variable **/
 const debug = import.meta.env.VITE_DEBUG;
 
+/** Defined the variable to display the error msg**/
+const showError = false;
+
+/** We define the emit object **/
+
+const emit = defineEmits(['update:currentPage']);
+
+
 /** To be able to use the socket as an object, we define it as an props**/
 const props = defineProps({
   socket: Object,
@@ -129,19 +137,18 @@ onMounted(() => {
       this
     );
     /** Player's waiting. */
-    const WaitPlayers = this.add
-      .text(globalx - 100, globaly, "ESPERANT JUGADORS...", {
-        fontFamily: 'Inter, "sans-serif"',
-        fontStyle: "normal",
-        fontSize: "24px",
-        color: "black",
-        strokeThickness: 7,
-        fontWeight: "bold",
-        stroke: "#f6eab0",
-      })
-      .setScale(1.4);
+    const WaitPlayers = this.add.text(globalx - 230, globaly- 60  , "ESPERANT JUGADORS...", {
+          fontFamily: 'Inter, "sans-serif"',
+          fontStyle: "normal",
+          fontSize: "24px",
+          color: "black",
+          strokeThickness: 7,
+          fontWeight: "bold",
+          stroke: "#f6eab0",
+        })
+        .setScale(1.4);
 
-    /** Invisible button to skip the game **/
+  /** Invisible button to skip the game **/
 
     const skipButton = this.add
       .text(1000, 500, " Skip", {
@@ -164,6 +171,7 @@ onMounted(() => {
     skipButton.on(
       "pointerdown",
       function (_pointer) {
+        console.log("Hola");
         props.socket.emit("game:rooms:skip-turn");
       },
       this
@@ -255,13 +263,18 @@ onMounted(() => {
       padding: { left: 15, right: 15, top: 7, bottom: 7 },
     });
 
-    /**TODO: Check the turn of the current player **/
-    props.socket.on("game:room:turn", (turn) => {
-      console.log(turn);
+    /**
+     * Event that checks the turn of the current player
+     *
+     * action: Update the current player
+     *  **/
+
+    props.socket.on("game:rooms:turn", (turn) => {
+      if(turn == null){ turn = "Comença el 5 😋";}
+     turnActualPlayer.text = "El turn del jugador és: " + turn;
     });
 
-    const CurrentPlayer = "Player 5";
-    const TurnPlayerName = this.add.text(25, 90, "El turn es de: " + CurrentPlayer, {
+    const turnActualPlayer = this.add.text(25, 90, "Comença el 5 😋"  , {
       fontFamily: 'Inter, "sans-serif"',
       color: "white",
       backgroundColor: "gray",
