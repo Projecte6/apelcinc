@@ -48,7 +48,9 @@ const ChangeColor = () => {
   if (index > colours.length) {
     index = 0;
   }
-  gamecolor.style.backgroundColor = colours[index++];
+  index++;
+  gamecolor.style.backgroundColor = colours[index];
+  document.body.style.background = colours[index];
 };
 const errormsg = ref("");
 
