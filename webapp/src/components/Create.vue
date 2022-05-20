@@ -77,8 +77,8 @@ const onClickCreate = () => {
     return;
   }
 
-  if (name.value.length < 2) {
-    errorMessage.value = "El nom ha de tenir una llargada mínima de 2 caràcters";
+  if (name.value.length < 2 || name.value.length >13) {
+    errorMessage.value = "El nom ha de tenir una llargada de entre 2 y 12 caràcters";
     setTimeout(() => (errorMessage.value = null), 4000);
     return;
   }
