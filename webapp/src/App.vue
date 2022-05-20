@@ -73,7 +73,7 @@ const roomName = ref("");
 // const messages = ref(null);
 // const messages = ref(null);
 
-const socket = io("144.91.79.189:3210", { upgrade: false });
+const socket = io("localhost:3210", { upgrade: false });
 
 // socket.on('messages', function (data) {
 //   messages.value = data;
