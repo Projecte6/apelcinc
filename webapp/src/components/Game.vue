@@ -1,34 +1,56 @@
 <script setup>
+/** Import of the GAMEDEV framework**/
 import Phaser from "phaser";
+
+/** Import of the chat component **/
 import Chat from "../components/Chat.vue";
+
+/** What is it ?**/
 import { onMounted, ref } from "vue";
+
+
+/** Constant to define when the chat is opened **/
 const isOpen = ref(false);
-const debug = true;
+
+/** Using the env file we can identify the debug variable **/
+const debug = import.meta.env.VITE_DEBUG;
+
+/** To be able to use the socket as an object, we define it as an props**/
 const props = defineProps({
   socket: Object,
 });
-const currentPlayers = [];
-props.socket.on("game:room:player-join", (player) => {
-  console.log(player);
-});
-/*TODO: Check the turn of the current player */
-props.socket.on("game:room:turn", (turn) => {
-  console.log(turn);
-});
-/* Var config, contains the canvas size, initialize Phaser and charge the method's contained in scene (screen) */
+
+/** Generic constants to resize the screen **/
 const globalx = 675;
 const globaly = 400;
 
-var colours = ["#023117", "#350202", "#210231", "#06304E"];
-var index = 0;
+
+/**
+ *
+ * Defined the colors of the game that can be used in the screen background
+ * Changecolor -> Changes the color of the game container using dom
+ *
+ * **/
+const colours = ["#023117", "#350202", "#210231", "#06304E"];
+let index = 0;
 
 const ChangeColor = () => {
-  var gamecolor = document.getElementById("game-container");
+  const gamecolor = document.getElementById("game-container");
   if (index > colours.length) {
     index = 0;
   }
   gamecolor.style.backgroundColor = colours[index++];
 };
+
+/** We mound the component in idependent div
+ *
+ * @width: Width of the canva
+ * @height : Height of the canva
+ * @type : Phaser type used
+ * @parent : The container div that we gonna export the component
+ * @transparent : Back Visibilty
+ * @scene : Defined Phaser methods
+ * **/
 
 onMounted(() => {
   const config = {
@@ -44,53 +66,73 @@ onMounted(() => {
     },
   };
 
-  const game = new Phaser.Game(config);
+  /** Creation of the Phaser game using the config parameters**/
+  new Phaser.Game(config);
+
+  /** Defined the array of cards and the types **/
   const pals = ["o", "e", "b", "c"];
-  /** We create an array to storage the letters contained on the image's name. */
   const cards = [];
-  //Precharge the images or variables to be used later.
+
+  /**
+   * The function preaload charges the needed resources to display the game
+   *  Here we are loading the images of all the cards needed for the game
+   * **/
   function preload() {
     if (debug) {
-      /**TODO: Get the name of the current room **/
-      console.log["Debug:" + "Game started"];
+      console.log("[Debug]: Game started");
     }
-    /** A Double for to walk first the "pals array (letters)" and after the numbers for precharge every image. */
     for (let i = 0; i < pals.length; i++) {
       for (let j = 1; j <= 12; j++) {
         this.load.image(j + "-" + pals[i], "/img/" + j + "-" + pals[i] + ".png");
       }
     }
-    /** Here we set the player's card space  */
     for (let i = 1; i <= 3; i++) {
       this.load.image("backcard" + i, "/img/backcard.png");
     }
+    if (debug) {
+      console.log("[Debug]: Loaded images correctly");
+    }
   }
-  //Create or show the images which gonna be contained
+  /**
+   * The method create gonna create all the resources for the game
+   * The actual interactions between the server and the client should be made inside here
+   * **/
   function create() {
-    /*Here we create the button than gonna start the game*/
-    const fadeOut = this.add
+
+    /**  Button to start the game **/
+
+    const startButton = this.add
       .text(880, 345, " 🏁 Començar  🏁", {
         fontFamily: 'Skranji, "cursive"',
         color: "red",
         backgroundColor: "#F7EBB1",
         fontStyle: "normal",
-        borderradius: "5px",
         strokeThickness: 10,
         padding: { left: 10, right: 10, top: 10, bottom: 10 },
-      })
-      .setInteractive()
-      .setFontSize(20);
-    /*When the button is pressed, se gonna hide the text of waiting players*/
-    /*We also hide the button itself*/
-    fadeOut.on(
+      }).setInteractive().setFontSize(20).setName("buttonStart");
+
+
+    /**
+     *  Function that detects when button is pressed
+     *  @action: Sends a petition to the server to start the game
+     * **/
+
+    startButton.on(
       "pointerdown",
       function (_pointer) {
         props.socket.emit("game:rooms:start-game");
-        /** TODO: Check if we can really create the room **/
       },
       this
     );
-    /** Skip turn **/
+    /** Player's waiting. */
+    const WaitPlayers = this.add
+        .text(globalx - 100, globaly - 45, "ESPERANT JUGADORS...", {
+          fontFamily: 'Inter, "sans-serif"',
+        })
+        .setScale(1.4);
+
+    /** Invisible button to skip the game **/
+
     const skipButton = this.add
         .text(1000, 500, " Skip", {
           fontFamily: 'Inter, "sans-serif"',
@@ -98,19 +140,33 @@ onMounted(() => {
           backgroundColor: "#F7EBB1",
           fontStyle: "normal",
           padding: { left: 20, right: 20, top: 10, bottom: 10 },
-        })
-        .setInteractive()
-        .setFontSize(20);
+        }).setInteractive().setFontSize(20);
+
     skipButton.visible = false;
+
+    /**
+     *  Function that detects when button is pressed
+     *  @action : Sends a petition to the server to skip the turn
+     * **/
+
     skipButton.on(
         "pointerdown",
         function (_pointer) {
-          console.log("I pressed skip!!")
           props.socket.emit("game:rooms:skip-turn");
         },
         this
     );
-    /** Player's position. */
+
+    /************** PLAYER POSITIONS TODO IMPORTANT **************/
+
+    /** TODO: Know how many players are here and identify them **/
+    const currentPlayers = [];
+    props.socket.on("game:room:player-join", (player) => {
+      console.log(player);
+    });
+
+    /** Player's names positions in the game */
+
     const PositionPlayer1 = this.add.text(80, 350, "Player left", {
       fontFamily: 'Koulen, "cursive"',
       color: "#000000",
@@ -121,6 +177,7 @@ onMounted(() => {
       strokeRoundedRect: (32, 32, 300, 200, 10),
       padding: { left: 15, right: 15, top: 7, bottom: 7 },
     });
+
     const PositionPlayer2 = this.add.text(1200, 350, "Player Right", {
       fontFamily: 'Koulen, "cursive"',
       fontSize: "24px",
@@ -131,6 +188,7 @@ onMounted(() => {
       strokeRoundedRect: (32, 32, 300, 200, 10),
       padding: { left: 17, right: 17, top: 7, bottom: 7 },
     });
+
     const PositionPlayer3 = this.add.text(675, 700, "Player down", {
       fontFamily: 'Koulen, "cursive"',
       fontSize: "24px",
@@ -141,6 +199,7 @@ onMounted(() => {
       strokeRoundedRect: (32, 32, 300, 200, 10),
       padding: { left: 15, right: 15, top: 7, bottom: 7 },
     });
+
     const PositionPlayer4 = this.add.text(675, 15, "Player up", {
       fontFamily: 'Koulen, "cursive"',
       fontSize: "24px",
@@ -151,10 +210,9 @@ onMounted(() => {
       strokeRoundedRect: (32, 32, 300, 200, 10),
       padding: { left: 15, right: 15, top: 7, bottom: 7 },
     });
-    // Back cards One backcard means one enemy player**/
-    if (debug) {
-      console.log("[Debug] If the seat its occupied this should be true");
-    }
+
+   /** Backcards of the players **/
+
     const PositionBackcardLeft = this.add
       .image(globalx - 450, globaly, "backcard1")
       .setScale(0.2, 0.2)
@@ -170,7 +228,15 @@ onMounted(() => {
       .setScale(0.2, 0.2); /*Player up*/
     PositionBackcardUp.visible = false;
 
-    /** Stats of the game **/
+
+    /********************END OF PLAYER'S POSITIONS******************/
+
+
+    /** Stats of the game
+     * @nameroom
+     * @currentplayer
+     * **/
+
     const nameRoom = "Sala #1";
 
     const TextNameOfRoom = this.add.text(25, 10, "Nom sala: " + nameRoom, {
@@ -181,7 +247,13 @@ onMounted(() => {
       strokeThickness: 1,
       strokeRoundedRect: (32, 32, 300, 200, 10),
       padding: { left: 15, right: 15, top: 7, bottom: 7 },
-    }); /* Name of the room */
+    });
+
+    /**TODO: Check the turn of the current player **/
+    props.socket.on("game:room:turn", (turn) => {
+      console.log(turn);
+    });
+
     const CurrentPlayer = "Player 5";
     const TurnPlayerName = this.add.text(25, 50, "El turn es de: " + CurrentPlayer, {
       fontFamily: 'Inter, "sans-serif"',
@@ -192,22 +264,27 @@ onMounted(() => {
       strokeRoundedRect: (32, 32, 300, 200, 10),
       padding: { left: 15, right: 15, top: 7, bottom: 7 },
     });
-    /** Player's waiting. */
-    const WaitPlayers = this.add
-      .text(globalx - 100, globaly - 45, "ESPERANT JUGADORS...", {
-        fontFamily: 'Inter, "sans-serif"',
-      })
-      .setScale(1.4); /*Player Wait*/
+
+    /**
+     * We define the array of the actual cards we gonna receive
+     * **/
     const cardsRecieved = [];
-    const cardsActualPlayer = [];
     let xposition = 0;
+
+    /**
+     * This event let us know the cards of the actual client
+     * @cardsActualPlayer: The array of the cards generated by the server
+     * **/
     props.socket.on("game:rooms:get-cards", (cardsActualPlayer) => {
+      /** We start showing the skipbutton
+       *  Next action
+       * We hide the startButton and watingplayers text **/
       skipButton.visible = true;
       this.tweens.add(
         {
-          targets: fadeOut,
+          targets: startButton,
           alpha: 0,
-          duration: 3000,
+          duration: 2000,
           ease: "Power2",
         },
         this
@@ -216,7 +293,7 @@ onMounted(() => {
         {
           targets: WaitPlayers,
           alpha: 0,
-          duration: 3000,
+          duration: 2000,
           ease: "Power2",
         },
         this
@@ -228,13 +305,20 @@ onMounted(() => {
         console.log("[Debug] Number of cards received: ");
         console.log(cardsActualPlayer.length);
       }
-      /*Depending if there are more or less cards*/
+
+      /** Depending of the number of cards that we received
+       * we can know how many players are playing **/
+
       let positionActualCardsX = 1.25;
+
       if (cardsActualPlayer.length === 24) {
         positionActualCardsX = 1.75;
       } else if (cardsActualPlayer.length === 16) {
         positionActualCardsX = 1.4;
       }
+
+      /** Display all the cards of the player client **/
+
       for (let j = 0; j < cardsActualPlayer.length; j++) {
         cardsRecieved[cardsActualPlayer[j]] = this.add
           .image(
@@ -246,8 +330,9 @@ onMounted(() => {
           .setInteractive();
       }
     });
-    /** The same code of the previous for, including xposition, a scale (size of images) and a setOrigin (X,Y)
-       to center the images.  **/
+
+    /** Display all of the cards in the table **/
+
     for (let i = 0; i < pals.length; i++) {
       xposition = xposition + 100;
       for (let j = 1; j <= 12; j++) {
@@ -259,13 +344,19 @@ onMounted(() => {
         cards[j + "-" + pals[i]].visible = false;
       }
     }
+
     if (debug) {
       console.log(
         "[Debug] Array of the actual objects of the current cards in the middle with their certain position: "
       );
       console.log(cards);
     }
-    // There we obtain the current key of the actual card in the array objectsClicked.texture.key
+
+    /** Event that detects when the client pressed any interactive object
+     *
+     * @action: Sends a petition to the server to move a card
+     *
+     * **/
     this.input.on("pointerdown", function (_pointer, objectsClicked) {
       const cardMoved = objectsClicked[0].texture.key;
       props.socket.emit("game:rooms:move-card", cardMoved);
@@ -273,30 +364,51 @@ onMounted(() => {
         console.log(message);
       });
     });
+
+    /**  Event that detects when a client hover an object
+     *
+     * @action: Resizes a card bigger
+     *
+     * **/
     this.input.on("pointerover", function (_pointer, objectsClicked) {
-      cardsRecieved[objectsClicked[0].texture.key].setScale(0.5, 0.55).setY(605);
-      // objectsClicked[0].depth = 100;
-      // console.log(objectsClicked[0]);
+      if(objectsClicked[0].name === "buttonStart"){return;}
+        cardsRecieved[objectsClicked[0].texture.key].setScale(0.5, 0.55).setY(605);
     });
+
+    /**  Event that detects when a client hover out an object
+     *
+     * @action: Returns the previous size
+     *
+     * **/
+
     this.input.on("pointerout", function (_pointer, objectsClicked) {
-      //objectsClicked[0].depth = objectsClicked[0].getData("depth");
-      cardsRecieved[objectsClicked[0].texture.key].setScale(0.35, 0.325).setY(650);
-      //  console.log(objectsClicked[0]);
+      if(objectsClicked[0].name === "buttonStart"){return;}
+        cardsRecieved[objectsClicked[0].texture.key].setScale(0.35, 0.325).setY(650);
     });
+
+    /**  Event that detects if the server returns a success move by another player
+     *
+     * @action: Sets visible the card
+     *
+     * **/
+
     props.socket.on("game:rooms:player-move-card:success", (card) => {
       cards[card].visible = true;
-      console.log("We are moviing");
     });
+
+    /**  Event that detects if the server returns a success move by the client player
+     *
+     * @action: Sets visible the card and hides his card
+     *
+     * **/
+
     props.socket.on("game:rooms:move-card:success", (card) => {
-      console.log(card);
       cards[card].visible = true;
       cardsRecieved[card].visible = false;
     });
-    // console.log(cardsRecieved);
   }
-  /*Events in realtime*/
+
   function update() {
-    // console.log('Actualitzant!');
   }
 });
 </script>
