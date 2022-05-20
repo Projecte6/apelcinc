@@ -29,12 +29,16 @@
             <div class="flex items-center">
               <button
                 @click="onClickCreate"
-                class="rounded-md bg-[#585858] text-white font-bold text-xl p-3 mt-4 mb-4 hover:transition-colors duration-200 hover:animate-bounce hover:bg-amber-300"
+                class="rounded-md bg-[#585858] text-white font-bold text-xl p-3 mt-4 mb-4 hover:transition-colors duration-200 hover:animate-pulse hover:bg-amber-300 hover:bg-amber-300"
               >
                 Crear partida
               </button>
               <div class="ml-8">
-                <input type="checkbox" v-model="privateRoom" class="bg-red-700 focus:shadow-none focus:outline-none"/>
+                <input
+                  type="checkbox"
+                  v-model="privateRoom"
+                  class="bg-red-700 focus:shadow-none focus:outline-none"
+                />
                 <label class="ml-2 font-bold text-md">Sala Privada</label>
               </div>
             </div>
@@ -58,18 +62,18 @@ const props = defineProps({
 
 const emit = defineEmits(["update:currentPage"]);
 
-const name = ref('');
-let privateRoom = ref('');
+const name = ref("");
+let privateRoom = ref("");
 const errorMessage = ref(null);
 
 const onClickCreate = () => {
-  if(privateRoom.value === ''){
+  if (privateRoom.value === "") {
     privateRoom.value = "public";
-  }else{
+  } else {
     privateRoom.value = "private";
   }
   console.log(privateRoom.value);
-  props.socket.emit('game:rooms:create', name.value , privateRoom.value);
+  props.socket.emit("game:rooms:create", name.value, privateRoom.value);
 
   if (name.value === "") {
     errorMessage.value = "Has d'introduir un nom de sala";
