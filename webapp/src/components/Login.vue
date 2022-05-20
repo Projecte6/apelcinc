@@ -48,8 +48,8 @@ const onClickLogin = () => {
     return;
   }
 
-  if(name.value.length < 4) {
-    errorMessage.value = 'El nom ha de tenir una llargada mínima de 4 caràcters';
+  if(name.value.length < 4 || name.value.length >13) {
+    errorMessage.value = 'El nom ha de tenir una llargada de entre 4 i 12 caràcters';
     setTimeout(() => errorMessage.value = null, 4000);
     return;
   }
