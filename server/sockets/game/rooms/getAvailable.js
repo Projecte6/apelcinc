@@ -9,20 +9,22 @@ import { Socket } from 'socket.io';
 export default (socket, debug, games) => {
   if (debug) console.log('[debug] [on] [game:rooms:get-available] ()');
 
-  let waitingRooms = [];
+  let waitingGames = [];
 
-  for (let property in games) {
-    let game = games[property];
+  Object.keys(games).forEach(id => {
+    let game = games[id];
 
-    if (game.status !== 'waiting' || game.type !== 'public') continue;
+    if (game.status !== 'waiting' && game.type !== 'public') {
+      return;
+    }
 
-    waitingRooms.push({
+    waitingGames.push({
       id: game.id,
       name: game.name,
       players: Object.keys(game.players).length,
       type: game.type,
     });
-  }
+  });
 
-  socket.emit('game:rooms:get-available', waitingRooms);
+  socket.emit('game:rooms:get-available', waitingGames);
 };

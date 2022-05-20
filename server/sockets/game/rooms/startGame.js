@@ -1,6 +1,11 @@
+// Packages
+import lodash from 'lodash';
+
 // Types
 import { Server, Socket } from 'socket.io';
-import lodash from 'lodash';
+
+// Functions
+import turnInterval from '../../../functions/turnInterval.js';
 
 /**
  * @param {Server} io
@@ -11,30 +16,24 @@ import lodash from 'lodash';
 export default (io, socket, debug, games) => {
   if (debug) console.log('[debug] [on] [game:rooms:start-game] ()');
 
-  let rooms = Array.from(socket.rooms.values());
-  let joinedGames = rooms.filter(r => r.startsWith('game-'));
-
-  if (joinedGames.length != 1) {
-    console.log('Error #1');
-    return;
-  }
-
-  let id = joinedGames[0].replace('game-', '');
-  let game = games[id];
-  let gameOwner = Object.keys(game.players)[0];
-  let playersLength = Object.keys(game.players).length;
+  let game = games[socket.data.game];
+  let playersKeys = Object.keys(game.players);
+  let gameOwner = playersKeys[0];
 
   if (gameOwner !== socket.id) {
     console.log('Error #2');
     return;
   }
 
-  if (playersLength < 2 || playersLength > 4) {
+  if (playersKeys.length < 2 || playersKeys.length > 4) {
     console.log('Error #3');
     return;
   }
 
-  let chunks = game.cards.length / playersLength;
+  game.status = 'playing';
+  io.to('searching').emit('game:rooms:deleted', game.id);
+
+  let chunks = game.cards.length / playersKeys.length;
 
   let cards = game.cards.reduce((previous, current, index) => {
     let chunkIndex = Math.floor(index / chunks);
@@ -47,8 +46,6 @@ export default (io, socket, debug, games) => {
 
     return previous;
   }, []);
-
-  let playersKeys = Object.keys(game.players);
 
   for (let [index, value] of cards.entries()) {
     let playerCards = lodash.cloneDeep(value);
@@ -69,7 +66,9 @@ export default (io, socket, debug, games) => {
   };
 
   let playerId = playersKeys[game.turn];
-  let playerName = io.sockets.sockets.get(playerId).name;
+  let playerName = io.sockets.sockets.get(playerId).data.name;
 
   io.to(`game-${game.id}`).emit('game:rooms:turn', playerName);
+
+  game.interval = setInterval(() => turnInterval(io, game), 30_000);
 };

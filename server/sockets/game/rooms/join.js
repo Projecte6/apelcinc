@@ -17,8 +17,8 @@ export default async (io, socket, debug, games, id) => {
     return;
   }
 
-  socket.game = id;
-  game.players[socket.id] = { cards: [] };
+  socket.data.game = id;
+  game.players[socket.id] = { name: socket.name, cards: [] };
 
   await socket.leave('global');
   await socket.join(`game-${id}`);
@@ -27,15 +27,9 @@ export default async (io, socket, debug, games, id) => {
 
   let players = [];
 
-  Object.keys(game.players).forEach(id => {
-    let player = io.sockets.sockets.get(id);
-
-    if (!player.name) {
-      console.log(`[join.js:34] Error can't get player name of ${id}`);
-      return;
-    }
-
-    players.push(player.name);
+  Object.keys(game.players).forEach(async id => {
+    let name = io.sockets.sockets.get(id).data.name;
+    players.push(name);
   });
 
   setTimeout(() => io.to(`game-${id}`).emit('game:room:player-join', players), 1000);
