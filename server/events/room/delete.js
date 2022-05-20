@@ -1,12 +1,8 @@
-export default (io, debug, rooms, room) => {
+export default (io, debug, games, room) => {
   if (!room.startsWith('game-')) return;
 
   let id = room.replace('game-','');
-  let index = rooms.findIndex(r => r.id === id);
-
-  if (index === -1) return;
-
-  rooms.splice(index, 1);
+  delete games[id];
   
   io.to('searching').emit('game:rooms:deleted', id);
 

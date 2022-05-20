@@ -13,14 +13,19 @@ import nextTurn from '../../../functions/nextTurn.js';
 export default (io, socket, debug, games) => {
   if (debug) console.log('[game:rooms:skip-turn]');
 
-  if (!socket.game) {
+  if (!socket.data.game) {
     console.log('Error #1');
     return;
   }
 
-  console.log(`socket.game: ${socket.game}`);
+  let game = games[socket.data.game];
 
-  let game = games[socket.game];
+  if (Object.keys(game.players)[game.turn] !== socket.id) {
+    socket.emit('game:rooms:error', 'No es el teu torn');
+    return;
+  }
+
+  console.log(`socket.game: ${socket.data.game}`);
 
   nextTurn(io, game);
 };

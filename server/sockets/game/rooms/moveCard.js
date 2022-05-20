@@ -19,13 +19,13 @@ export default (io, socket, debug, games, card) => {
     return;
   }
 
-  if (!socket.game) {
+  if (!socket.data.game) {
     console.log('[moveCard.js:23] Error player is not in any game');
     socket.emit('game:rooms:error', 'No estàs en cap partida');
     return;
   }
 
-  let gameId = socket.game;
+  let gameId = socket.data.game;
   let game = games[gameId];
   let playersKeys = Object.keys(game.players);
 
@@ -79,10 +79,7 @@ export default (io, socket, debug, games, card) => {
   game.table[cardType][cardNumber] = true;
 
   socket.emit('game:rooms:move-card:success', card);
-  console.log('game:rooms:move-card:success');
-
   socket.to(`game-${game.id}`).emit('game:rooms:player-move-card:success', card);
-  console.log(`[game:rooms:player-move-card:success] game-${game.id} ${card}`);
 
   nextTurn(io, game);
 };

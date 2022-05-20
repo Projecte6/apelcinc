@@ -19,7 +19,7 @@ export default async (socket, debug, cards, games, name,type) => {
   let suffledCards = lodash.shuffle(clonedCards);
 
   name = name.replaceAll(' ', '').toLowerCase();
-  
+
   if (!name || name == '') {
     if (debug) console.log(`[debug] [error] Missing or empty name`);
     return;
@@ -35,7 +35,9 @@ export default async (socket, debug, cards, games, name,type) => {
     id: id,
     name: name,
     status: 'waiting',
+    type: 'public',
     turn: null,
+    interval: null,
     cards: suffledCards,
     players: {},
     table: {
@@ -98,14 +100,14 @@ export default async (socket, debug, cards, games, name,type) => {
     }
   };
 
-  games[id].players[socket.id] = { cards: [] };
+  games[id].players[socket.id] = { name: socket.name, cards: [] };
 
   let room = { id, name, type };
 
   await socket.join(`game-${id}`);
   await socket.leave('global');
 
-  socket.game = id;
+  socket.data.game = id;
 
   socket.emit('game:rooms:create:success', room);
   socket.to('searching').emit('game:rooms:created', room);

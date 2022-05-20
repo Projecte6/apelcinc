@@ -6,7 +6,7 @@ import { Server, Socket } from 'socket.io';
  * @param {Socket} socket
  * @param {boolean} debug
  */
-export default (io, socket, debug, usernames, name = '') => {
+export default (socket, debug, usernames, name = '') => {
   if (debug) console.log(`[debug] [on] [game:login] (${name})`);
 
   name = name.replaceAll(' ', '').toLowerCase();
@@ -22,14 +22,16 @@ export default (io, socket, debug, usernames, name = '') => {
     return;
   }
 
-  socket.name = name;
+  socket.data.name = name;
   usernames.push(name);
 
-  console.log(`[ws] [game:login] ${socket.id} logged as ${socket.name} connected`);
+  // socket.name = name;
+
+  console.log(`[ws] [game:login] ${socket.id} logged as ${socket.data.name} connected`);
 
   socket.join('global');
 
-  let message = `${socket.name} se ha conectado`;
+  let message = `${socket.data.name} se ha conectado`;
 
   socket.emit('game:login:success');
 

@@ -63,8 +63,8 @@ io.on('connection', (socket) => {
   socket.on('web:page:join', () => socketWebPageJoin(socket, debug));
 
   // Game
-  socket.on('game:login', (name) => socketGameLogin(io, socket, debug, usernames, name));
-  socket.on('game:rooms:create', (name,type) => socketGameRoomsCreate(socket, debug, cards, games, name,type));
+  socket.on('game:login', (name) => socketGameLogin(socket, debug, usernames, name));
+  socket.on('game:rooms:create', (name, type) => socketGameRoomsCreate(socket, debug, cards, games, name, type));
   socket.on('game:rooms:get-available', () => socketGameRoomsGetAvailable(socket, debug, games));
   socket.on('game:rooms:join', (id) => socketGameRoomsJoin(io, socket, debug, games, id));
   socket.on('game:rooms:start-game', () => socketGameRoomsStartGame(io, socket, debug, games));
@@ -84,7 +84,7 @@ io.on('connection', (socket) => {
 
 // Native
 io.of('/').adapter.on('create-room', (room) => eventRoomCreate(debug, rooms, room));
-io.of('/').adapter.on('delete-room', (room) => eventRoomDelete(io, debug, rooms, room));
+io.of('/').adapter.on('delete-room', (room) => eventRoomDelete(io, debug, games, room));
 io.of('/').adapter.on('join-room', (room, id) => eventRoomJoin(io, debug, games, room, id));
 io.of('/').adapter.on('leave-room', (room, id) => eventRoomLeave(io, debug, games, room, id));
 
