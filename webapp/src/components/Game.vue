@@ -15,9 +15,13 @@ const isOpen = ref(false);
 /** Using the env file we can identify the debug variable **/
 const debug = import.meta.env.VITE_DEBUG;
 
+/** Defined the variable to display the error msg**/
+const showError = false;
+
 /** To be able to use the socket as an object, we define it as an props**/
 const props = defineProps({
   socket: Object,
+  roomName: Array,
 });
 
 /** Generic constants to resize the screen **/
@@ -41,6 +45,7 @@ const ChangeColor = () => {
   }
   gamecolor.style.backgroundColor = colours[index++];
 };
+const errormsg = ref("");
 
 /** We mound the component in idependent div
  *
@@ -81,11 +86,13 @@ onMounted(() => {
     if (debug) {
       console.log("[Debug]: Game started");
     }
+    /** A Double for to walk first the "pals array (letters)" and after the numbers for precharge every image. */
     for (let i = 0; i < pals.length; i++) {
       for (let j = 1; j <= 12; j++) {
         this.load.image(j + "-" + pals[i], "/img/" + j + "-" + pals[i] + ".png");
       }
     }
+    /** Here we set the player's card space  */
     for (let i = 1; i <= 3; i++) {
       this.load.image("backcard" + i, "/img/backcard.png");
     }
@@ -103,11 +110,10 @@ onMounted(() => {
 
     const startButton = this.add
       .text(880, 345, " 🏁 Començar  🏁", {
-        fontFamily: 'Skranji, "cursive"',
-        color: "red",
-        backgroundColor: "#F7EBB1",
-        fontStyle: "normal",
-        strokeThickness: 10,
+        fontFamily: 'Inter, "cursive"',
+        color: "black",
+        backgroundColor: "#867A7A",
+        fontStyle: "bold",
         padding: { left: 10, right: 10, top: 10, bottom: 10 },
       }).setInteractive().setFontSize(20).setName("buttonStart");
 
@@ -173,8 +179,6 @@ onMounted(() => {
       fontSize: "24px",
       backgroundColor: "#72c3d3",
       fontStyle: "normal",
-      strokeThickness: 10,
-      strokeRoundedRect: (32, 32, 300, 200, 10),
       padding: { left: 15, right: 15, top: 7, bottom: 7 },
     });
 
@@ -184,8 +188,6 @@ onMounted(() => {
       color: "#000000",
       backgroundColor: "#72d397",
       fontStyle: "normal",
-      strokeThickness: 10,
-      strokeRoundedRect: (32, 32, 300, 200, 10),
       padding: { left: 17, right: 17, top: 7, bottom: 7 },
     });
 
@@ -195,8 +197,6 @@ onMounted(() => {
       color: "#000000",
       backgroundColor: "#d372ca",
       fontStyle: "normal",
-      strokeThickness: 10,
-      strokeRoundedRect: (32, 32, 300, 200, 10),
       padding: { left: 15, right: 15, top: 7, bottom: 7 },
     });
 
@@ -206,8 +206,6 @@ onMounted(() => {
       color: "#000000",
       backgroundColor: "#d3d372",
       fontStyle: "normal",
-      strokeThickness: 10,
-      strokeRoundedRect: (32, 32, 300, 200, 10),
       padding: { left: 15, right: 15, top: 7, bottom: 7 },
     });
 
@@ -237,9 +235,7 @@ onMounted(() => {
      * @currentplayer
      * **/
 
-    const nameRoom = "Sala #1";
-
-    const TextNameOfRoom = this.add.text(25, 10, "Nom sala: " + nameRoom, {
+   this.add.text(25, 10, "Id sala: " + props.roomName.id, {
       fontFamily: 'Inter, "sans-serif"',
       color: "#000000",
       backgroundColor: "#F7EBB1",
@@ -255,7 +251,7 @@ onMounted(() => {
     });
 
     const CurrentPlayer = "Player 5";
-    const TurnPlayerName = this.add.text(25, 50, "El turn es de: " + CurrentPlayer, {
+    const TurnPlayerName = this.add.text(25, 95, "El turn es de: " + CurrentPlayer, {
       fontFamily: 'Inter, "sans-serif"',
       color: "white",
       backgroundColor: "gray",
@@ -359,9 +355,12 @@ onMounted(() => {
      * **/
     this.input.on("pointerdown", function (_pointer, objectsClicked) {
       const cardMoved = objectsClicked[0].texture.key;
+
       props.socket.emit("game:rooms:move-card", cardMoved);
-      props.socket.on("game:rooms:move-card:error", (message) => {
-        console.log(message);
+      props.socket.on("game:rooms:error", (message) => {
+        errormsg.value = message;
+        console.log(errormsg.value);
+        setTimeout(() => (this.showError = true), 2000);
       });
     });
 
@@ -414,55 +413,52 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="all-game">
+  <div id="game-container">
     <div
-      class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative absolute top-15 right-0 w-64"
+      v-show="showError"
+      class="bg-red-100 border border-red-400 text-center text-red-700 px-4 py-3 rounded absolute top-15 right-40 w-80"
       role="alert"
     >
-      <strong class="font-bold">Ha hagut un error<br /></strong>
-      <span class="block sm:inline">Something seriously bad happened.</span>
-      <span class="absolute top-0 bottom-0 right-0 px-4 py-3"> </span>
+      <span class="font-bold" v-if="errormsg" v-text="errormsg" />
     </div>
-    <div id="game-container">
-      <div class="absolute top-28 right-2">
-        <button
-          @click="ChangeColor"
-          class="rounded-md bg-[#585858] text-white font-bold text-md p-1 w-28"
-        >
-          Color Tauler
-        </button>
-      </div>
+    <div class="absolute top-28 right-2">
+      <button
+        @click="ChangeColor"
+        class="rounded-md bg-[#585858] text-white font-bold text-md p-1 w-28"
+      >
+        Color Tauler
+      </button>
     </div>
-    <div class="absolute bottom-10 right-2">
-      <div v-if="isOpen" class="relative top-3">
-        <Chat :socket="props.socket"></Chat>
-      </div>
-      <div class="absolute right-0 flex">
-        <button
-          @click="isOpen = !isOpen"
-          class="flex items-center justify-center h-12 w-12 hover:bg-gray-500 hover:rounded-full hover:transition duration-500 ease-in-out"
+  </div>
+  <div class="absolute bottom-10 right-2">
+    <div v-if="isOpen" class="relative top-3">
+      <Chat :socket="props.socket"></Chat>
+    </div>
+    <div class="absolute right-0 flex">
+      <button
+        @click="isOpen = !isOpen"
+        class="flex items-center justify-center h-12 w-12 hover:bg-gray-500 hover:rounded-full hover:transition duration-500 ease-in-out"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          class="h-8 w-8 fill-white"
+          version="1.1"
+          id="Capa_1"
+          x="0px"
+          y="0px"
+          viewBox="0 0 60 60"
+          style="enable-background: new 0 0 60 60"
+          xml:space="preserve"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            class="h-8 w-8 fill-white"
-            version="1.1"
-            id="Capa_1"
-            x="0px"
-            y="0px"
-            viewBox="0 0 60 60"
-            style="enable-background: new 0 0 60 60"
-            xml:space="preserve"
-          >
-            <path
-              d="M44.348,12.793H2.652C1.189,12.793,0,13.982,0,15.445v43.762l9.414-9.414h34.934c1.463,0,2.652-1.19,2.652-2.653V15.445   C47,13.982,45.811,12.793,44.348,12.793z M10,35.777c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S12.206,35.777,10,35.777z    M23,35.777c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S25.206,35.777,23,35.777z M36,35.777c-2.206,0-4-1.794-4-4s1.794-4,4-4   s4,1.794,4,4S38.206,35.777,36,35.777z"
-            />
-            <path
-              d="M57.348,0.793H12.652C11.189,0.793,10,1.982,10,3.445v7.348h34.348c2.565,0,4.652,2.087,4.652,4.652v25.332h11V3.445   C60,1.982,58.811,0.793,57.348,0.793z"
-            />
-          </svg>
-        </button>
-      </div>
+          <path
+            d="M44.348,12.793H2.652C1.189,12.793,0,13.982,0,15.445v43.762l9.414-9.414h34.934c1.463,0,2.652-1.19,2.652-2.653V15.445   C47,13.982,45.811,12.793,44.348,12.793z M10,35.777c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S12.206,35.777,10,35.777z    M23,35.777c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S25.206,35.777,23,35.777z M36,35.777c-2.206,0-4-1.794-4-4s1.794-4,4-4   s4,1.794,4,4S38.206,35.777,36,35.777z"
+          />
+          <path
+            d="M57.348,0.793H12.652C11.189,0.793,10,1.982,10,3.445v7.348h34.348c2.565,0,4.652,2.087,4.652,4.652v25.332h11V3.445   C60,1.982,58.811,0.793,57.348,0.793z"
+          />
+        </svg>
+      </button>
     </div>
   </div>
 </template>
