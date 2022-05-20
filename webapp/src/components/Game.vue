@@ -8,7 +8,6 @@ import Chat from "../components/Chat.vue";
 /** What is it ?**/
 import { onMounted, ref } from "vue";
 
-
 /** Constant to define when the chat is opened **/
 const isOpen = ref(false);
 
@@ -107,14 +106,16 @@ onMounted(() => {
     /**  Button to start the game **/
 
     const startButton = this.add
-      .text(880, 345, " 🏁 Començar  🏁", {
+      .text(880, 345, " 🏁 COMENÇAR  🏁", {
         fontFamily: 'Inter, "cursive"',
         color: "black",
         backgroundColor: "#867A7A",
         fontStyle: "bold",
         padding: { left: 10, right: 10, top: 10, bottom: 10 },
-      }).setInteractive().setFontSize(20).setName("buttonStart");
-
+      })
+      .setInteractive()
+      .setFontSize(20)
+      .setName("buttonStart");
 
     /**
      *  Function that detects when button is pressed
@@ -129,8 +130,7 @@ onMounted(() => {
       this
     );
     /** Player's waiting. */
-    const WaitPlayers = this.add
-        .text(globalx - 100, globaly, "ESPERANT JUGADORS...", {
+    const WaitPlayers = this.add.text(globalx - 100, globaly, "ESPERANT JUGADORS...", {
           fontFamily: 'Inter, "sans-serif"',
           fontStyle: "normal",
           fontSize: "24px",
@@ -140,7 +140,8 @@ onMounted(() => {
           stroke: "#f6eab0",
         })
         .setScale(1.4);
-    /** Invisible button to skip the game **/
+
+  /** Invisible button to skip the game **/
 
     const skipButton = this.add
       .text(1000, 500, " Skip", {
@@ -214,7 +215,7 @@ onMounted(() => {
       padding: { left: 15, right: 15, top: 7, bottom: 7 },
     });
 
-   /** Backcards of the players **/
+    /** Backcards of the players **/
 
     const PositionBackcardLeft = this.add
       .image(globalx - 450, globaly, "backcard1")
@@ -231,22 +232,26 @@ onMounted(() => {
       .setScale(0.2, 0.2); /*Player up*/
     PositionBackcardUp.visible = false;
 
-
     /********************END OF PLAYER'S POSITIONS******************/
-
 
     /** Stats of the game
      * @nameroom
      * @currentplayer
      * **/
 
-   this.add.text(25, 10, "Id sala: " + props.roomName.id, {
+    this.add.text(25, 10, "Id sala: " + props.roomName.id, {
       fontFamily: 'Inter, "sans-serif"',
       color: "#000000",
       backgroundColor: "#F7EBB1",
       fontStyle: "normal",
-      strokeThickness: 1,
-      strokeRoundedRect: (32, 32, 300, 200, 10),
+      padding: { left: 15, right: 15, top: 7, bottom: 7 },
+    });
+
+    this.add.text(25, 50, "Nom sala: " + props.roomName.name, {
+      fontFamily: 'Inter, "sans-serif"',
+      color: "#000000",
+      backgroundColor: "#F7EBB1",
+      fontStyle: "normal",
       padding: { left: 15, right: 15, top: 7, bottom: 7 },
     });
 
@@ -256,7 +261,7 @@ onMounted(() => {
     });
 
     const CurrentPlayer = "Player 5";
-    const TurnPlayerName = this.add.text(25, 95, "El turn es de: " + CurrentPlayer, {
+    const TurnPlayerName = this.add.text(25, 90, "El turn es de: " + CurrentPlayer, {
       fontFamily: 'Inter, "sans-serif"',
       color: "white",
       backgroundColor: "gray",
@@ -375,8 +380,10 @@ onMounted(() => {
      *
      * **/
     this.input.on("pointerover", function (_pointer, objectsClicked) {
-      if(objectsClicked[0].name === "buttonStart"){return;}
-        cardsRecieved[objectsClicked[0].texture.key].setScale(0.5, 0.55).setY(605);
+      if (objectsClicked[0].name === "buttonStart") {
+        return;
+      }
+      cardsRecieved[objectsClicked[0].texture.key].setScale(0.5, 0.55).setY(605);
     });
 
     /**  Event that detects when a client hover out an object
@@ -386,8 +393,10 @@ onMounted(() => {
      * **/
 
     this.input.on("pointerout", function (_pointer, objectsClicked) {
-      if(objectsClicked[0].name === "buttonStart"){return;}
-        cardsRecieved[objectsClicked[0].texture.key].setScale(0.35, 0.325).setY(650);
+      if (objectsClicked[0].name === "buttonStart") {
+        return;
+      }
+      cardsRecieved[objectsClicked[0].texture.key].setScale(0.35, 0.325).setY(650);
     });
 
     /**  Event that detects if the server returns a success move by another player
@@ -412,8 +421,7 @@ onMounted(() => {
     });
   }
 
-  function update() {
-  }
+  function update() {}
 });
 </script>
 

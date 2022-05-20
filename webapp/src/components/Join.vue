@@ -124,6 +124,7 @@ const roomsList = ref([]);
 const onClickJoinRoom = (id) => {
   props.socket.emit("game:rooms:join", id);
 };
+
 props.socket.on("game:rooms:join:success", (room) => {
   console.log(room);
   emit("update:roomName", room);
