@@ -61,8 +61,15 @@ export default (io, socket, debug, games) => {
         break;
       }
     }
-
-    io.to(playerId).emit('game:rooms:get-cards', player.cards);
+   /**
+    * TODO: Send an array of all the players with the game
+    * let contraryPlayers = [];
+    for(let key in playersKeys){
+        contraryPlayers[playersKeys] = io.sockets.sockets.get(playersKeys[key]).data.name;
+    }
+    console.log(contraryPlayers);
+    **/
+    io.to(playerId).emit('game:rooms:get-cards', player.cards,contraryPlayers);
   };
 
   let playerId = playersKeys[game.turn];
