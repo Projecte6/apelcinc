@@ -34,10 +34,7 @@
                 Crear partida
               </button>
               <div class="ml-8">
-                <input
-                  type="checkbox"
-                  class="bg-red-700 focus:shadow-none focus:outline-none"
-                />
+                <input type="checkbox" v-model="privateRoom" class="bg-red-700 focus:shadow-none focus:outline-none"/>
                 <label class="ml-2 font-bold text-md">Sala Privada</label>
               </div>
             </div>
@@ -61,11 +58,18 @@ const props = defineProps({
 
 const emit = defineEmits(["update:currentPage"]);
 
-const name = ref("");
+const name = ref('');
+let privateRoom = ref('');
 const errorMessage = ref(null);
 
 const onClickCreate = () => {
-  props.socket.emit("game:rooms:create", name.value);
+  if(privateRoom.value === ''){
+    privateRoom.value = "public";
+  }else{
+    privateRoom.value = "private";
+  }
+  console.log(privateRoom.value);
+  props.socket.emit('game:rooms:create', name.value , privateRoom.value);
 
   if (name.value === "") {
     errorMessage.value = "Has d'introduir un nom de sala";
@@ -78,15 +82,13 @@ const onClickCreate = () => {
     setTimeout(() => (errorMessage.value = null), 4000);
     return;
   }
-
-  props.socket.emit("game:create", name.value);
   name.value = "";
 };
 
 // const onClickCreate = () => {
 //   name.value = name.value.replaceAll(' ', '');
-props.socket.on("game:rooms:create:success", () => {
-  console.log("Room created");
+props.socket.on("game:rooms:create:success", (room) => {
+  emit("update:roomName", room);
   emit("update:currentPage", "game");
 });
 

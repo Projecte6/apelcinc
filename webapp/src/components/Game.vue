@@ -8,6 +8,7 @@ import Chat from "../components/Chat.vue";
 /** What is it ?**/
 import { onMounted, ref } from "vue";
 
+
 /** Constant to define when the chat is opened **/
 const isOpen = ref(false);
 
@@ -112,10 +113,8 @@ onMounted(() => {
         backgroundColor: "#867A7A",
         fontStyle: "bold",
         padding: { left: 10, right: 10, top: 10, bottom: 10 },
-      })
-      .setInteractive()
-      .setFontSize(20)
-      .setName("buttonStart");
+      }).setInteractive().setFontSize(20).setName("buttonStart");
+
 
     /**
      *  Function that detects when button is pressed
@@ -130,7 +129,17 @@ onMounted(() => {
       this
     );
     /** Player's waiting. */
-
+    const WaitPlayers = this.add
+        .text(globalx - 100, globaly, "ESPERANT JUGADORS...", {
+          fontFamily: 'Inter, "sans-serif"',
+          fontStyle: "normal",
+          fontSize: "24px",
+          color: "black",
+          strokeThickness: 7,
+          fontWeight: "bold",
+          stroke: "#f6eab0",
+        })
+        .setScale(1.4);
     /** Invisible button to skip the game **/
 
     const skipButton = this.add
@@ -205,7 +214,7 @@ onMounted(() => {
       padding: { left: 15, right: 15, top: 7, bottom: 7 },
     });
 
-    /** Backcards of the players **/
+   /** Backcards of the players **/
 
     const PositionBackcardLeft = this.add
       .image(globalx - 450, globaly, "backcard1")
@@ -222,14 +231,16 @@ onMounted(() => {
       .setScale(0.2, 0.2); /*Player up*/
     PositionBackcardUp.visible = false;
 
+
     /********************END OF PLAYER'S POSITIONS******************/
+
 
     /** Stats of the game
      * @nameroom
      * @currentplayer
      * **/
 
-    this.add.text(25, 10, "Id sala: " + props.roomName.id, {
+   this.add.text(25, 10, "Id sala: " + props.roomName.id, {
       fontFamily: 'Inter, "sans-serif"',
       color: "#000000",
       backgroundColor: "#F7EBB1",
@@ -254,18 +265,6 @@ onMounted(() => {
       strokeRoundedRect: (32, 32, 300, 200, 10),
       padding: { left: 15, right: 15, top: 7, bottom: 7 },
     });
-    /** Player's waiting. */
-    const WaitPlayers = this.add
-      .text(globalx - 100, globaly, "ESPERANT JUGADORS...", {
-        fontFamily: 'Koulen, "cursive"',
-        fontStyle: "normal",
-        fontSize: "24px",
-        color: "black",
-        strokeThickness: 7,
-        fontWeight: "bold",
-        stroke: "#f6eab0",
-      })
-      .setScale(1.4); /*Player Wait*/
 
     /**
      * We define the array of the actual cards we gonna receive
@@ -376,10 +375,8 @@ onMounted(() => {
      *
      * **/
     this.input.on("pointerover", function (_pointer, objectsClicked) {
-      if (objectsClicked[0].name === "buttonStart") {
-        return;
-      }
-      cardsRecieved[objectsClicked[0].texture.key].setScale(0.5, 0.55).setY(605);
+      if(objectsClicked[0].name === "buttonStart"){return;}
+        cardsRecieved[objectsClicked[0].texture.key].setScale(0.5, 0.55).setY(605);
     });
 
     /**  Event that detects when a client hover out an object
@@ -389,10 +386,8 @@ onMounted(() => {
      * **/
 
     this.input.on("pointerout", function (_pointer, objectsClicked) {
-      if (objectsClicked[0].name === "buttonStart") {
-        return;
-      }
-      cardsRecieved[objectsClicked[0].texture.key].setScale(0.35, 0.325).setY(650);
+      if(objectsClicked[0].name === "buttonStart"){return;}
+        cardsRecieved[objectsClicked[0].texture.key].setScale(0.35, 0.325).setY(650);
     });
 
     /**  Event that detects if the server returns a success move by another player
@@ -417,7 +412,8 @@ onMounted(() => {
     });
   }
 
-  function update() {}
+  function update() {
+  }
 });
 </script>
 
