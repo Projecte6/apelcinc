@@ -5,6 +5,7 @@ import lodash from 'lodash';
 import { Server, Socket } from 'socket.io';
 
 // Functions
+import timerInterval from '../../../functions/timerInterval.js';
 import turnInterval from '../../../functions/turnInterval.js';
 
 /**
@@ -77,5 +78,7 @@ export default (io, socket, debug, games) => {
 
   io.to(`game-${game.id}`).emit('game:rooms:turn', playerName);
 
+  game.clock = 30;
+  game.timer = setInterval(() => timerInterval(io, game), 1_000);
   game.interval = setInterval(() => turnInterval(io, game), 30_000);
 };

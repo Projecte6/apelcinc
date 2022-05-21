@@ -2,6 +2,7 @@
 import { Server, Socket } from 'socket.io';
 
 // Functions
+import canMoveCard from '../../../functions/canMoveCard.js';
 import nextTurn from '../../../functions/nextTurn.js';
 
 /**
@@ -25,7 +26,12 @@ export default (io, socket, debug, games) => {
     return;
   }
 
-  console.log(`socket.game: ${socket.data.game}`);
+  for (let card of game.players[socket.id].cards) {
+    if (canMoveCard(game, card)) {
+      socket.emit('game:rooms:error', 'No pots passar perquè tens una carta vàlida');
+      return;
+    }
+  }
 
   nextTurn(io, game);
 };

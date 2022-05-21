@@ -2,6 +2,8 @@
 import { Server, Socket } from 'socket.io';
 
 // Functions
+import canMoveCard from './canMoveCard.js';
+import timerInterval from './timerInterval.js';
 import turnInterval from './turnInterval.js';
 
 /**
@@ -12,6 +14,8 @@ import turnInterval from './turnInterval.js';
  */
 export default (io, game) => {
   let playersIds = Object.keys(game.players);
+
+  // TODO: Detect if player can move card and move automatically
 
   game.turn = (game.turn + 1 === playersIds.length)
     ? 0
@@ -32,11 +36,14 @@ export default (io, game) => {
     return;
   }
 
+  clearInterval(game.timer);
   clearInterval(game.interval);
   console.log('clearInterval');
 
   io.to(`game-${game.id}`).emit('game:rooms:turn', nextPlayerName);
 
+  game.clock = 30;
+  game.timer = setInterval(() => timerInterval(io, game), 1_000);
   game.interval = setInterval(() => turnInterval(io, game), 30_000);
   console.log('setInterval');
 };
