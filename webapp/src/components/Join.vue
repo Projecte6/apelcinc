@@ -139,7 +139,9 @@ props.socket.on("game:rooms:get-available", (rooms) => {
 });
 
 props.socket.on("game:rooms:created", (game) => {
-  roomsList.value.push(game);
+  if(game.type !== "private"){
+    roomsList.value.push(game);
+  }
 });
 
 props.socket.on("game:rooms:update-players-length", (id, players) => {

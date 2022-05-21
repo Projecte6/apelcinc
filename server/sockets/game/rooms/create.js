@@ -35,7 +35,7 @@ export default async (socket, debug, cards, games, name,type) => {
     id: id,
     name: name,
     status: 'waiting',
-    type: 'public',
+    type: type,
     turn: null,
     interval: null,
     cards: suffledCards,
