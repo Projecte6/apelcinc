@@ -53,6 +53,7 @@ const ChangeColor = () => {
   document.body.style.background = colours[index];
 };
 let errormsg = ref("");
+let counterTime = ref("");
 
 /** We mound the component in idependent div
  *
@@ -180,6 +181,7 @@ onMounted(() => {
       this
     );
 
+
     /************** PLAYER POSITIONS TODO IMPORTANT **************/
 
     /** TODO: Know how many players are here and identify them **/
@@ -301,7 +303,11 @@ onMounted(() => {
       /** We start showing the skipbutton
        *  Next action
        * We hide the startButton and watingplayers text **/
-      if(debug){
+      props.socket.on("game:rooms:clock", (time) => {
+        counterTime.value = time;
+        console.log(counterTime)
+      });
+        if(debug){
         console.log("Games in the match :D")
         console.log({gamePlayers});
       }
@@ -449,6 +455,12 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- Span top edge -->
+  <div class="relative">
+    <div class="fixed top-2 left-1/2 right-1/2 rounded-md text-white font-bold text-xl p-1 w-24 hover:transition-colors duration-200">Temps</div>
+    <div class="fixed top-12 ml-1 text-center left-1/2 right-1/2 rounded-md bg-[#585858] text-white font-bold text-xl p-1 w-16 hover:transition-colors duration-200 hover:animate-pulse hover:bg-amber-300" v-if="counterTime" >{{ counterTime }}s</div>
+    </div>
+
   <div id="game-container">
     <div
       v-if="errormsg"

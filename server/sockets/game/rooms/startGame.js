@@ -63,14 +63,14 @@ export default (io, socket, debug, games) => {
       }
     }
    /**
+    *     let contraryPlayers = [];
     * TODO: Send an array of all the players with the game
-    * let contraryPlayers = [];
     for(let key in playersKeys){
         contraryPlayers[playersKeys] = io.sockets.sockets.get(playersKeys[key]).data.name;
     }
     console.log(contraryPlayers);
     **/
-    io.to(playerId).emit('game:rooms:get-cards', player.cards,contraryPlayers);
+    io.to(playerId).emit('game:rooms:get-cards', player.cards);
   };
 
   let playerId = playersKeys[game.turn];
