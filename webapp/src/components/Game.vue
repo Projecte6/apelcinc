@@ -304,7 +304,8 @@ onMounted(() => {
        *  Next action
        * We hide the startButton and watingplayers text **/
       props.socket.on("game:rooms:clock", (time) => {
-        counterTime = time;
+        counterTime.value = time;
+        console.log(counterTime)
       });
         if(debug){
         console.log("Games in the match :D")
@@ -457,7 +458,7 @@ onMounted(() => {
   <!-- Span top edge -->
   <div class="relative">
     <div class="fixed top-2 left-1/2 right-1/2 rounded-md text-white font-bold text-xl p-1 w-24 hover:transition-colors duration-200">Temps</div>
-    <div class="fixed top-12 ml-1 text-center left-1/2 right-1/2 rounded-md bg-[#585858] text-white font-bold text-xl p-1 w-16 hover:transition-colors duration-200 hover:animate-pulse hover:bg-amber-300">00:<p v-text="counterTime" ></p></div>
+    <div class="fixed top-12 ml-1 text-center left-1/2 right-1/2 rounded-md bg-[#585858] text-white font-bold text-xl p-1 w-16 hover:transition-colors duration-200 hover:animate-pulse hover:bg-amber-300" v-if="counterTime" >{{ counterTime }}s</div>
     </div>
 
   <div id="game-container">
