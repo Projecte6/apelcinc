@@ -2,7 +2,7 @@
 import { Server, Socket } from 'socket.io';
 
 // Functions
-import canMoveCard from './canMoveCard.js';
+// import canMoveCard from './canMoveCard.js';
 import timerInterval from './timerInterval.js';
 import turnInterval from './turnInterval.js';
 
@@ -21,29 +21,22 @@ export default (io, game) => {
     ? 0
     : game.turn + 1;
 
-  console.log(`game.turn ${game.turn}`);
-  console.log(`nextPlayerId ${playersIds[game.turn]}`);
-  console.log(`player.name ${io.sockets.sockets.get(playersIds[game.turn]).data.name}`);
-
   let nextPlayerId = playersIds[game.turn];
-  let nextPlayerName = io.sockets.sockets.get(nextPlayerId).data.name;
+  let nextPlayer = io.sockets.sockets.get(nextPlayerId);
 
-  console.log(`nextPlayerId: ${nextPlayerId}`);
-  console.log(`nextPlayerName: ${nextPlayerName}`);
+  if (!nextPlayer) return;
 
-  if (!nextPlayerName) {
+  if (!nextPlayer.data.name) {
     console.log('[nextTurn.js:21] Error getting next player name');
     return;
   }
 
   clearInterval(game.timer);
   clearInterval(game.interval);
-  console.log('clearInterval');
 
-  io.to(`game-${game.id}`).emit('game:rooms:turn', nextPlayerName);
+  io.to(`game-${game.id}`).emit('game:rooms:turn', nextPlayer.data.name);
 
   game.clock = 30;
   game.timer = setInterval(() => timerInterval(io, game), 1_000);
   game.interval = setInterval(() => turnInterval(io, game), 30_000);
-  console.log('setInterval');
 };
