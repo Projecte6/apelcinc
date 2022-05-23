@@ -50,6 +50,7 @@
   <Winning
     v-if="currentPage == 'winning'"
     v-model:currentPage="currentPage"
+    v-model:playersWon="playersWon"
     :socket="socket"
   />
 </template>
@@ -73,7 +74,7 @@ const roomName = ref("");
 // const messages = ref(null);
 // const messages = ref(null);
 
-const socket = io("localhost:3210", { upgrade: false });
+const socket = io("cinquillo.seoalexramon.dev", { upgrade: false });
 
 // socket.on('messages', function (data) {
 //   messages.value = data;
