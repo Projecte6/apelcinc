@@ -23,7 +23,6 @@ const showError = false;
 
 const emit = defineEmits(['update:currentPage']);
 
-
 /** To be able to use the socket as an object, we define it as an props**/
 const props = defineProps({
   socket: Object,
@@ -450,6 +449,18 @@ onMounted(() => {
       cards[card].visible = true;
       cardsRecieved[card].visible = false;
     });
+
+    /**  Update the current page to go at the winning
+     *
+     * @action: Change the current page and send emit
+     *
+     * **/
+
+    props.socket.on("game:rooms:win", (players) => {
+      emit("update:currentPage", "winning");
+      console.log(players);
+    });
+
   }
 
   function update() {}
