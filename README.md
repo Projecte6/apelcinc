@@ -206,7 +206,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/Projecte6/apelcinc.svg?style=for-the-badge
-[contributors-url]: https://github.com/m04a/apelcinc/graphs/contributors
+[contributors-url]: [https://github.com/m04a/apelcinc/graphs/contributors](https://github.com/Projecte6/apelcinc/graphs/contributor)
 [JS-shield]: https://img.shields.io/badge/js-%23ffff00.svg?style=for-the-badge&logo=javascript&logoColor=black
 [JS-url]: https://www.javascript.com
 [Phaser-shield]: https://img.shields.io/badge/phaser.io-%23715c99.svg?style=for-the-badge&logo=javascript&logoColor=white
@@ -220,11 +220,11 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [Socket-shield]: https://img.shields.io/badge/Socket.io-%23ffffff.svg?style=for-the-badge&logo=Socket.io&logoColor=black
 [Socket-url]: https://vuejs.org
 [forks-shield]: https://img.shields.io/github/forks/m04a/apelcinc.svg?style=for-the-badge
-[forks-url]: https://github.com/Projecte5/TicketHelp/network/members
+[forks-url]: https://github.com/Projecte6/apelcinc/network/members
 [stars-shield]: https://img.shields.io/github/stars/m04a/apelcinc.svg?style=for-the-badge
-[stars-url]: https://github.com/m04a/apelcinc/stargazers
+[stars-url]: https://github.com/Projecte6/apelcinc/stargazers
 [issues-shield]: https://img.shields.io/github/issues/m04a/apelcinc.svg?style=for-the-badge
-[issues-url]: https://github.com/m04a/apelcinc/issues
+[issues-url]: https://github.com/Projecte6/apelcinc/issues
 [license-shield]: https://img.shields.io/github/license/m04a/apelcinc.svg?style=for-the-badge
 [license-url]: https://github.com/m04a/apelcinc/blob/master/LICENSE.txt
 [product-screenshot]: images/screenshot.png
